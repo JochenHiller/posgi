@@ -62,3 +62,7 @@ It will be limited to core features of OSGi R8, which are applicable to be imple
 
 * https://github.com/google?language=c%2B%2B
 * https://blog.codacy.com/10-cpp-open-source-projects/
+
+* Google C++ Style guide
+  * https://google.github.io/styleguide/cppguide.html
+  * https://google.github.io/styleguide/cppguide.html
