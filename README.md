@@ -28,7 +28,28 @@ It will be limited to core features of OSGi, which are applicable to be implemen
 
 ## References
 
-### OSGi
+### OSGi specifications
+
+* https://docs.osgi.org/specification/
+* OSGi R8 - Specification
+  * [OSGi Core Release 8 Specification](https://docs.osgi.org/specification/osgi.core/8.0.0/) ([pdf](https://docs.osgi.org/download/r8/osgi.core-8.0.0.pdf))
+  * [OSGi Compendium Release 8 Specification](https://docs.osgi.org/specification/osgi.cmpn/8.0.0/) ([pdf](https://docs.osgi.org/download/r8/osgi.cmpn-8.0.0.pdf))
+  * [OSGi Compendium Release 8.1 Specification](https://docs.osgi.org/specification/osgi.cmpn/8.1.0/) ([pdf](https://docs.osgi.org/download/r8/osgi.cmpn-8.1.0.pdf))
+* OSGi R8 - Documentation
+  * [OSGi Annotation Release 8 Javadoc](https://docs.osgi.org/javadoc/osgi.annotation/8.1.0/)
+  * [OSGi Core Release 8 Javadoc](https://docs.osgi.org/javadoc/osgi.core/8.0.0/)
+  * [OSGi Compendium Release 8 Javadoc](https://docs.osgi.org/javadoc/osgi.cmpn/8.0.0/)
+  * [OSGi Compendium Release 8.1 Javadoc](https://docs.osgi.org/javadoc/osgi.cmpn/8.1.0/)
+* OSGi R8 - Artifacts
+  * [OSGi Core](https://central.sonatype.com/artifact/org.osgi/osgi.core/8.0.0)
+  * [OSGi Annotations 8.1](https://central.sonatype.com/artifact/org.osgi/osgi.annotation/8.1.0)
+  * [OSGi Compendium Spec for Logging 1.5](https://central.sonatype.com/artifact/org.osgi/org.osgi.service.log/1.5.0)
+  * more to add here...
+
+### OSGi and C/C++
+
+* Apache Celix project
+  * https://celix.apache.org/
 
 * https://blog.cppmicroservices.org/2012/03/29/osgi-and-c++/
 
