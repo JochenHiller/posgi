@@ -4,7 +4,7 @@
 
 This project is a first, simple C++ based implementation of OSGi. It is intended to refresh my old C++ skills with latest C++ versions.
 
-It will be limited to core features of OSGi, which are applicable to be implemented in C++ as well.
+It will be limited to core features of OSGi R8, which are applicable to be implemented in C++ as well.
 
 ## Roadmap
 
@@ -53,7 +53,7 @@ It will be limited to core features of OSGi, which are applicable to be implemen
 
 * https://blog.cppmicroservices.org/2012/03/29/osgi-and-c++/
 
-* nOSGi - Native OSGi implementation, Universität Ulm
+* nOSGi - Native OSGi implementation, Universität Ulm (developed until 2014)
   * https://sourceforge.net/p/nosgi/home/Home/
   * https://dl.acm.org/doi/10.1145/2016551.2016555
   * https://www.uni-ulm.de/in/in/vs/res/proj/nostrum/getting-started/
