@@ -32,5 +32,6 @@
 *.app
 
 
-# tmp folder
+# some transient folders
+third_party
 tmp
