@@ -27,15 +27,15 @@ download_and_unpack_third_party() {
 
 check_tools() {
   # check for clang compiler >= 16.x
-  which clang >/dev/null
+  which clang++ >/dev/null
   if [ ! $? = 0 ] ; then
-    echo "WARN: clang compiler not found"
+    echo "WARN: clang++ compiler not found"
   fi
-  CLANG_VERSION=$(clang --version | grep version | awk '{print $4}')
-  if [[ "${CLANG_VERSION}" < "16" ]] ; then
-    echo "WARN: clang compiler too old (16+ required): found ${CLANG_VERSION} "
+  CLANG_PLUSPLUS_VERSION=$(clang++ --version | grep version | awk '{print $4}')
+  if [[ "${CLANG_PLUSPLUS_VERSION}" < "16" ]] ; then
+    echo "WARN: clang++ compiler too old (16+ required): found ${CLANG_PLUSPLUS_VERSION} "
   else
-    echo "INFO: clang compiler version ${CLANG_VERSION} found"
+    echo "INFO: clang++ compiler version ${CLANG_PLUSPLUS_VERSION} found"
   fi
 
   # check for clang format >= 16.x
@@ -61,6 +61,18 @@ check_tools() {
   else
     echo "INFO: lldb version ${LLDB_VERSION} found"
   fi
+
+  # check for g++ compiler >= 16.x
+  which g++ >/dev/null
+  if [ ! $? = 0 ] ; then
+    echo "WARN: g++ compiler not found"
+  fi
+  GPLUSPLUS_VERSION=$(g++ --version | grep version | awk '{print $4}')
+  if [[ "${GPLUSPLUS_VERSION}" < "14" ]] ; then
+    echo "WARN: g++ compiler too old (14+ required): found ${GPLUSPLUS_VERSION} "
+  else
+    echo "INFO: g++ compiler version ${GPLUSPLUS_VERSION} found"
+  fi
 }
 
 # TODO Use standard approach to setup project including all external dependencies
@@ -69,7 +81,11 @@ check_tools() {
 DO_CLEAN=${1}
 
 if [ ! "${DO_CLEAN}" = "clean" ] ; then
+  echo "INFO: Checking installed tools ..."
   check_tools
+  echo " "
+
+  echo "INFO: Checking C++ libraries ..."
 
   if [ ! -d ../third_party ] ; then
     echo "INFO: Creating third_party directory ..."
