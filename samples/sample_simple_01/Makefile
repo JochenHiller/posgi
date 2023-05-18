@@ -1,14 +1,19 @@
-CXX=g++
+CXX=clang++
 CXXFLAGS=-std=c++17 -Wall -fPIC -O2
 
-all: main
+all: hello thread
 
-main: main.o
+hello: hello.o
 	$(CXX) -o $@ $^
 
-main.o: main.cc
+hello.o: hello.cc
+
+thread: thread.o
+	$(CXX) -o $@ $^
+
+thread.o: thread.cc
 
 .PHONY: all clean
 
 clean:
-	rm -f *.o main
+	rm -f *.o hello thread
