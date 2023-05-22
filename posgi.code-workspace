@@ -77,7 +77,8 @@
 			"sstream": "cpp",
 			"stack": "cpp",
 			"unordered_map": "cpp",
-			"variant": "cpp"
+			"variant": "cpp",
+			"thread": "cpp"
 		},
 		"editor.formatOnSave": true
 	}
