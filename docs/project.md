@@ -5,6 +5,7 @@
 ### Work in progress (WIP)
 
 * [ ] Copy code from sample02 to framework
+* [ ] start/stop bundle
 * [ ] CMake build
 * [ ] C++ Linter
 * [ ] Pros and Cons C++
@@ -58,6 +59,7 @@ Specification for LogFormatter:
   * [ ] LogService
   * [ ] EventAdmin
 * [ ] CI/CD
+  * [ ] GitHub Actions pipeline
   * [ ] Unit tests
   * [ ] Integration tests
   * [ ] Fuzzy tests (e.g. on ManifestParser), using Jazzer
