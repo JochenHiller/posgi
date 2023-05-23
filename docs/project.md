@@ -33,11 +33,12 @@
   * [ ] libposgi-0.1.0.so delivery
   * [ ] C++ Linter integrated
   * [ ] Auto-Format (IDE, build) (`.h`, `.cc`)
-  * [ ] Doxygen generated docs, incl. class diaggram
+  * [ ] Doxygen generated docs, incl. class diagram
   * [ ] Docs how to build and run on Linux (using Docker)
+  * [ ] Try to use VisualStudio Code in cloud IDE (VS Code, GitPod)
 * [ ] Documentation
   * [x] Standard OpenSource files in project
-  * [ ] Pros and Cons
+  * [ ] Pros and Cons of C++
 
 Specification for LogFormatter:
 

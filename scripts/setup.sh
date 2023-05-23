@@ -73,6 +73,18 @@ check_tools() {
   else
     echo "INFO: g++ compiler version ${GPLUSPLUS_VERSION} found"
   fi
+
+  # check for cmake
+  which cmake >/dev/null
+  if [ ! $? = 0 ] ; then
+    echo "WARN: cmake not found"
+  fi
+  CMAKE_VERSION=$(cmake --version | grep version | awk '{print $3}')
+  if [[ "${CMAKE_VERSION}" < "3" ]] ; then
+    echo "WARN: cmake too old (3+ required): found ${CMAKE_VERSION} "
+  else
+    echo "INFO: cmake version ${CMAKE_VERSION} found"
+  fi
 }
 
 # TODO Use standard approach to setup project including all external dependencies

@@ -7,6 +7,8 @@
 #include "org/osgi/framework/service/osgi_console.h"
 #include "org/posgi/framework/impl/framework_impl.h"
 
+#include "PosgiConfig.h"
+
 namespace sample {
 
 class SomeBundle : public osgi::BundleActivator {
@@ -28,7 +30,15 @@ private:
 
 } // namespace sample
 
-int main() {
+int main(int argc, char *argv[]) {
+  if ((argc >= 2) && ((std::string)argv[1] == "--version")) {
+    // report version
+    std::cout << argv[0] << " Version " << Posgi_VERSION_MAJOR << "."
+              << Posgi_VERSION_MINOR << std::endl;
+    std::cout << "Usage: " << argv[0] << std::endl;
+    return 1;
+  }
+
   osgi::Framework *framework = osgi::FrameworkFactory().NewFramework();
   framework->Init();
   framework->Start();

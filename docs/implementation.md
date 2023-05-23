@@ -27,6 +27,16 @@ Up-to-now I am using the Google style guide without changes, for simplicity.
   * See <https://google.github.io/styleguide/cppguide.html#Namespaces>
   * See tips from [Abseil](https://abseil.io/tips/130) as well
 
+## C++ Pros and Cons
+
+### Pros
+
+* Multi-line string literals supported since C++11 (see [here](https://en.cppreference.com/w/cpp/language/string_literal))
+
+### Cons
+
+* Separation of header (`.h`) and implementation (`.cc`) files very inefficient. Leads to a lot of code-duplication and manual maintenance, which could be done by tooling in a better way (like in [Golang](https://go.dev/), or proposed for [Carbon](https://github.com/carbon-language/carbon-lang))
+
 ## References
 
 ### OSGi specifications
@@ -75,7 +85,8 @@ Up-to-now I am using the Google style guide without changes, for simplicity.
 
 * CMake
   * <https://code.visualstudio.com/docs/cpp/cmake-linux>
-
+  * <https://cmake.org/cmake/help/latest/guide/tutorial/index.html>
+  
 * Multiple inheritance
   * <https://stackoverflow.com/questions/48407658/stumped-by-simple-c-multiple-inheritance-example>
 

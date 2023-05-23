@@ -3,5 +3,6 @@
     "C_Cpp.formatting": "clangFormat",
     "C_Cpp.clang_format_fallbackStyle": "Google",
     "editor.formatOnSave": true,
-    "C_Cpp.errorSquiggles": "disabled"
+    "C_Cpp.errorSquiggles": "disabled",
+    "cmake.configureOnOpen": true
 }

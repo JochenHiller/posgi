@@ -1,5 +1,6 @@
 CXX=clang++
 CXXFLAGS=\
+  -I../. \
   -I./include \
   -I../third_party/plog-1.1.9/include \
   -I../third_party/googletest-1.13.0/googletest/include \

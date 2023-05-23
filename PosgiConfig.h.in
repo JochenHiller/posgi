@@ -1,0 +1,3 @@
+// the configured options and settings for Posgi
+#define Posgi_VERSION_MAJOR @Posgi_VERSION_MAJOR@
+#define Posgi_VERSION_MINOR @Posgi_VERSION_MINOR@
