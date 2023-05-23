@@ -4,8 +4,9 @@
 
 ### Work in progress (WIP)
 
-* [ ] Copy code from sample02 to framework
-* [ ] start/stop bundle
+* [x] Copy code from sample02 to framework
+* [x] Start/stop bundles
+* [ ] Bundles with bundle state
 * [ ] CMake build
 * [ ] C++ Linter
 * [ ] Pros and Cons C++
@@ -34,8 +35,8 @@
   * [ ] Auto-Format (IDE, build) (`.h`, `.cc`)
   * [ ] Doxygen generated docs, incl. class diaggram
   * [ ] Docs how to build and run on Linux (using Docker)
-* [ ] Documentaion
-  * [ ] Standard OpenSource files in project
+* [ ] Documentation
+  * [x] Standard OpenSource files in project
   * [ ] Pros and Cons
 
 Specification for LogFormatter:

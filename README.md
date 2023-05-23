@@ -12,4 +12,5 @@ It will be limited to core features of OSGi R8, which are applicable to be imple
 ## Futher documentation
 
 Project plan: [docs/project.md](docs/project.md)
+
 Implementation documentation: [docs/implementation.md](docs/implementation.md)

@@ -6,8 +6,8 @@ I think in modern times we should not discuss about source code style anymore. I
 
 To rely on common used code styles, I am using the Google C++ style guide, and associated toolset:
 
-* format C++ code (.h, .cc) with clang-format on CLI
-* use Clang-Format extension inside VisualStudio code ads default formatter. Use Google style for formatting.
+* format C++ code (`.h`, `.cc`) with clang-format on CLI
+* use Clang-Format extension inside VisualStudio code as default formatter. Use Google style for formatting.
 * Use "Auto-format on Save" inside IDE
 
 Up-to-now I am using the Google style guide without changes, for simplicity.
@@ -21,11 +21,11 @@ Up-to-now I am using the Google style guide without changes, for simplicity.
   * see <https://stackoverflow.com/questions/32434294/camelcase-vs-snake-case-in-c-c-identifiers-and-filenames>
   * see <http://www.cs.kent.edu/~jmaletic/papers/ICPC2010-CamelCaseUnderScoreClouds.pdf>
 * Sort header files in well defined order
-  * Use double quotes `".../*.h" for non library header files
+  * Use double quotes `".../*.h"` for non standard library header files
   * <https://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes>
 * Use namespaces
   * See <https://google.github.io/styleguide/cppguide.html#Namespaces>
-  * See tip [here](https://abseil.io/tips/130)
+  * See tips from [Abseil](https://abseil.io/tips/130) as well
 
 ## References
 
@@ -54,15 +54,19 @@ Up-to-now I am using the Google style guide without changes, for simplicity.
 
 * <https://blog.cppmicroservices.org/2012/03/29/osgi-and-c++/>
 
-* nOSGi - Native OSGi implementation, Universität Ulm (developed until 2014)
+* nOSGi - Native OSGi implementation, Universität Ulm (development stopped in 2014)
   * <https://sourceforge.net/p/nosgi/home/Home/>
   * <https://dl.acm.org/doi/10.1145/2016551.2016555>
   * <https://www.uni-ulm.de/in/in/vs/res/proj/nostrum/getting-started/>
 
 ### C++
 
-* <https://github.com/google?language=c%2B%2B>
-* <https://blog.codacy.com/10-cpp-open-source-projects/>
+* C++ Language reference
+  * <https://cppreference.com>
+
+* C++ Libraries
+  * <https://github.com/google?language=c%2B%2B>
+  * <https://blog.codacy.com/10-cpp-open-source-projects/>
 
 * Google C++ Style guide
   * <https://google.github.io/styleguide/cppguide.html>
@@ -79,7 +83,7 @@ Up-to-now I am using the Google style guide without changes, for simplicity.
   * <https://github.com/google/googletest>
 
 * Logging frameworks
-  * <https://github.com/SergiusTheBest/plog> ==> Proposed solution
+  * <https://github.com/SergiusTheBest/plog> ==> selected logging framework
   * <https://github.com/gabime/spdlog>
   * <https://logging.apache.org/log4cxx/latest_stable/>
 
