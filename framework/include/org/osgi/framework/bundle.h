@@ -29,6 +29,9 @@ public:
   virtual BundleContext *GetBundleContext() = 0;
   virtual int GetId() = 0;
   virtual std::string GetSymbolicName() = 0;
+  virtual int GetState() = 0;
+  // TODO: convenient method to get the state as a string, move to utils?
+  virtual std::string GetStateAsString() = 0;
 };
 
 } // end namespace osgi

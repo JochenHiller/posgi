@@ -15,6 +15,8 @@ private:
   void console();
   osgi::Bundle *
   getBundleFromSecondArg(const std::vector<std::string> &command_args);
+  std::string bundle_to_string_c_plain(osgi::Bundle *bundle);
+  std::string bundle_to_string_cpp(osgi::Bundle *bundle);
 
   osgi::BundleContext *bundleContext;
   std::thread *consoleThread;

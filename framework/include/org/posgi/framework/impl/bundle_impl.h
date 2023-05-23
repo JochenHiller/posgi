@@ -18,13 +18,20 @@ public:
   std::string GetSymbolicName();
   osgi::BundleContext *GetBundleContext();
   void SetBundleContext(BundleContextImpl *bundleContextImpl);
+  int GetState();
+  void SetState(int state);
+  std::string GetStateAsString();
 
-public:
   // TODO: make all private with setters, or use friends
   BundleContextImpl *bc;
   int id;
   std::string bundleSymbolicName;
   osgi::BundleActivator *activatorRef = nullptr;
+
+private:
+  std::string getStateAsStringMapping(int state);
+  std::string to_string();
+  int state = UNINSTALLED;
 };
 
 } // end namespace posgi

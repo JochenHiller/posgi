@@ -3,9 +3,12 @@
 #include <atomic>
 #include <chrono>
 #include <condition_variable>
+#include <cstdio>
+#include <iomanip>
 #include <iostream>
 #include <map>
 #include <mutex>
+#include <sstream>
 #include <string>
 #include <thread>
 #include <vector>
@@ -88,21 +91,22 @@ Available commands
       )";
       std::cout << usage << std::endl;
     } else if (command == "quit") {
-      std::cout << "Quiting the OSGi console" << std::endl;
+      std::cout << "OSGi console terminated" << std::endl;
       break;
     } else if (command == "exit") {
-      std::cout << "Exit OSGi framework" << std::endl;
       this->bundleContext->GetBundle(0)->Stop();
-      std::cout << "Exit OSGi framework after" << std::endl;
+      std::cout << "OSGi framework terminated" << std::endl;
     } else if (command == "lb") {
       std::cout << "List bundles" << std::endl;
       PLOG_ERROR << "OsgiConsole::console: " << this;
       PLOG_ERROR << "OsgiConsole::console: " << this->bundleContext;
 
       auto bundles = this->bundleContext->GetBundles();
+      std::cout << "  ID   State      Bundle-SymbolicName" << std::endl;
+      std::cout << "  ---- ---------- -------------------" << std::endl;
       for (const auto b : *bundles) {
-        std::cout << "  [" << b->GetId() << "] " << b->GetSymbolicName()
-                  << std::endl;
+        std::string nice_format = this->bundle_to_string_cpp(b);
+        std::cout << "  " << nice_format << std::endl;
       }
     } else if (command == "start") {
       auto bundle = getBundleFromSecondArg(command_args);
@@ -115,7 +119,9 @@ Available commands
         bundle->Stop();
       }
     } else {
-      // std::cout << "Unknown command: " << command << std::endl;
+      if (command != "") {
+        std::cout << "Unknown command: " << command << std::endl;
+      }
     }
   }
 }
@@ -130,6 +136,31 @@ void OsgiConsole::Start(osgi::BundleContext *bundleContext) {
 void OsgiConsole::Stop(osgi::BundleContext *bundleContext) {
   PLOG_INFO << "OsgiConsole::Stop";
   this->bundleContext = nullptr;
+}
+
+// plain old C-style printf
+std::string OsgiConsole::bundle_to_string_c_plain(osgi::Bundle *bundle) {
+  std::string format = "[%2d] %-10s %s";
+  auto size = std::snprintf(nullptr, 0, format.c_str(), bundle->GetId(),
+                            bundle->GetStateAsString().c_str(),
+                            bundle->GetSymbolicName().c_str());
+  std::string output(size + 1, '\0');
+  std::snprintf(&output[0], size + 1, format.c_str(), bundle->GetId(),
+                bundle->GetStateAsString().c_str(),
+                bundle->GetSymbolicName().c_str());
+  return output;
+}
+
+// C++-style string stream
+std::string OsgiConsole::bundle_to_string_cpp(osgi::Bundle *bundle) {
+  std::ostringstream oss;
+  // TODO: avoid leading zeros
+  oss << "[" << std::noshowbase << std::internal << oss.width(1)
+      << bundle->GetId() << "] ";
+  oss << std::setw(10) << std::left << bundle->GetStateAsString() << " "
+      << bundle->GetSymbolicName();
+  std::string formattedString = oss.str();
+  return formattedString;
 }
 
 } // namespace osgi

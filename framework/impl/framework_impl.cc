@@ -93,7 +93,9 @@ void FrameworkImpl::frameworkThreadLoop() {
     std::lock_guard<std::mutex> lockFinished(mtx);
     this->isThreadFinished = true;
   }
+  PLOG_ERROR << "FrameworkImpl::frameworkThreadLoop: before notify!";
   this->cv.notify_one();
+  PLOG_ERROR << "FrameworkImpl::frameworkThreadLoop: after notify!";
 }
 
 void FrameworkImpl::Init() {
@@ -132,11 +134,19 @@ void FrameworkImpl::Stop() {
   {
     std::lock_guard<std::mutex> lock(framework_stop_mtx);
     framework_stop = true;
+
+    PLOG_ERROR << "FrameworkImpl::Stop (notify thread)";
+    framework_stop_cv.notify_one();
+    PLOG_ERROR << "FrameworkImpl::Stop (notify thread done)";
+    try {
+      // TODO: why do we get a "thread::join failed: Invalid argument" here?
+      frameworkThread->join();
+    } catch (const std::system_error &err) {
+      PLOG_ERROR << "FrameworkImpl::Stop: caught exception: "
+                 << err.what(); // << err;
+    }
   }
-  PLOG_ERROR << "FrameworkImpl::Stop (notify thread)";
-  framework_stop_cv.notify_one();
-  PLOG_ERROR << "FrameworkImpl::Stop (notify thread done)";
-  frameworkThread->join();
+
   PLOG_INFO << "FrameworkImpl::Stop (done)";
 }
 
@@ -190,11 +200,15 @@ osgi::Bundle *FrameworkImpl::InstallBundle(std::string manifest,
   if (activator != nullptr) {
     bundleImpl->activatorRef = activator;
   }
+  bundleImpl->SetState(BundleImpl::INSTALLED);
   PLOG_INFO << "FrameworkImpl::InstallBundle " << bundleImpl;
   BundleContextImpl *bundleContextImpl = new BundleContextImpl(bundleImpl);
   bundleContextImpl->frameworkImpl = this;
   bundleImpl->SetBundleContext(bundleContextImpl);
   bundles.push_back(bundleImpl);
+  // TODO: any other state than resolved?
+  bundleImpl->SetState(BundleImpl::RESOLVED);
+
   return bundleImpl;
 }
 
@@ -204,7 +218,20 @@ int FrameworkImpl::WaitForStop(long timeout) {
   PLOG_INFO << "FrameworkImpl::WaitForStop (" << timeout << " ms)";
 
   if (timeout == 0) {
-    frameworkThread->join();
+    // https://stackoverflow.com/questions/66773247/libcabi-dylib-terminating-with-uncaught-exception-of-type-std-1system-er
+    try {
+      PLOG_ERROR << "FrameworkImpl::WaitForStop (framework_stop_mtx1"
+                 << ")";
+      frameworkThread->join();
+      PLOG_ERROR << "FrameworkImpl::WaitForStop (framework_stop_mtx2"
+                 << ")";
+
+    } catch (const std::system_error &err) {
+      PLOG_ERROR << "FrameworkImpl::WaitForStop (framework_stop_mtx3"
+                 << ")";
+
+      PLOG_ERROR << "FrameworkImpl::WaitForStop: caught exception: "; // << err;
+    }
     PLOG_INFO << "FrameworkImpl::WaitForStop: Thread finished successfully.";
     return 0;
   }

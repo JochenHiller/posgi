@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
     // report version
     std::cout << argv[0] << " Version " << Posgi_VERSION_MAJOR << "."
               << Posgi_VERSION_MINOR << std::endl;
-    std::cout << "Usage: " << argv[0] << std::endl;
+    std::cout << "Usage: " << argv[0] << " [--version]" << std::endl;
     return 1;
   }
 
