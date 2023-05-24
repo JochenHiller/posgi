@@ -6,11 +6,11 @@
 namespace osgi {
 
 class BundleActivator {
-public:
+ public:
   virtual void Start(BundleContext *bundleContext) = 0;
   virtual void Stop(BundleContext *bundleContext) = 0;
 };
 
-} // end namespace osgi
+}  // end namespace osgi
 
-#endif // POSGI_ORG_OSGI_FRAMEWORK_BUNDLE_ACTIVATOR_H
+#endif  // POSGI_ORG_OSGI_FRAMEWORK_BUNDLE_ACTIVATOR_H

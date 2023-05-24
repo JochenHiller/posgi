@@ -6,11 +6,11 @@
 namespace osgi {
 
 class FrameworkFactory {
-public:
+ public:
   FrameworkFactory();
   static Framework *NewFramework();
 };
 
-} // end namespace osgi
+}  // end namespace osgi
 
-#endif // POSGI_ORG_OSGI_FRAMEWORK_LAUNCH_FRAMEWORK_FACTORY_H
+#endif  // POSGI_ORG_OSGI_FRAMEWORK_LAUNCH_FRAMEWORK_FACTORY_H

@@ -11,7 +11,7 @@ namespace posgi {
 class BundleContextImpl;
 
 class BundleImpl : public virtual osgi::Bundle {
-public:
+ public:
   void Start();
   void Stop();
   int GetId();
@@ -28,12 +28,12 @@ public:
   std::string bundleSymbolicName;
   osgi::BundleActivator *activatorRef = nullptr;
 
-private:
+ private:
   std::string getStateAsStringMapping(int state);
   std::string to_string();
   int state = UNINSTALLED;
 };
 
-} // end namespace posgi
+}  // end namespace posgi
 
-#endif // POSGI_ORG_POSGI_FRAMEWORK_IMPL_BUNDLE_IMPL_H
+#endif  // POSGI_ORG_POSGI_FRAMEWORK_IMPL_BUNDLE_IMPL_H

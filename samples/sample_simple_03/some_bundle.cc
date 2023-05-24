@@ -26,4 +26,4 @@ std::string SomeBundle::MANIFEST() {
          name + "\n";
 }
 
-} // namespace sample
+}  // namespace sample

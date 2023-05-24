@@ -6,8 +6,9 @@
 
 * [x] Copy code from sample02 to framework
 * [x] Start/stop bundles
-* [ ] Bundles with bundle state
-* [ ] CMake build
+* [x] Bundles with bundle state
+* [x] CMake build
+* [x] CMake: format code
 * [ ] C++ Linter
 * [ ] Pros and Cons C++
 * [ ] Linux build and tests

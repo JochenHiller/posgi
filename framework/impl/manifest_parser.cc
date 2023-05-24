@@ -40,4 +40,4 @@ std::map<std::string, std::string> ManifestParser::parse(std::string manifest) {
   return headers;
 }
 
-} // end namespace posgi
+}  // end namespace posgi

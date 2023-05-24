@@ -4,10 +4,10 @@
 namespace osgi {
 
 class BundleRevision {
-public:
+ public:
   virtual std::string GetSymbolicName() = 0;
 };
 
-} // end namespace osgi
+}  // end namespace osgi
 
-#endif // POSGI_ORG_OSGI_FRAMEWORK_BUNDLE_REVISION_H
+#endif  // POSGI_ORG_OSGI_FRAMEWORK_BUNDLE_REVISION_H

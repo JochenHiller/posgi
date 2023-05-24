@@ -20,7 +20,7 @@ namespace posgi {
 // class BundleImpl;
 
 class FrameworkImpl : public BundleImpl, public osgi::Framework {
-public:
+ public:
   FrameworkImpl();
   ~FrameworkImpl();
 
@@ -39,7 +39,7 @@ public:
   // Returns 0 if framework is stopped, 1 if timeout occurs.
   int WaitForStop(long timeout);
 
-private:
+ private:
   void frameworkThreadLoop();
 
   std::vector<BundleImpl *> bundles;
@@ -55,6 +55,6 @@ private:
   bool framework_stop = false;
 };
 
-} // end namespace posgi
+}  // end namespace posgi
 
-#endif // POSGI_ORG_POSGI_FRAMEWORK_IMPL_FRAMEWORK_IMPL_H
+#endif  // POSGI_ORG_POSGI_FRAMEWORK_IMPL_FRAMEWORK_IMPL_H

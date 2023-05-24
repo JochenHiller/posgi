@@ -23,4 +23,4 @@ Framework *FrameworkFactory::NewFramework() {
   // return nullptr;
 }
 
-} // end namespace osgi
+}  // end namespace osgi

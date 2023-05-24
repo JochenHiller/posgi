@@ -36,9 +36,8 @@ osgi::Bundle *BundleContextImpl::GetBundle(int bundleId) {
   return fwImpl->GetBundle(bundleId);
 }
 
-osgi::Bundle *
-BundleContextImpl::InstallBundle(std::string manifest,
-                                 osgi::BundleActivator *activator) {
+osgi::Bundle *BundleContextImpl::InstallBundle(
+    std::string manifest, osgi::BundleActivator *activator) {
   // should never be null
   PLOG_INFO << "BundleContextImpl::InstallBundle";
   FrameworkImpl *fwImpl = this->frameworkImpl;
@@ -51,4 +50,4 @@ std::vector<osgi::Bundle *> *BundleContextImpl::GetBundles() {
   return fwImpl->GetBundles();
 }
 
-} // end namespace posgi
+}  // end namespace posgi

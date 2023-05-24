@@ -6,15 +6,15 @@
 namespace osgi {
 
 class OsgiConsole : public osgi::BundleActivator {
-public:
+ public:
   OsgiConsole();
   void Start(osgi::BundleContext *bundleContext);
   void Stop(osgi::BundleContext *bundleContext);
 
-private:
+ private:
   void console();
-  osgi::Bundle *
-  getBundleFromSecondArg(const std::vector<std::string> &command_args);
+  osgi::Bundle *getBundleFromSecondArg(
+      const std::vector<std::string> &command_args);
   std::string bundle_to_string_c_plain(osgi::Bundle *bundle);
   std::string bundle_to_string_cpp(osgi::Bundle *bundle);
 
@@ -22,6 +22,6 @@ private:
   std::thread *consoleThread;
 };
 
-} // end namespace osgi
+}  // end namespace osgi
 
-#endif // POSGI_ORG_OSGI_FRAMEWORK_SERVICE_OSGI_CONSOLE_H
+#endif  // POSGI_ORG_OSGI_FRAMEWORK_SERVICE_OSGI_CONSOLE_H

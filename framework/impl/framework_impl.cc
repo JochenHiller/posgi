@@ -36,35 +36,37 @@ void initializeLogging() {
   logging_type type = logging_type::file;
 
   switch (type) {
-  case file:
-    // Option A) fixed file logger
-    plog::init(plog::debug, "posgi.log");
-    break;
+    case file:
+      // Option A) fixed file logger
+      plog::init(plog::debug, "posgi.log");
+      break;
 
-  case console:
-    // Option B) Console logging
-    {
-      static plog::ConsoleAppender<plog::TxtFormatter> consoleAppender;
-      plog::init(plog::debug, &consoleAppender);
-    }
-    break;
+    case console:
+      // Option B) Console logging
+      {
+        static plog::ConsoleAppender<plog::TxtFormatter> consoleAppender;
+        plog::init(plog::debug, &consoleAppender);
+      }
+      break;
 
-  case color_console:
-    // Option C) Color console logger
-    {
-      static plog::ColorConsoleAppender<plog::TxtFormatter> consoleAppender;
-      plog::init(plog::debug, &consoleAppender);
-    }
-    break;
+    case color_console:
+      // Option C) Color console logger
+      {
+        static plog::ColorConsoleAppender<plog::TxtFormatter> consoleAppender;
+        plog::init(plog::debug, &consoleAppender);
+      }
+      break;
 
-  default:
-    break;
+    default:
+      break;
   }
 
   initLoggingDone = true;
 }
 
-FrameworkImpl::FrameworkImpl() { PLOG_INFO << "FrameworkImpl::FrameworkImpl"; }
+FrameworkImpl::FrameworkImpl() {
+  PLOG_INFO << "FrameworkImpl::FrameworkImpl";
+}
 FrameworkImpl::~FrameworkImpl() {
   PLOG_INFO << "FrameworkImpl::~FrameworkImpl";
 }
@@ -143,7 +145,7 @@ void FrameworkImpl::Stop() {
       frameworkThread->join();
     } catch (const std::system_error &err) {
       PLOG_ERROR << "FrameworkImpl::Stop: caught exception: "
-                 << err.what(); // << err;
+                 << err.what();  // << err;
     }
   }
 
@@ -230,7 +232,8 @@ int FrameworkImpl::WaitForStop(long timeout) {
       PLOG_ERROR << "FrameworkImpl::WaitForStop (framework_stop_mtx3"
                  << ")";
 
-      PLOG_ERROR << "FrameworkImpl::WaitForStop: caught exception: "; // << err;
+      PLOG_ERROR
+          << "FrameworkImpl::WaitForStop: caught exception: ";  // << err;
     }
     PLOG_INFO << "FrameworkImpl::WaitForStop: Thread finished successfully.";
     return 0;
@@ -249,4 +252,4 @@ int FrameworkImpl::WaitForStop(long timeout) {
   }
 }
 
-} // end namespace posgi
+}  // end namespace posgi

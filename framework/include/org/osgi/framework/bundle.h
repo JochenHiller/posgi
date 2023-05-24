@@ -10,7 +10,7 @@
 namespace osgi {
 
 class Bundle : public virtual BundleRevision {
-public:
+ public:
   // TODO enums?
   static const int UNINSTALLED = 0x00000001;
   static const int INSTALLED = 0x00000002;
@@ -34,6 +34,6 @@ public:
   virtual std::string GetStateAsString() = 0;
 };
 
-} // end namespace osgi
+}  // end namespace osgi
 
-#endif // POSGI_ORG_OSGI_FRAMEWORK_BUNDLE_H
+#endif  // POSGI_ORG_OSGI_FRAMEWORK_BUNDLE_H

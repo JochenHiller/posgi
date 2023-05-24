@@ -86,6 +86,8 @@ Up-to-now I am using the Google style guide without changes, for simplicity.
 * CMake
   * <https://code.visualstudio.com/docs/cpp/cmake-linux>
   * <https://cmake.org/cmake/help/latest/guide/tutorial/index.html>
+  * <https://github.com/zemasoft/clangformat-cmake>
+  * <https://github.com/cheshirekow/cmake_format>
   
 * Multiple inheritance
   * <https://stackoverflow.com/questions/48407658/stumped-by-simple-c-multiple-inheritance-example>

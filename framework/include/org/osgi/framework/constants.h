@@ -4,7 +4,7 @@
 namespace osgi {
 
 class Constants {
-public:
+ public:
   // inline supported since C++17:
   // https://en.cppreference.com/w/cpp/language/inline
   inline static const std::string BUNDLE_ACTIVATOR = "Bundle-Activator";
@@ -12,6 +12,6 @@ public:
   inline static const std::string BUNDLE_VERSION = "Bundle-Version";
 };
 
-} // end namespace osgi
+}  // end namespace osgi
 
-#endif // POSGI_ORG_OSGI_FRAMEWORK_CONSTANTS_H
+#endif  // POSGI_ORG_OSGI_FRAMEWORK_CONSTANTS_H

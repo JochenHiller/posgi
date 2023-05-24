@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "PosgiConfig.h"
 #include "org/osgi/framework/bundle_activator.h"
 #include "org/osgi/framework/constants.h"
 #include "org/osgi/framework/launch/framework.h"
@@ -7,12 +8,10 @@
 #include "org/osgi/framework/service/osgi_console.h"
 #include "org/posgi/framework/impl/framework_impl.h"
 
-#include "PosgiConfig.h"
-
 namespace sample {
 
 class SomeBundle : public osgi::BundleActivator {
-public:
+ public:
   SomeBundle(std::string name) {
     std::cout << "SomeBundle::SomeBundle(" << name << ")\n";
     this->name = name;
@@ -24,11 +23,11 @@ public:
     std::cout << name << "::Stop\n";
   }
 
-private:
+ private:
   std::string name;
 };
 
-} // namespace sample
+}  // namespace sample
 
 int main(int argc, char *argv[]) {
   if ((argc >= 2) && ((std::string)argv[1] == "--version")) {

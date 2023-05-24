@@ -1,6 +1,9 @@
 #include "org/osgi/framework/service/osgi_console.h"
 
+#include <plog/Log.h>
+
 #include <atomic>
+#include <boost/algorithm/string.hpp>
 #include <chrono>
 #include <condition_variable>
 #include <cstdio>
@@ -12,10 +15,6 @@
 #include <string>
 #include <thread>
 #include <vector>
-
-#include <boost/algorithm/string.hpp>
-
-#include <plog/Log.h>
 
 #include "org/osgi/framework/bundle.h"
 #include "org/posgi/framework/impl/bundle_context_impl.h"
@@ -126,7 +125,9 @@ Available commands
   }
 }
 
-OsgiConsole::OsgiConsole() { PLOG_INFO << "OsgiConsole::OsgiConsole"; }
+OsgiConsole::OsgiConsole() {
+  PLOG_INFO << "OsgiConsole::OsgiConsole";
+}
 
 void OsgiConsole::Start(osgi::BundleContext *bundleContext) {
   PLOG_INFO << "OsgiConsole::Start";
@@ -163,4 +164,4 @@ std::string OsgiConsole::bundle_to_string_cpp(osgi::Bundle *bundle) {
   return formattedString;
 }
 
-} // namespace osgi
+}  // namespace osgi

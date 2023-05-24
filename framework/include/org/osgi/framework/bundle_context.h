@@ -11,13 +11,13 @@ class Bundle;
 class BundleActivator;
 
 class BundleContext {
-public:
+ public:
   virtual Bundle *InstallBundle(std::string manifest,
                                 BundleActivator *activator = nullptr) = 0;
   virtual Bundle *GetBundle(int bundleId) = 0;
   virtual std::vector<Bundle *> *GetBundles() = 0;
 };
 
-} // end namespace osgi
+}  // end namespace osgi
 
-#endif // POSGI_ORG_OSGI_FRAMEWORK_BUNDLE_CONTEXT_H
+#endif  // POSGI_ORG_OSGI_FRAMEWORK_BUNDLE_CONTEXT_H

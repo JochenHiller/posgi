@@ -15,7 +15,7 @@ class BundleImpl;
 class FrameworkImpl;
 
 class BundleContextImpl : public osgi::BundleContext {
-public:
+ public:
   BundleContextImpl(BundleImpl *bundleImpl);
   BundleContextImpl(FrameworkImpl *frameworkImpl);
   osgi::Bundle *GetBundle(int bundleId);
@@ -28,10 +28,10 @@ public:
   // TODO: make private and provide a setter
   FrameworkImpl *frameworkImpl;
 
-private:
+ private:
   BundleImpl *bundleImpl;
 };
 
-} // end namespace posgi
+}  // end namespace posgi
 
-#endif // POSGI_ORG_POSGI_FRAMEWORK_IMPL_BUNDLE_CONTEXT_IMPL_H
+#endif  // POSGI_ORG_POSGI_FRAMEWORK_IMPL_BUNDLE_CONTEXT_IMPL_H

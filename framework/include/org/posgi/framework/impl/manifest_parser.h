@@ -10,11 +10,11 @@
 namespace posgi {
 
 class ManifestParser {
-public:
+ public:
   ManifestParser();
   std::map<std::string, std::string> parse(std::string manifest);
 };
 
-} // end namespace posgi
+}  // end namespace posgi
 
-#endif // POSGI_ORG_POSGI_FRAMEWORK_IMPL_MANIFEST_PARSER_H
+#endif  // POSGI_ORG_POSGI_FRAMEWORK_IMPL_MANIFEST_PARSER_H

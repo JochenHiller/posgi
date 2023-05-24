@@ -31,11 +31,17 @@ void BundleImpl::Stop() {
   this->SetState(BundleImpl::RESOLVED);
 }
 
-int BundleImpl::GetId() { return this->id; }
+int BundleImpl::GetId() {
+  return this->id;
+}
 
-std::string BundleImpl::GetSymbolicName() { return this->bundleSymbolicName; }
+std::string BundleImpl::GetSymbolicName() {
+  return this->bundleSymbolicName;
+}
 
-osgi::BundleContext *BundleImpl::GetBundleContext() { return this->bc; };
+osgi::BundleContext *BundleImpl::GetBundleContext() {
+  return this->bc;
+};
 
 void BundleImpl::SetBundleContext(BundleContextImpl *bundleContextImpl) {
   PLOG_INFO << "set bundle context " << to_string();
@@ -61,20 +67,20 @@ std::string BundleImpl::GetStateAsString() {
 
 std::string BundleImpl::getStateAsStringMapping(int state) {
   switch (state) {
-  case UNINSTALLED:
-    return "UNINSTALLED";
-  case INSTALLED:
-    return "INSTALLED";
-  case RESOLVED:
-    return "RESOLVED";
-  case STARTING:
-    return "STARTING";
-  case STOPPING:
-    return "STOPPING";
-  case ACTIVE:
-    return "ACTIVE";
-  default:
-    return "UNKNOWN";
+    case UNINSTALLED:
+      return "UNINSTALLED";
+    case INSTALLED:
+      return "INSTALLED";
+    case RESOLVED:
+      return "RESOLVED";
+    case STARTING:
+      return "STARTING";
+    case STOPPING:
+      return "STOPPING";
+    case ACTIVE:
+      return "ACTIVE";
+    default:
+      return "UNKNOWN";
   }
 };
 
@@ -84,4 +90,4 @@ std::string BundleImpl::to_string() {
          " [" + this->getStateAsStringMapping(this->state) + "]";
 }
 
-} // end namespace posgi
+}  // end namespace posgi

@@ -6,11 +6,11 @@
 namespace osgi {
 
 class Framework : public virtual Bundle {
-public:
+ public:
   virtual void Init() = 0;
   virtual int WaitForStop(long timeout) = 0;
 };
 
-} // end namespace osgi
+}  // end namespace osgi
 
-#endif // POSGI_ORG_OSGI_FRAMEWORK_LAUNCH_FRAMEWORK_H
+#endif  // POSGI_ORG_OSGI_FRAMEWORK_LAUNCH_FRAMEWORK_H

@@ -7,15 +7,21 @@
 namespace posgi {
 
 class PrintableMutex {
-private:
+ private:
   std::mutex mutex;
 
-public:
-  inline void lock() { mutex.lock(); }
+ public:
+  inline void lock() {
+    mutex.lock();
+  }
 
-  inline void unlock() { mutex.unlock(); }
+  inline void unlock() {
+    mutex.unlock();
+  }
 
-  inline bool try_lock() { return mutex.try_lock(); }
+  inline bool try_lock() {
+    return mutex.try_lock();
+  }
 
   // Custom printing function
   inline void print() {
@@ -25,6 +31,6 @@ public:
   }
 };
 
-} // namespace posgi
+}  // namespace posgi
 
-#endif // POSGI_ORG_POSGI_FRAMEWORK_IMPL_UTIL_PRINTABLE_MUTEX_H
+#endif  // POSGI_ORG_POSGI_FRAMEWORK_IMPL_UTIL_PRINTABLE_MUTEX_H

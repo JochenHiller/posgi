@@ -10,7 +10,7 @@
 namespace sample {
 
 class SomeBundle : public osgi::BundleActivator {
-public:
+ public:
   SomeBundle(std::string name);
 
   void Start(osgi::BundleContext *bundleContext);
@@ -18,10 +18,10 @@ public:
 
   std::string MANIFEST();
 
-private:
+ private:
   std::string name;
 };
 
-} // namespace sample
+}  // namespace sample
 
-#endif // POSGI_SAMPLES_SAMPLE_SIMPLE_02_SOME_BUNDLE_H
+#endif  // POSGI_SAMPLES_SAMPLE_SIMPLE_02_SOME_BUNDLE_H
