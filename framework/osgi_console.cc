@@ -4,16 +4,16 @@
 
 #include <atomic>
 #include <boost/algorithm/string.hpp>
-#include <chrono>
-#include <condition_variable>
+#include <chrono>              // NOLINT [build/c++11]
+#include <condition_variable>  // NOLINT [build/c++11]
 #include <cstdio>
 #include <iomanip>
 #include <iostream>
 #include <map>
-#include <mutex>
+#include <mutex>  // NOLINT [build/c++11]
 #include <sstream>
 #include <string>
-#include <thread>
+#include <thread>  // NOLINT [build/c++11]
 #include <vector>
 
 #include "org/osgi/framework/bundle.h"

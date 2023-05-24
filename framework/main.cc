@@ -12,7 +12,7 @@ namespace sample {
 
 class SomeBundle : public osgi::BundleActivator {
  public:
-  SomeBundle(std::string name) {
+  explicit SomeBundle(std::string name) {
     std::cout << "SomeBundle::SomeBundle(" << name << ")\n";
     this->name = name;
   }

@@ -7,13 +7,13 @@
 #include <plog/Log.h>
 
 #include <atomic>
-#include <chrono>
-#include <condition_variable>
+#include <chrono>              // NOLINT [build/c++11]
+#include <condition_variable>  // NOLINT [build/c++11]
 #include <iostream>
 #include <map>
-#include <mutex>
+#include <mutex>  // NOLINT [build/c++11]
 #include <string>
-#include <thread>
+#include <thread>  // NOLINT [build/c++11]
 #include <vector>
 
 #include "org/osgi/framework/constants.h"

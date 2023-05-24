@@ -61,86 +61,68 @@ download_and_unpack_third_party() {
   fi
 }
 
+
+check_one_tool() {
+  binary=${1}
+  column=${2}
+  min_version=${3}
+   # check for one tool
+  which ${binary} >/dev/null
+  if [ ! $? = 0 ] ; then
+    echo "WARN: ${binary} not found"
+  else
+    if [ "${column}" = "" ] || [ "${min_version}" = "" ]; then
+      # ignore version check
+      echo "INFO: ${binary} found"
+    else
+      _VERSION=$(${binary} --version | grep version | cut -f ${column} -d " ")
+      if [[ "${_VERSION}" < ${min_version} ]] ; then
+        echo "WARN: ${binary} too old (${min_version} required): found ${_VERSION} "
+      else
+        echo "INFO: ${binary} version ${_VERSION} found"
+      fi
+    fi
+  fi
+}
+
 check_tools() {
   # check for clang compiler >= 16.x
-  which clang++ >/dev/null
-  if [ ! $? = 0 ] ; then
-    echo "WARN: clang++ compiler not found"
-  else
-    CLANG_PLUSPLUS_VERSION=$(clang++ --version | grep version | awk '{print $4}')
-    if [[ "${CLANG_PLUSPLUS_VERSION}" < "16" ]] ; then
-      echo "WARN: clang++ compiler too old (16+ required): found ${CLANG_PLUSPLUS_VERSION} "
-    else
-      echo "INFO: clang++ compiler version ${CLANG_PLUSPLUS_VERSION} found"
-    fi
-  fi
+  # clang++ --version ==> Homebrew clang version 16.0.4
+  check_one_tool clang++ 4 16
 
   # check for clang format >= 16.x
-  which clang-format >/dev/null
-  if [ ! $? = 0 ] ; then
-    echo "WARN: clang-format not found"
-  else
-    CLANG_FORMAT_VERSION=$(clang-format --version | grep version | awk '{print $4}')
-    if [[ "${CLANG_FORMAT_VERSION}" < "16" ]] ; then
-      echo "WARN: clang-format too old (16+ required): found ${CLANG_FORMAT_VERSION}"
-    else
-      echo "INFO: clang-format version ${CLANG_FORMAT_VERSION} found"
-    fi
-  fi
+  # clang-format --version ==> Homebrew clang-format version 16.0.4
+  check_one_tool clang-format 4 16
+
+  # check for clang tidy >= 16.x
+  # clang-tidy --version ==> Homebrew LLVM version 16.0.4
+  check_one_tool clang-tidy 4 16
 
   # check for lldb debugger >= 16.x
-  which lldb >/dev/null
-  if [ ! $? = 0 ] ; then
-    echo "WARN: lldb not found"
-  else
-    LLDB_VERSION=$(lldb --version | grep version | awk '{print $3}')
-    if [[ "${LLDB_VERSION}" < "16" ]] ; then
-      echo "WARN: lldb too old (16+ required): found ${LLDB_VERSION}"
-    else
-      echo "INFO: lldb version ${LLDB_VERSION} found"
-    fi
-  fi
+  # lldb --version ==> lldb version 16.0.4
+  check_one_tool lldb 3 16
 
   # check for g++ compiler >= 16.x
-  which g++ >/dev/null
-  if [ ! $? = 0 ] ; then
-    echo "WARN: g++ compiler not found"
-  else
-    GPLUSPLUS_VERSION=$(g++ --version | grep version | awk '{print $4}')
-    if [[ "${GPLUSPLUS_VERSION}" < "14" ]] ; then
-      echo "WARN: g++ compiler too old (14+ required): found ${GPLUSPLUS_VERSION} "
-    else
-      echo "INFO: g++ compiler version ${GPLUSPLUS_VERSION} found"
-    fi
-  fi
+  # g++ --version ==> Apple clang version 14.0.3 (clang-1403.0.22.14.1)
+  check_one_tool g++ 4 14
 
   # check for cmake
-  which cmake >/dev/null
-  if [ ! $? = 0 ] ; then
-    echo "WARN: cmake not found"
-  else
-    CMAKE_VERSION=$(cmake --version | grep version | awk '{print $3}')
-    if [[ "${CMAKE_VERSION}" < "3" ]] ; then
-      echo "WARN: cmake too old (3+ required): found ${CMAKE_VERSION} "
-    else
-      echo "INFO: cmake version ${CMAKE_VERSION} found"
-    fi
-  fi
+  # cmake --version ==> cmake version 3.26.4
+  check_one_tool cmake 3 3
 
   # check for cmake-format
   # see https://github.com/cheshirekow/cmake_format
   # install with: "pip install cmakelang"
-  which cmake-format >/dev/null
-  if [ ! $? = 0 ] ; then
-    echo "WARN: cmake-format not found"
-  else
-    CMAKE_FORMAT_VERSION=$(cmake-format --version)
-    if [[ "${CMAKE_FORMAT_VERSION}" < "0.6" ]] ; then
-      echo "WARN: cmake-format too old (3+ required): found ${CMAKE_FORMAT_VERSION} "
-    else
-      echo "INFO: cmake-format version ${CMAKE_FORMAT_VERSION} found"
-    fi
-  fi
+  # cmake-format --version ==> 0.6.13
+  check_one_tool cmake-format
+
+  # check for cpplint
+  # include-what-you-use --version ==> include-what-you-use 0.20 based on Homebrew clang version 16.0.4
+  check_one_tool cpplint
+
+  # check for include-what-you-use >= 16.x
+  # include-what-you-use --version ==> include-what-you-use 0.20 based on Homebrew clang version 16.0.4
+  check_one_tool include-what-you-use 2 0.20
 }
 
 # see https://github.com/zemasoft/clangformat-cmake

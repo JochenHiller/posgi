@@ -88,7 +88,19 @@ Up-to-now I am using the Google style guide without changes, for simplicity.
   * <https://cmake.org/cmake/help/latest/guide/tutorial/index.html>
   * <https://github.com/zemasoft/clangformat-cmake>
   * <https://github.com/cheshirekow/cmake_format>
-  
+
+* Linter
+  * cpplint (by Google): <https://github.com/google/styleguide/blob/gh-pages/cpplint/cpplint.py>
+  * Maintained version: <https://github.com/cpplint/cpplint>
+  * <https://stackoverflow.com/questions/51582604/how-to-use-cpplint-code-style-checking-with-cmake>
+  * Good video, recommended to view: <https://www.youtube.com/watch?v=rLopVhns4Zs&t=4633s>
+  * <https://include-what-you-use.org/>
+  * <https://stackoverflow.com/questions/45667850/disable-specific-warnings-from-cpplint>
+
+* Linter hints
+  * "explicit" should be used on single-parameter constructors and conversion operators: <https://rules.sonarsource.com/cpp/RSPEC-1709>
+  * Google Style Guide "<chrono> is an unapproved C++11 header": <https://stackoverflow.com/questions/33653326/google-style-guide-chrono-is-an-unapproved-c11-header>
+
 * Multiple inheritance
   * <https://stackoverflow.com/questions/48407658/stumped-by-simple-c-multiple-inheritance-example>
 
