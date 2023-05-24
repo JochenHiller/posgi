@@ -36,6 +36,7 @@ Up-to-now I am using the Google style guide without changes, for simplicity.
 ### Cons
 
 * Separation of header (`.h`) and implementation (`.cc`) files very inefficient. Leads to a lot of code-duplication and manual maintenance, which could be done by tooling in a better way (like in [Golang](https://go.dev/), or proposed for [Carbon](https://github.com/carbon-language/carbon-lang))
+* String format: old plain C-style vs. modern C++ style: see [osgi_console.cc](../framework/osgi_console.cc): both options are not really nice. Using old C-style requires conversion from `char *` to `std::string` and vice versa. And the C++ formatting options are also not as intuitive.
 
 ## References
 

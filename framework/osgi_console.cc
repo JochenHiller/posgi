@@ -155,9 +155,7 @@ std::string OsgiConsole::bundle_to_string_c_plain(osgi::Bundle *bundle) {
 // C++-style string stream
 std::string OsgiConsole::bundle_to_string_cpp(osgi::Bundle *bundle) {
   std::ostringstream oss;
-  // TODO: avoid leading zeros
-  oss << "[" << std::noshowbase << std::internal << oss.width(1)
-      << bundle->GetId() << "] ";
+  oss << "[" << std::right << std::setw(2) << bundle->GetId() << "] ";
   oss << std::setw(10) << std::left << bundle->GetStateAsString() << " "
       << bundle->GetSymbolicName();
   std::string formattedString = oss.str();

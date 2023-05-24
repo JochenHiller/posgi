@@ -3,7 +3,7 @@ CXX=clang++
 # for development
 CXXFLAGS=-std=c++17 -Wall -fPIC -g
 
-all: hello thread coredump
+all: hello thread core_dump string_format
 
 hello: hello.o
 	$(CXX) -o $@ $^
@@ -15,12 +15,17 @@ thread: thread.o
 
 thread.o: thread.cc
 
-coredump: coredump.o
+core_dump: core_dump.o
 	$(CXX) -o $@ $^
 
-coredump.o: coredump.cc
+string_format.o: string_format.cc
+
+string_format: string_format.o
+	$(CXX) -o $@ $^
+
+core_dump.o: core_dump.cc
 
 .PHONY: all clean
 
 clean:
-	rm -f *.o hello thread coredump
+	rm -f *.o hello thread core_dump string_format

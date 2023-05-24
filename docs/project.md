@@ -4,22 +4,21 @@
 
 ### Work in progress (WIP)
 
-* [x] Copy code from sample02 to framework
-* [x] Start/stop bundles
-* [x] Bundles with bundle state
-* [x] CMake build
-* [x] CMake: format code
-* [ ] C++ Linter
+* [ ] console as service bundle
+  * [ ] bundles/console/include/org/osgi/service/console/console.h, command.h
+  * [ ] bundles/console/impl/osgi_console.cc, command_xxx.cc
 * [ ] Pros and Cons C++
 * [ ] Linux build and tests
+* [ ] Persist OSGi storage
 
 ### Minimum viable product (MVP)
 
 * [ ] OSGi Framework: Core APIs
 * [ ] OSGi Bundle Layer
-  * [ ] Install bundles from linked classes
+  * [x] Install bundles from linked classes
+  * [x] Bundle states
   * [ ] MANIFEST Parser
-  * [ ] Start and stop bundles
+  * [x] Start and stop bundles
   * [ ] Bundle tracker
 * [ ] OSGi Compendium Bundles
   * [ ] Console bundle to manage framework and bundles (stdin/stdout console)
@@ -29,16 +28,17 @@
   * [ ] Namespaces: osgi::framework, osgi::services ???
   * [ ] Named threads
 * [ ] CI/CD
-  * [ ] Clang C++17
-  * [ ] CMake build
-  * [ ] libposgi-0.1.0.so delivery
-  * [ ] C++ Linter integrated
-  * [ ] Auto-Format (IDE, build) (`.h`, `.cc`)
+  * [x] Clang C++17
+  * [x] CMake build
+  * [x] libposgi-0.1.0.so delivery
+  * [x] C++ Linter integrated
+  * [x] Auto-Format (IDE, build) (`.h`, `.cc`)
   * [ ] Doxygen generated docs, incl. class diagram
   * [ ] Docs how to build and run on Linux (using Docker)
   * [ ] Try to use VisualStudio Code in cloud IDE (VS Code, GitPod)
 * [ ] Documentation
   * [x] Standard OpenSource files in project
+  * [ ] Provide copyright headers, at least class headers
   * [ ] Pros and Cons of C++
 
 Specification for LogFormatter:
@@ -68,6 +68,7 @@ Specification for LogFormatter:
   * [ ] Fuzzy tests (e.g. on ManifestParser), using Jazzer
   * [ ] G++ 13
   * [ ] Bazel support
+  * [ ] More C++ Linters (clang-tidy, include-what-you-use, cppcheck)
 * [ ] Further Ideas
   * [ ] Check for OSGi.fx support (Bundle/Service layer) (agent, sockets, DTOs)
   * [ ] Gogo telnet console
