@@ -2,7 +2,14 @@
  * @brief Sample to test psogi design in C++.
  */
 
+#include <plog/Appenders/ColorConsoleAppender.h>
+#include <plog/Formatters/TxtFormatter.h>
+#include <plog/Initializers/ConsoleInitializer.h>
+#include <plog/Initializers/RollingFileInitializer.h>
+#include <plog/Log.h>
+
 #include <atomic>
+#include <boost/algorithm/string.hpp>
 #include <chrono>
 #include <condition_variable>
 #include <iostream>
@@ -12,18 +19,10 @@
 #include <thread>
 #include <vector>
 
-#include <boost/algorithm/string.hpp>
-
-#include <plog/Appenders/ColorConsoleAppender.h>
-#include <plog/Formatters/TxtFormatter.h>
-#include <plog/Initializers/ConsoleInitializer.h>
-#include <plog/Initializers/RollingFileInitializer.h>
-#include <plog/Log.h>
-
 namespace osgi {
 
 class BundleRevision {
-public:
+ public:
   virtual std::string GetSymbolicName() = 0;
 };
 
@@ -31,7 +30,7 @@ class Bundle;
 class BundleActivator;
 
 class BundleContext {
-public:
+ public:
   virtual Bundle *InstallBundle(std::string manifest,
                                 BundleActivator *activator = nullptr) = 0;
   virtual Bundle *GetBundle(int bundleId) = 0;
@@ -39,13 +38,13 @@ public:
 };
 
 class BundleActivator {
-public:
+ public:
   virtual void Start(BundleContext *bundleContext) = 0;
   virtual void Stop(BundleContext *bundleContext) = 0;
 };
 
 class Bundle : public virtual BundleRevision {
-public:
+ public:
   virtual void Start() = 0;
   virtual void Stop() = 0;
   virtual BundleContext *GetBundleContext() = 0;
@@ -54,13 +53,13 @@ public:
 };
 
 class Framework : public virtual Bundle {
-public:
+ public:
   virtual void Init() = 0;
   virtual int WaitForStop(long timeout) = 0;
 };
 
 class Constants {
-public:
+ public:
   // inline supported since C++17:
   // https://en.cppreference.com/w/cpp/language/inline
   inline static const std::string BUNDLE_ACTIVATOR = "Bundle-Activator";
@@ -68,7 +67,7 @@ public:
   inline static const std::string BUNDLE_VERSION = "Bundle-Version";
 };
 
-} // namespace osgi
+}  // namespace osgi
 
 namespace posgi {
 
@@ -76,7 +75,7 @@ class BundleImpl;
 class FrameworkImpl;
 
 class BundleContextImpl : public osgi::BundleContext {
-public:
+ public:
   BundleContextImpl(BundleImpl *bundleImpl);
   BundleContextImpl(FrameworkImpl *frameworkImpl);
   osgi::Bundle *GetBundle(int bundleId);
@@ -86,15 +85,15 @@ public:
                               osgi::BundleActivator *activator = nullptr);
 
   void dump_bundle_context();
-  // TODO: make private and provide a setter
+  // TODO(JochenHiller): make private and provide a setter
   FrameworkImpl *frameworkImpl;
 
-private:
+ private:
   BundleImpl *bundleImpl;
 };
 
 class BundleImpl : public virtual osgi::Bundle {
-public:
+ public:
   void Start() {
     PLOG_INFO << "BundleImpl::Start (" << this->id << ", "
               << this->bundleSymbolicName << ", " << this->activatorRef << ")";
@@ -131,8 +130,8 @@ public:
     this->bc = bundleContextImpl;
   };
 
-public:
-  // TODO: make all private with setters, or use friends
+ public:
+  // TODO(JochenHiller): make all private with setters, or use friends
   BundleContextImpl *bc;
   int id;
   std::string bundleSymbolicName;
@@ -140,8 +139,10 @@ public:
 };
 
 class ManifestParser {
-public:
-  ManifestParser() { PLOG_INFO << "ManifestParser::ManifestParser()"; }
+ public:
+  ManifestParser() {
+    PLOG_INFO << "ManifestParser::ManifestParser()";
+  }
   std::map<std::string, std::string> parse(std::string manifest) {
     PLOG_INFO << "ManifestParser::parse()";
     std::map<std::string, std::string> headers;
@@ -152,7 +153,7 @@ public:
       // Split the line by the delimiter ":"
       std::vector<std::string> tokens;
       boost::split(tokens, line, boost::is_any_of(":"));
-      // TODO: what to do with "key: value1:value2"
+      // TODO(JochenHiller): what to do with "key: value1:value2"
       if (tokens.size() != 2) {
         PLOG_ERROR << "Could not parse '" << line << "'";
         continue;
@@ -170,9 +171,13 @@ public:
 };
 
 class FrameworkImpl : public BundleImpl, public osgi::Framework {
-public:
-  FrameworkImpl() { PLOG_INFO << "FrameworkImpl::FrameworkImpl"; }
-  ~FrameworkImpl() { PLOG_INFO << "FrameworkImpl::~FrameworkImpl"; }
+ public:
+  FrameworkImpl() {
+    PLOG_INFO << "FrameworkImpl::FrameworkImpl";
+  }
+  ~FrameworkImpl() {
+    PLOG_INFO << "FrameworkImpl::~FrameworkImpl";
+  }
 
   void frameworkThreadLoop() {
     PLOG_ERROR << "FrameworkImpl::frameworkThreadLoop started";
@@ -206,7 +211,7 @@ public:
   void Start() {
     PLOG_INFO << "FrameworkImpl::Start";
     BundleImpl::Start();
-    // TODO: give thread a good name, see named thread sample
+    // TODO(JochenHiller): give thread a good name, see named thread sample
     frameworkThread =
         new std::thread(&FrameworkImpl::frameworkThreadLoop, this);
     // give thread a chance to start
@@ -315,7 +320,7 @@ public:
     }
   }
 
-private:
+ private:
   std::vector<BundleImpl *> bundles;
   int lastBundleId = 0;
   std::thread *frameworkThread;
@@ -352,9 +357,8 @@ osgi::Bundle *BundleContextImpl::GetBundle(int bundleId) {
   return fwImpl->GetBundle(bundleId);
 }
 
-osgi::Bundle *
-BundleContextImpl::InstallBundle(std::string manifest,
-                                 osgi::BundleActivator *activator) {
+osgi::Bundle *BundleContextImpl::InstallBundle(
+    std::string manifest, osgi::BundleActivator *activator) {
   // should never be null
   PLOG_INFO << "BundleContextImpl::InstallBundle";
   FrameworkImpl *fwImpl = this->frameworkImpl;
@@ -368,8 +372,10 @@ std::vector<osgi::Bundle *> *BundleContextImpl::GetBundles() {
 }
 
 class OsgiConsole : public osgi::BundleActivator {
-public:
-  OsgiConsole() { PLOG_INFO << "OsgiConsole::OsgiConsole"; }
+ public:
+  OsgiConsole() {
+    PLOG_INFO << "OsgiConsole::OsgiConsole";
+  }
   void Start(osgi::BundleContext *bundleContext) {
     PLOG_INFO << "OsgiConsole::Start";
     this->bundleContext = bundleContext;
@@ -421,17 +427,17 @@ public:
     }
   }
 
-private:
+ private:
   osgi::BundleContext *bundleContext;
   std::thread *consoleThread;
 };
 
-} // namespace posgi
+}  // namespace posgi
 
 namespace sample {
 
 class SomeBundle : public osgi::BundleActivator {
-public:
+ public:
   SomeBundle(std::string name) {
     PLOG_INFO << "SomeBundle::SomeBundle(" << name << ")";
     this->name = name;
@@ -443,11 +449,11 @@ public:
     PLOG_INFO << name << "::Stop";
   }
 
-private:
+ private:
   std::string name;
 };
 
-} // namespace sample
+}  // namespace sample
 
 int main() {
   // console logging

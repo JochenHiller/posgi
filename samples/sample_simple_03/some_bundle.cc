@@ -1,4 +1,4 @@
-#include "some_bundle.h"
+#include "some_bundle.h"  // NOLINT [build/include_subdir]
 
 #include <iostream>
 #include <string>

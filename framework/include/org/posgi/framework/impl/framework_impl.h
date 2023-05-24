@@ -37,7 +37,7 @@ class FrameworkImpl : public BundleImpl, public osgi::Framework {
 
   // Wait until framework is stopped or timeout occurs.
   // Returns 0 if framework is stopped, 1 if timeout occurs.
-  int WaitForStop(long timeout);
+  int WaitForStop(int timeout);
 
  private:
   void frameworkThreadLoop();

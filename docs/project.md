@@ -38,7 +38,7 @@
   * [ ] Try to use VisualStudio Code in cloud IDE (VS Code, GitPod)
 * [ ] Documentation
   * [x] Standard OpenSource files in project
-  * [ ] Provide copyright headers, at least class headers
+  * [ ] Provide copyright headers, at least class headers, consider to add copyright header by script
   * [ ] Pros and Cons of C++
 
 Specification for LogFormatter:

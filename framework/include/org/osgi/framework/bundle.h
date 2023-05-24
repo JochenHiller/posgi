@@ -30,7 +30,8 @@ class Bundle : public virtual BundleRevision {
   virtual int GetId() = 0;
   virtual std::string GetSymbolicName() = 0;
   virtual int GetState() = 0;
-  // TODO: convenient method to get the state as a string, move to utils?
+  // TODO(JochenHiller): convenient method to get the state as a string, move to
+  // utils?
   virtual std::string GetStateAsString() = 0;
 };
 

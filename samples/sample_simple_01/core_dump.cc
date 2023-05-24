@@ -11,7 +11,7 @@ int main() {
   auto p = &s;
   std::cout << *p << std::endl;
 
-  // TODO: Trace/BPT trap: 5 what does this mean?
+  // TODO(JochenHiller): Trace/BPT trap: 5 what does this mean?
   // on macOS: see /Library/Logs/DiagnosticReports
   // ls -alt /Library/Logs/DiagnosticReports/ | head
   p = nullptr;

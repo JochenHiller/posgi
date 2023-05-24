@@ -23,7 +23,7 @@
 
 namespace posgi {
 
-// TODO use inner namespace internal or impl?
+// TODO(JochenHiller): use inner namespace internal or impl?
 // posgi::internal, posgi::impl
 
 void initializeLogging() {
@@ -122,7 +122,7 @@ void FrameworkImpl::Init() {
 void FrameworkImpl::Start() {
   PLOG_INFO << "FrameworkImpl::Start";
   BundleImpl::Start();
-  // TODO: give thread a good name, see named thread sample
+  // TODO(JochenHiller): give thread a good name, see named thread sample
   frameworkThread = new std::thread(&FrameworkImpl::frameworkThreadLoop, this);
   // give thread a chance to start
   std::this_thread::yield();
@@ -141,7 +141,8 @@ void FrameworkImpl::Stop() {
     framework_stop_cv.notify_one();
     PLOG_ERROR << "FrameworkImpl::Stop (notify thread done)";
     try {
-      // TODO: why do we get a "thread::join failed: Invalid argument" here?
+      // TODO(JochenHiller): why do we get a "thread::join failed: Invalid
+      // argument" here?
       frameworkThread->join();
     } catch (const std::system_error &err) {
       PLOG_ERROR << "FrameworkImpl::Stop: caught exception: "
@@ -208,7 +209,7 @@ osgi::Bundle *FrameworkImpl::InstallBundle(std::string manifest,
   bundleContextImpl->frameworkImpl = this;
   bundleImpl->SetBundleContext(bundleContextImpl);
   bundles.push_back(bundleImpl);
-  // TODO: any other state than resolved?
+  // TODO(JochenHiller): any other state than resolved?
   bundleImpl->SetState(BundleImpl::RESOLVED);
 
   return bundleImpl;
@@ -216,7 +217,7 @@ osgi::Bundle *FrameworkImpl::InstallBundle(std::string manifest,
 
 // Wait until framework is stopped or timeout occurs.
 // Returns 0 if framework is stopped, 1 if timeout occurs.
-int FrameworkImpl::WaitForStop(long timeout) {
+int FrameworkImpl::WaitForStop(int timeout) {
   PLOG_INFO << "FrameworkImpl::WaitForStop (" << timeout << " ms)";
 
   if (timeout == 0) {
@@ -227,11 +228,9 @@ int FrameworkImpl::WaitForStop(long timeout) {
       frameworkThread->join();
       PLOG_ERROR << "FrameworkImpl::WaitForStop (framework_stop_mtx2"
                  << ")";
-
     } catch (const std::system_error &err) {
       PLOG_ERROR << "FrameworkImpl::WaitForStop (framework_stop_mtx3"
                  << ")";
-
       PLOG_ERROR
           << "FrameworkImpl::WaitForStop: caught exception: ";  // << err;
     }

@@ -22,7 +22,7 @@ class BundleImpl : public virtual osgi::Bundle {
   void SetState(int state);
   std::string GetStateAsString();
 
-  // TODO: make all private with setters, or use friends
+  // TODO(JochenHiller): make all private with setters, or use friends
   BundleContextImpl *bc;
   int id;
   std::string bundleSymbolicName;

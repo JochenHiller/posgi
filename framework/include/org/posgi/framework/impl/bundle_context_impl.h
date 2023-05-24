@@ -25,7 +25,7 @@ class BundleContextImpl : public osgi::BundleContext {
                               osgi::BundleActivator *activator = nullptr);
 
   void dump_bundle_context();
-  // TODO: make private and provide a setter
+  // TODO(JochenHiller): make private and provide a setter
   FrameworkImpl *frameworkImpl;
 
  private:

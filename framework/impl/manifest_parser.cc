@@ -1,12 +1,11 @@
 #include "org/posgi/framework/impl/manifest_parser.h"
 
-#include <plog/Log.h>
-
-#include <boost/algorithm/string.hpp>
 #include <iostream>
 #include <string>
 
+#include "boost/algorithm/string.hpp"
 #include "org/osgi/framework/bundle_context.h"
+#include "plog/Log.h"
 
 namespace posgi {
 
@@ -24,7 +23,7 @@ std::map<std::string, std::string> ManifestParser::parse(std::string manifest) {
     // Split the line by the delimiter ":"
     std::vector<std::string> tokens;
     boost::split(tokens, line, boost::is_any_of(":"));
-    // TODO: what to do with "key: value1:value2"
+    // TODO(JochenHiller): what to do with "key: value1:value2"
     if (tokens.size() != 2) {
       PLOG_ERROR << "Could not parse '" << line << "'";
       continue;

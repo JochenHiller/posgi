@@ -8,7 +8,7 @@ namespace osgi {
 class Framework : public virtual Bundle {
  public:
   virtual void Init() = 0;
-  virtual int WaitForStop(long timeout) = 0;
+  virtual int WaitForStop(int timeout) = 0;
 };
 
 }  // end namespace osgi

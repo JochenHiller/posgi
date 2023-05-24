@@ -7,6 +7,7 @@ Usage: $0 [clean|fmt|all|lint]
   clean    will cleanup all generated files
   fmt      will format all source files (.cc, .h, CMakelists.txt)
   all      will build all targets
+  lint     will run C++ linter(s) on all source files
 EOF
 }
 
@@ -44,7 +45,7 @@ fi
 
 if [ "${1}" = "lint" ] ; then
   # see https://stackoverflow.com/questions/51582604/how-to-use-cpplint-code-style-checking-with-cmake
-  rm -rf ./build ; cmake "-DCMAKE_CXX_CPPLINT=cpplint;--filter=-build/c++11;--verbose=5" -S . -B build
+  rm -rf ./build ; cmake "-DCMAKE_CXX_CPPLINT=cpplint;--filter=-build/c++11;--verbose=0" -S . -B build
   (cd build ; make clean all) 2>&1 | tee lint-cpplint.log
   # rm -rf ./build ; cmake "-DCMAKE_CXX_CLANG_TIDY=clang-tidy;-checks=*" -S . -B build
   # (cd build ; make clean all) 2>&1 | tee lint-clang-tidy.log

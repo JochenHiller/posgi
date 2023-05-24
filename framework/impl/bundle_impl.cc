@@ -12,7 +12,7 @@ void BundleImpl::Start() {
   PLOG_INFO << "start " << this->to_string() << " (" << this->activatorRef
             << ")";
   this->SetState(BundleImpl::STARTING);
-  // TODO: calling activator asynchronously?
+  // TODO(JochenHiller): calling activator asynchronously?
   if (this->activatorRef != nullptr) {
     PLOG_INFO << "call activator start " << to_string() << " ("
               << this->activatorRef << ")";
@@ -41,17 +41,17 @@ std::string BundleImpl::GetSymbolicName() {
 
 osgi::BundleContext *BundleImpl::GetBundleContext() {
   return this->bc;
-};
+}
 
 void BundleImpl::SetBundleContext(BundleContextImpl *bundleContextImpl) {
   PLOG_INFO << "set bundle context " << to_string();
   this->bc = bundleContextImpl;
-};
+}
 
 int BundleImpl::GetState() {
   PLOG_INFO << to_string();
   return this->state;
-};
+}
 
 void BundleImpl::SetState(int state) {
   PLOG_INFO << "set state " << this->getStateAsStringMapping(state) << " to "
@@ -63,7 +63,7 @@ std::string BundleImpl::GetStateAsString() {
   std::string stateAsString = getStateAsStringMapping(this->state);
   PLOG_INFO << to_string();
   return stateAsString;
-};
+}
 
 std::string BundleImpl::getStateAsStringMapping(int state) {
   switch (state) {
@@ -82,9 +82,9 @@ std::string BundleImpl::getStateAsStringMapping(int state) {
     default:
       return "UNKNOWN";
   }
-};
+}
 
-// TODO: C++ pattern for toString() ?
+// TODO(JochenHiller): C++ pattern for toString() ?
 std::string BundleImpl::to_string() {
   return "[" + std::to_string(this->id) + "] " + this->bundleSymbolicName +
          " [" + this->getStateAsStringMapping(this->state) + "]";
