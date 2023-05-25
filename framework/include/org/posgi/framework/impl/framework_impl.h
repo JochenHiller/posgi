@@ -22,7 +22,8 @@ namespace posgi {
 class FrameworkImpl : public BundleImpl, public osgi::Framework {
  public:
   FrameworkImpl();
-  ~FrameworkImpl();
+  // https://clang.llvm.org/extra/clang-tidy/checks/cppcoreguidelines/virtual-class-destructor.html
+  virtual ~FrameworkImpl();
 
   void Init();
   void Start();

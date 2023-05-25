@@ -11,7 +11,7 @@ namespace osgi {
 
 class Bundle : public virtual BundleRevision {
  public:
-  // TODO enums?
+  // TODO(JochenHiller): enums?
   static const int UNINSTALLED = 0x00000001;
   static const int INSTALLED = 0x00000002;
   static const int RESOLVED = 0x00000004;

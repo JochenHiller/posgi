@@ -66,6 +66,7 @@ void initializeLogging() {
 
 FrameworkImpl::FrameworkImpl() {
   PLOG_INFO << "FrameworkImpl::FrameworkImpl";
+  this->frameworkThread = nullptr;
 }
 FrameworkImpl::~FrameworkImpl() {
   PLOG_INFO << "FrameworkImpl::~FrameworkImpl";

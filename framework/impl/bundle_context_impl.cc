@@ -1,13 +1,12 @@
 #include "org/posgi/framework/impl/bundle_context_impl.h"
 
-#include <plog/Log.h>
-
 #include <iostream>
 #include <string>
 
 #include "org/osgi/framework/bundle.h"
 #include "org/osgi/framework/bundle_context.h"
 #include "org/posgi/framework/impl/manifest_parser.h"
+#include "plog/Log.h"
 
 namespace posgi {
 
@@ -23,6 +22,8 @@ void BundleContextImpl::dump_bundle_context() {
 BundleContextImpl::BundleContextImpl(BundleImpl *bundleImpl) {
   PLOG_INFO << "BundleContextImpl::BundleContextImpl(BundleImpl)";
   this->bundleImpl = bundleImpl;
+  this->frameworkImpl =
+      nullptr;  // needs to be set during installBundle from FrameworkImpl
 }
 BundleContextImpl::BundleContextImpl(FrameworkImpl *frameworkImpl) {
   PLOG_INFO << "BundleContextImpl::BundleContextImpl(FrameworkImpl)";

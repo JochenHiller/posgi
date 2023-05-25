@@ -20,6 +20,7 @@ if [ "${1}" = "clean" ] ; then
   if [ -d build ] ; then
     echo "Clean ./build directory"
     rm -rf ./build
+    rm -f posgi.log lint-*.log
   fi
   shift
 fi
@@ -43,13 +44,32 @@ if [ "${1}" = "all" ] ; then
   shift
 fi
 
+# TODO(JochenHiller): lint-cpplint, lint-clang-tidy, lint-iwyu
 if [ "${1}" = "lint" ] ; then
   # see https://stackoverflow.com/questions/51582604/how-to-use-cpplint-code-style-checking-with-cmake
-  rm -rf ./build ; cmake "-DCMAKE_CXX_CPPLINT=cpplint;--filter=-build/c++11;--verbose=0" -S . -B build
-  (cd build ; make clean all) 2>&1 | tee lint-cpplint.log
-  # rm -rf ./build ; cmake "-DCMAKE_CXX_CLANG_TIDY=clang-tidy;-checks=*" -S . -B build
-  # (cd build ; make clean all) 2>&1 | tee lint-clang-tidy.log
-  # rm -rf ./build ; cmake "-DCMAKE_CXX_INCLUDE_WHAT_YOU_USE=include-what-you-use;--transitive_includes_only;-w;-Xiwyu;--verbose=7" -S . -B build
-  # (cd build ; make clean all) 2>&1 | tee lint-iwyu.log
+  which cpplint >/dev/null
+  if [ $? = 0 ] ; then
+    rm -rf ./build ; cmake "-DCMAKE_CXX_CPPLINT=cpplint;--filter=-build/c++11;--verbose=0" -S . -B build
+    (cd build ; make clean all) 2>&1 | tee lint-cpplint.log
+    :
+  else
+    echo "WARN: Could not find cpplint, ignoring..."
+  fi
+  which clang-tidy >/dev/null
+  if [ $? = 0 ] ; then
+    pwd=$(PWD)
+    rm -rf ./build ; cmake "-DCMAKE_CXX_CLANG_TIDY=clang-tidy" -S . -B build
+    (cd build ; make clean all) 2>&1 | tee lint-clang-tidy.log
+  else
+    echo "WARN: Could not find clang-tidy, ignoring..."
+  fi
+  which include-what-you-use >/dev/null
+  if [ $? = 0 ] ; then
+    # rm -rf ./build ; cmake "-DCMAKE_CXX_INCLUDE_WHAT_YOU_USE=include-what-you-use;--transitive_includes_only;-w;-Xiwyu;--verbose=7" -S . -B build
+    # (cd build ; make clean all) 2>&1 | tee lint-iwyu.log
+    :
+  else
+    echo "WARN: Could not find include-what-you-use, ignoring..."
+  fi
   shift
 fi

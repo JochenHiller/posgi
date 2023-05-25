@@ -75,6 +75,10 @@ Up-to-now I am using the Google style guide without changes, for simplicity.
 * C++ Language reference
   * <https://cppreference.com>
 
+* C++ Core Guidelines
+  * Guidelines: <https://github.com/isocpp/CppCoreGuidelines>
+  * Guidelines Support Library: <https://github.com/microsoft/gsl>
+
 * C++ Libraries
   * <https://github.com/google?language=c%2B%2B>
   * <https://blog.codacy.com/10-cpp-open-source-projects/>

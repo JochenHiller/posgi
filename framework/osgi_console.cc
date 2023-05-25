@@ -92,6 +92,7 @@ Available commands
       std::cout << "OSGi console terminated" << std::endl;
       break;
     } else if (command == "exit") {
+      // TODO(JochenHiller): does not work on Linux
       this->bundleContext->GetBundle(0)->Stop();
       std::cout << "OSGi framework terminated" << std::endl;
     } else if (command == "lb") {
@@ -126,6 +127,8 @@ Available commands
 
 OsgiConsole::OsgiConsole() {
   PLOG_INFO << "OsgiConsole::OsgiConsole";
+  this->bundleContext = nullptr;
+  this->consoleThread = nullptr;
 }
 
 void OsgiConsole::Start(osgi::BundleContext *bundleContext) {
@@ -141,22 +144,35 @@ void OsgiConsole::Stop(osgi::BundleContext *bundleContext) {
 // plain old C-style printf
 std::string OsgiConsole::bundle_to_string_c_plain(osgi::Bundle *bundle) {
   std::string format = "[%2d] %-10s %s";
+  // NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
   auto size = std::snprintf(nullptr, 0, format.c_str(), bundle->GetId(),
                             bundle->GetStateAsString().c_str(),
                             bundle->GetSymbolicName().c_str());
   std::string output(size + 1, '\0');
-  std::snprintf(&output[0], size + 1, format.c_str(), bundle->GetId(),
-                bundle->GetStateAsString().c_str(),
-                bundle->GetSymbolicName().c_str());
-  return output;
+  // https://clang.llvm.org/extra/clang-tidy/checks/cert/err33-c.html
+  // NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
+  int ret = std::snprintf(&output[0], size + 1, format.c_str(), bundle->GetId(),
+                          bundle->GetStateAsString().c_str(),
+                          bundle->GetSymbolicName().c_str());
+  if (ret < 0) {
+    return "internal error happened" + std::to_string(ret);
+  } else if (ret != size) {
+    return "wrong nunber of characters written: expected " +
+           std::to_string(size) + " got " + std::to_string(ret);
+  } else {
+    // all OK
+    return output;
+  }
 }
 
 // C++-style string stream
 std::string OsgiConsole::bundle_to_string_cpp(osgi::Bundle *bundle) {
+  constexpr int width_id = 2;
+  constexpr int width_state = 10;
   std::ostringstream oss;
-  oss << "[" << std::right << std::setw(2) << bundle->GetId() << "] ";
-  oss << std::setw(10) << std::left << bundle->GetStateAsString() << " "
-      << bundle->GetSymbolicName();
+  oss << "[" << std::right << std::setw(width_id) << bundle->GetId() << "] ";
+  oss << std::setw(width_state) << std::left << bundle->GetStateAsString()
+      << " " << bundle->GetSymbolicName();
   std::string formattedString = oss.str();
   return formattedString;
 }

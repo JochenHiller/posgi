@@ -1,0 +1,15 @@
+[  8%] Building CXX object CMakeFiles/posgi.dir/framework/impl/bundle_context_impl.cc.o
+[ 16%] Building CXX object CMakeFiles/posgi.dir/framework/impl/bundle_impl.cc.o
+[ 25%] Building CXX object CMakeFiles/posgi.dir/framework/impl/framework_impl.cc.o
+[ 33%] Building CXX object CMakeFiles/posgi.dir/framework/impl/manifest_parser.cc.o
+[ 41%] Building CXX object CMakeFiles/posgi.dir/framework/osgi_console.cc.o
+[ 50%] Building CXX object CMakeFiles/posgi.dir/framework/framework_factory.cc.o
+[ 58%] Linking CXX static library libposgi.a
+[ 58%] Built target posgi
+[ 66%] Building CXX object CMakeFiles/posgi_cli.dir/framework/main.cc.o
+[ 75%] Linking CXX executable posgi_cli
+[ 75%] Built target posgi_cli
+[ 83%] Building CXX object CMakeFiles/posgi_sample03.dir/samples/sample_simple_03/main.cc.o
+[ 91%] Building CXX object CMakeFiles/posgi_sample03.dir/samples/sample_simple_03/some_bundle.cc.o
+[100%] Linking CXX executable posgi_sample03
+[100%] Built target posgi_sample03

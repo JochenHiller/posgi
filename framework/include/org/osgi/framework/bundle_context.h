@@ -2,6 +2,7 @@
 #define POSGI_ORG_OSGI_FRAMEWORK_BUNDLE_CONTEXT_H
 
 #include <string>
+#include <vector>
 
 namespace osgi {
 

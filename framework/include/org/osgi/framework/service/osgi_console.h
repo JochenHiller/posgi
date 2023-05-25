@@ -1,6 +1,8 @@
 #ifndef POSGI_ORG_OSGI_FRAMEWORK_SERVICE_OSGI_CONSOLE_H
 #define POSGI_ORG_OSGI_FRAMEWORK_SERVICE_OSGI_CONSOLE_H
 
+#include <thread>
+
 #include "org/osgi/framework/bundle_activator.h"
 
 namespace osgi {

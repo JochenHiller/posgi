@@ -9,7 +9,6 @@
   * [ ] bundles/console/impl/osgi_console.cc, command_xxx.cc
 * [ ] Pros and Cons C++
 * [ ] Linux build and tests
-* [ ] Persist OSGi storage
 
 ### Minimum viable product (MVP)
 
@@ -21,7 +20,7 @@
   * [x] Start and stop bundles
   * [ ] Bundle tracker
 * [ ] OSGi Compendium Bundles
-  * [ ] Console bundle to manage framework and bundles (stdin/stdout console)
+  * [ ] Console bundle to manage framework and bundles (stdin/stdout console, telnet)
 * [ ] Implementation
   * [ ] Common logging, prepare for later log service
   * [ ] Log Formatter with this format: limit thread name and class/file to max. size, cut from right side
@@ -55,6 +54,7 @@ Specification for LogFormatter:
 * [ ] OSGi Framework
   * [ ] Framework Events
   * [ ] Builtin log service
+  * [ ] Persist OSGi storage
 * [ ] OSGi Service Layer
   * [ ] Service registry
   * [ ] SCR, OSGI-INF/*.xml

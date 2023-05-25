@@ -12,10 +12,12 @@ namespace sample {
 
 class SomeBundle : public osgi::BundleActivator {
  public:
-  explicit SomeBundle(std::string name) {
+  // use a member constructor initializer list
+  explicit SomeBundle(std::string name) : name(name) {
     std::cout << "SomeBundle::SomeBundle(" << name << ")\n";
-    this->name = name;
   }
+  virtual ~SomeBundle() = default;
+
   void Start(osgi::BundleContext *bundleContext) {
     std::cout << name << "::Start\n";
   }
@@ -29,8 +31,12 @@ class SomeBundle : public osgi::BundleActivator {
 
 }  // namespace sample
 
+// https://github.com/llvm/llvm-project/issues/54668 ==> ignore
+// bugprone-exception-escape
+
+// NOLINTNEXTLINE(bugprone-exception-escape)
 int main(int argc, char *argv[]) {
-  if ((argc >= 2) && ((std::string)argv[1] == "--version")) {
+  if ((argc >= 2) && (strcmp(argv[1], "--version") == 0)) {
     // report version
     std::cout << argv[0] << " Version " << Posgi_VERSION_MAJOR << "."
               << Posgi_VERSION_MINOR << std::endl;
