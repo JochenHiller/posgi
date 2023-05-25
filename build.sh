@@ -49,7 +49,7 @@ if [ "${1}" = "lint" ] ; then
   # see https://stackoverflow.com/questions/51582604/how-to-use-cpplint-code-style-checking-with-cmake
   which cpplint >/dev/null
   if [ $? = 0 ] ; then
-    rm -rf ./build ; cmake "-DCMAKE_CXX_CPPLINT=cpplint;--filter=-build/c++11;--verbose=0" -S . -B build
+    rm -rf ./build ; cmake "-DCMAKE_CXX_CPPLINT=cpplint;--verbose=0;--quiet" -S . -B build
     (cd build ; make clean all) 2>&1 | tee lint-cpplint.log
     :
   else

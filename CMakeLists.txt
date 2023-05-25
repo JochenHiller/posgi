@@ -15,6 +15,7 @@ add_library(
   framework/impl/manifest_parser.cc
   framework/osgi_console.cc
   framework/framework_factory.cc
+  framework/posgi.h
   framework/include/org/osgi/framework/bundle_activator.h
   framework/include/org/osgi/framework/bundle_context.h
   framework/include/org/osgi/framework/bundle_revision.h
@@ -40,7 +41,7 @@ target_include_directories(
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/boost_1_82_0>)
 target_clangformat_setup(posgi)
 
-add_executable(posgi_cli framework/main.cc)
+add_executable(posgi_cli framework/main.cc framework/posgi.cc)
 target_link_libraries(posgi_cli PUBLIC posgi)
 target_compile_features(posgi_cli PUBLIC cxx_std_17)
 target_include_directories(

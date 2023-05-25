@@ -37,4 +37,4 @@ build
 third_party
 tmp
 **/posgi.log
-lint-cpplint.log
+lint-*.log

@@ -174,6 +174,17 @@ cmake_clang_format() {
   fi
 }
 
+build_googletest() {
+  dir=${1}
+
+  (
+  cd ${dir}
+  cmake -S . -B build
+  (cd build ; make ; ls -al lib)
+  # libs are in ./third_party/googletest-1.13.0/build/lib
+  )
+}
+
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd ${SCRIPT_DIR}
 
@@ -224,6 +235,7 @@ if [ "${DO_INSTALL}" = "true" ] ; then
     # gtest is a standard framework to write unit tests on C++
     download_and_unpack_third_party false googletest-1.13.0 \
       https://github.com/google/googletest/archive/refs/tags/v1.13.0.tar.gz
+    build_googletest googletest-1.13.0
 
     # boost: https://www.boost.org/doc/libs/1_82_0/more/getting_started/unix-variants.html
     # boost is a standard library for C++
