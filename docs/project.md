@@ -4,6 +4,9 @@
 
 ### Work in progress (WIP)
 
+* [ ] manifest: testdata, valid/invalid files, use felix as sample
+* [ ] linter: check for include files if really needed (clang-tidy)
+* [ ] check for smart memory management
 * [ ] console as service bundle
   * [ ] bundles/console/include/org/osgi/service/console/console.h, command.h
   * [ ] bundles/console/impl/osgi_console.cc, command_xxx.cc

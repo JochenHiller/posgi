@@ -68,21 +68,21 @@ if [ "${DO_FMT}" = "true" ] ; then
   # Option A)
   # cmake --build build --target clangformat
   # Option B)
-  cmake -S . -B build
+  cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -S . -B build
   (cd build ; make clangformat)
   cmake-format -i CMakeLists.txt
 fi
 
 if [ "${DO_ALL}" = "true" ] ; then
   echo "Make ./build directory"
-  cmake -S . -B build
+  cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -S . -B build
   (cd build ; make)
   ls -al build/libposgi* build/posgi*
 fi
 
 if [ "${DO_TEST}" = "true" ] ; then
   echo "Run tests"
-  cmake -S . -B build
+  cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -S . -B build
   cmake --build build
   (cd build ; ctest --output-on-failure)
 fi
@@ -92,23 +92,24 @@ if [ "${DO_LINT}" = "true" ] ; then
   # see https://stackoverflow.com/questions/51582604/how-to-use-cpplint-code-style-checking-with-cmake
   which cpplint >/dev/null
   if [ $? = 0 ] ; then
-    rm -rf ./build ; cmake "-DCMAKE_CXX_CPPLINT=cpplint;--verbose=0;--quiet" -S . -B build
+    rm -rf ./build ; cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON "-DCMAKE_CXX_CPPLINT=cpplint;--verbose=0;--quiet" -S . -B build
     (cd build ; make clean all) 2>&1 | tee lint-cpplint.log
     :
   else
     echo "WARN: Could not find cpplint, ignoring..."
   fi
+  # TODO(JochenHiller): does not run on Linux
   which clang-tidy >/dev/null
   if [ $? = 0 ] ; then
-    pwd=$(PWD)
-    rm -rf ./build ; cmake "-DCMAKE_CXX_CLANG_TIDY=clang-tidy" -S . -B build
+    pwd=$(pwd)
+    rm -rf ./build ; cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON "-DCMAKE_CXX_CLANG_TIDY=clang-tidy" -S . -B build
     (cd build ; make clean all) 2>&1 | tee lint-clang-tidy.log
   else
     echo "WARN: Could not find clang-tidy, ignoring..."
   fi
   which include-what-you-use >/dev/null
   if [ $? = 0 ] ; then
-    # rm -rf ./build ; cmake "-DCMAKE_CXX_INCLUDE_WHAT_YOU_USE=include-what-you-use;--transitive_includes_only;-w;-Xiwyu;--verbose=7" -S . -B build
+    # rm -rf ./build ; cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON "-DCMAKE_CXX_INCLUDE_WHAT_YOU_USE=include-what-you-use;--transitive_includes_only;-w;-Xiwyu;--verbose=7" -S . -B build
     # (cd build ; make clean all) 2>&1 | tee lint-iwyu.log
     :
   else

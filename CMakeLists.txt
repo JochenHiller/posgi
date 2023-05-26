@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
+# TODO(JochenHiller): How can we change folder where .o files will be created?
+
 # https://cmake.org/cmake/help/latest/policy/CMP0135.html needed to avoid warn
 # when fetching googletest content
 cmake_policy(SET CMP0135 NEW)

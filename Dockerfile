@@ -2,7 +2,9 @@ FROM ubuntu:23.10
 
 LABEL org.opencontainers.image.authors="jo.hiller@gmail.com"
 
+
 # Install needed tools
+# https://stackoverflow.com/questions/26333823/clang-doesnt-see-basic-headers
 RUN apt-get update \
   && apt-get install -y \
     locales \

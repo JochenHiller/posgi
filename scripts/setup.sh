@@ -176,11 +176,12 @@ cmake_clang_format() {
 
 build_googletest() {
   dir=${1}
+  echo "INFO: Build googletest in third_party/${dir}"
 
   (
   cd ${dir}
-  cmake -S . -B build
-  (cd build ; make ; ls -al lib)
+  cmake -S . -B build >/dev/null
+  (cd build ; make >/dev/null)
   # libs are in ./third_party/googletest-1.13.0/build/lib
   )
 }
@@ -218,7 +219,7 @@ if [ "${DO_INSTALL}" = "true" ] ; then
 
   cd ${SCRIPT_DIR}
   if [ ! -d ../third_party ] ; then
-    echo "INFO: Creating third_party directory"
+    echo "INFO: Creating third_party/"
     mkdir -p ../third_party
   fi
 
