@@ -1,12 +1,10 @@
 # https://clang.llvm.org/extra/clang-tidy/index.html
 
-# removed checks due to plog
-# -cppcoreguidelines-pro-bounds-array-to-pointer-decay,-cppcoreguidelines-pro-type-reinterpret-cast
-
-
-Checks:              '-*,boost-*,bugprone-*,cert-*,clang-analyzer-*,concurrency-*,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-cppcoreguidelines-pro-type-reinterpret-cast,-cppcoreguidelines-owning-memory'
-
-# TODO(JochenHiller): fix theses warnings using GSL: [cppcoreguidelines-owning-memory]
-
 # pending checks
 # cppcoreguidelines-* and next ones
+
+Checks:              '-*,boost-*,bugprone-*,cert-*,clang-analyzer-*,concurrency-*,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-cppcoreguidelines-pro-type-reinterpret-cast,-cppcoreguidelines-owning-memory,-bugprone-suspicious-include'
+
+# TODO(JochenHiller): fix theses warnings using GSL: [cppcoreguidelines-owning-memory]
+# TODO(JochenHiller): fix theses warnings with gtest: [bugprone-suspicious-include]
+# TODO(JochenHiller): fix theses warnings due to plog: [-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-cppcoreguidelines-pro-type-reinterpret-cast]

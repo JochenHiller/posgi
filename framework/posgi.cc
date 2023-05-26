@@ -1,7 +1,9 @@
-#include "posgi.h"  // NOLINT(build/include_subdir)
+#include "posgi.h"
 
+#include <algorithm>
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "PosgiConfig.h"
 #include "org/osgi/framework/bundle_activator.h"
@@ -34,16 +36,14 @@ class SomeBundle : public osgi::BundleActivator {
 
 }  // namespace sample
 
-// https://github.com/llvm/llvm-project/issues/54668 ==> ignore
-// bugprone-exception-escape
-
-int do_main(int argc, char *argv[]) {
-  if ((argc >= 2) && (strcmp(argv[1], "--version") == 0)) {
+int do_main(std::vector<std::string> args) {
+  if ((args.size() >= 2) &&
+      (std::find(args.begin(), args.end(), "--version") != args.end())) {
     // report version
-    std::cout << argv[0] << " Version " << Posgi_VERSION_MAJOR << "."
+    std::cout << args[0] << " Version " << Posgi_VERSION_MAJOR << "."
               << Posgi_VERSION_MINOR << std::endl;
-    std::cout << "Usage: " << argv[0] << " [--version]" << std::endl;
-    return 1;
+    std::cout << "Usage: " << args[0] << " [--version]" << std::endl;
+    return RC_VERSION;
   }
 
   osgi::Framework *framework = osgi::FrameworkFactory().NewFramework();
@@ -76,5 +76,5 @@ int do_main(int argc, char *argv[]) {
   framework->WaitForStop(0);
   // framework->Stop();
 
-  return 0;
+  return RC_OK;
 }

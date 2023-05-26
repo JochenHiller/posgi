@@ -1,6 +1,18 @@
+#include <string>
+#include <vector>
+
 #include "posgi.h"  // NOLINT(build/include_subdir)
+
+inline std::vector<std::string> convert_args(int argc, char *argv[]) {
+  std::vector<std::string> args;
+  for (int i = 0; i < argc; ++i) {
+    args.push_back(argv[i]);
+  }
+  return args;
+}
 
 // NOLINTNEXTLINE(bugprone-exception-escape)
 int main(int argc, char *argv[]) {
-  return do_main(argc, argv);
+  auto rc = do_main(convert_args(argc, argv));
+  return rc;
 }

@@ -93,6 +93,7 @@ Up-to-now I am using the Google style guide without changes, for simplicity.
   * <https://cmake.org/cmake/help/latest/guide/tutorial/index.html>
   * <https://github.com/zemasoft/clangformat-cmake>
   * <https://github.com/cheshirekow/cmake_format>
+  * <http://google.github.io/googletest/quickstart-cmake.html>
 
 * Linter
   * cpplint (by Google): <https://github.com/google/styleguide/blob/gh-pages/cpplint/cpplint.py>

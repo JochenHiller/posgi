@@ -1,8 +1,13 @@
 #ifndef POSGI_POSGI_H
 #define POSGI_POSGI_H
 
-extern "C" {
-int do_main(int argc, char *argv[]);
-}
+#include <string>
+#include <vector>
+
+// TODO(JochenHiller): enums?
+constexpr int RC_OK = 0;
+constexpr int RC_VERSION = 1;
+
+int do_main(std::vector<std::string> args);
 
 #endif  // POSGI_POSGI_H

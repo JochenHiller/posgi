@@ -2,30 +2,68 @@
 
 usage() {
   cat <<EOF
-Usage: $0 [clean|fmt|all|lint]
+Usage: $0 [clean|fmt|all|test|lint|help]
 
-  clean    will cleanup all generated files
-  fmt      will format all source files (.cc, .h, CMakelists.txt)
-  all      will build all targets
-  lint     will run C++ linter(s) on all source files
+  clean    cleanup all generated files
+  fmt      format all source files (.cc, .h, CMakelists.txt)
+  all      build all targets
+  test     run tests
+  lint     run C++ linter(s) on all source files
+  help     this help
 EOF
 }
 
-if [ $# = 0 ] ; then
+# parse args
+DO_CLEAN="false"
+DO_FMT="false"
+DO_ALL="false"
+DO_TEST="false"
+DO_LINT="false"
+DO_HELP="false"
+for arg in $@ ; do
+  if [ "${arg}" = "clean" ] ; then
+    DO_CLEAN="true"
+  elif [ "${arg}" = "fmt" ] ; then
+    DO_FMT="true"
+  elif [ "${arg}" = "all" ] ; then
+    DO_ALL="true"
+  elif [ "${arg}" = "test" ] ; then
+    DO_TEST="true"
+  elif [ "${arg}" = "lint" ] ; then
+    DO_LINT="true"
+  elif [ "${arg}" = "help" ] ; then
+    DO_HELP="true"
+  else
+    echo "WARN: Unknown command ${arg}"
+    DO_HELP="true"
+  fi
+done
+
+if    [ "${DO_CLEAN}" = "false" ] \
+   && [ "${DO_FMT}" = "false" ]   \
+   && [ "${DO_ALL}" = "false" ]   \
+   && [ "${DO_TEST}" = "false" ]  \
+   && [ "${DO_LINT}" = "false" ]  \
+   ; then
+  DO_HELP="true"
+fi
+
+if [ "${DO_HELP}" = "true" ] ; then
   usage
   exit 1
 fi
 
-if [ "${1}" = "clean" ] ; then
+
+
+if [ "${DO_CLEAN}" = "true" ] ; then
   if [ -d build ] ; then
     echo "Clean ./build directory"
     rm -rf ./build
-    rm -f posgi.log lint-*.log
   fi
-  shift
+  rm -fv lint-*.log posgi.log */posgi.log */*/posgi.log
 fi
 
-if [ "${1}" = "fmt" ] ; then
+if [ "${DO_FMT}" = "true" ] ; then
   # see https://github.com/zemasoft/clangformat-cmake
   # Option A)
   # cmake --build build --target clangformat
@@ -33,19 +71,24 @@ if [ "${1}" = "fmt" ] ; then
   cmake -S . -B build
   (cd build ; make clangformat)
   cmake-format -i CMakeLists.txt
-  shift
 fi
 
-if [ "${1}" = "all" ] ; then
+if [ "${DO_ALL}" = "true" ] ; then
   echo "Make ./build directory"
   cmake -S . -B build
   (cd build ; make)
   ls -al build/libposgi* build/posgi*
-  shift
+fi
+
+if [ "${DO_TEST}" = "true" ] ; then
+  echo "Run tests"
+  cmake -S . -B build
+  cmake --build build
+  (cd build ; ctest --output-on-failure)
 fi
 
 # TODO(JochenHiller): lint-cpplint, lint-clang-tidy, lint-iwyu
-if [ "${1}" = "lint" ] ; then
+if [ "${DO_LINT}" = "true" ] ; then
   # see https://stackoverflow.com/questions/51582604/how-to-use-cpplint-code-style-checking-with-cmake
   which cpplint >/dev/null
   if [ $? = 0 ] ; then
@@ -71,5 +114,4 @@ if [ "${1}" = "lint" ] ; then
   else
     echo "WARN: Could not find include-what-you-use, ignoring..."
   fi
-  shift
 fi
