@@ -28,6 +28,7 @@ include(ClangFormat)
 # core library
 add_library(
   posgi STATIC
+  framework/impl/utils/file_utils.cc
   framework/impl/bundle_context_impl.cc
   framework/impl/bundle_impl.cc
   framework/impl/framework_impl.cc
@@ -45,12 +46,13 @@ add_library(
   framework/include/org/osgi/framework/launch/framework.h
   framework/include/org/osgi/framework/service/osgi_console.h
   framework/include/org/osgi/framework/bundle_activator.h
+  framework/include/org/posgi/framework/impl/utils/file_utils.h
   framework/include/org/posgi/framework/impl/bundle_context_impl.h
   framework/include/org/posgi/framework/impl/bundle_impl.h
   framework/include/org/posgi/framework/impl/framework_impl.h
   framework/include/org/posgi/framework/impl/bundle_context_impl.h
   framework/include/org/posgi/framework/impl/manifest_parser.h
-  framework/include/org/posgi/framework/impl/util/printable_mutex.h)
+  framework/include/org/posgi/framework/impl/utils/printable_mutex.h)
 target_compile_features(posgi PUBLIC cxx_std_17)
 target_include_directories(
   posgi
@@ -74,10 +76,16 @@ target_include_directories(
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/plog-1.1.9/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/googletest-1.13.0/googletest/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/boost_1_82_0>)
-
 target_compile_features(posgi_test PUBLIC cxx_std_17)
 include(GoogleTest)
+# run all tests found be gtest
+#
 gtest_discover_tests(posgi_test)
+
+# run one single test only, use for development
+#
+# add_test(NAME posgi_test COMMAND posgi_test
+# --gtest_filter=ManifestParserTest.parse_standard)
 
 # posgi cli
 add_executable(posgi_cli framework/main.cc framework/posgi.cc)

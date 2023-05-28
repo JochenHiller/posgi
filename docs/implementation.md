@@ -32,11 +32,16 @@ Up-to-now I am using the Google style guide without changes, for simplicity.
 ### Pros
 
 * Multi-line string literals supported since C++11 (see [here](https://en.cppreference.com/w/cpp/language/string_literal))
+* Googletest is very useful testing framework
+  * easy writing test cases, easy test suites, CMake integration
+  * ignore tests, parameterized tests, run single tests on CLI if needed
+  * hides console output, can be enabled by start parameter (`--gtest_catch_exceptions=0`)
 
 ### Cons
 
 * Separation of header (`.h`) and implementation (`.cc`) files very inefficient. Leads to a lot of code-duplication and manual maintenance, which could be done by tooling in a better way (like in [Golang](https://go.dev/), or proposed for [Carbon](https://github.com/carbon-language/carbon-lang))
 * String format: old plain C-style vs. modern C++ style: see [osgi_console.cc](../framework/osgi_console.cc): both options are not really nice. Using old C-style requires conversion from `char *` to `std::string` and vice versa. And the C++ formatting options are also not as intuitive.
+* Googletest framework does complain with linter(s)
 
 ## References
 

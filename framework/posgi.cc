@@ -38,6 +38,17 @@ class SomeBundle : public osgi::BundleActivator {
 
 int do_main(std::vector<std::string> args) {
   if ((args.size() >= 2) &&
+      (std::find(args.begin(), args.end(), "--help") != args.end())) {
+    // report version
+    std::cout << R"(Usage: posgi_cli [options]
+
+Options:
+  --version  show version number
+  --help     show this help
+    )" << std::endl;
+    return RC_HELP;
+  }
+  if ((args.size() >= 2) &&
       (std::find(args.begin(), args.end(), "--version") != args.end())) {
     // report version
     std::cout << args[0] << " Version " << Posgi_VERSION_MAJOR << "."

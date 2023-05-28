@@ -85,6 +85,8 @@ if [ "${DO_TEST}" = "true" ] ; then
   cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -S . -B build
   cmake --build build
   (cd build ; ctest --output-on-failure)
+  # show console output when running tests. Useful during development
+  # (cd build ; ctest --output-on-failure --gtest_catch_exceptions=0)
 fi
 
 # TODO(JochenHiller): lint-cpplint, lint-clang-tidy, lint-iwyu

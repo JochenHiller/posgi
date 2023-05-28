@@ -12,6 +12,7 @@ namespace posgi {
 class ManifestParser {
  public:
   ManifestParser();
+  std::string flatten(std::string manifest);
   std::map<std::string, std::string> parse(std::string manifest);
 };
 
