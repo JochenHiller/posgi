@@ -1,27 +1,28 @@
 {
-  "configurations": [
-      {
-        "name": "Linux",
-        "includePath": [
-            "${workspaceFolder}/framework/include",
-            "${workspaceFolder}/third_party/plog-1.1.9/include",
-            "${workspaceFolder}/third_party/googletest-1.13.0/googletest/include",
-            "${workspaceFolder}/third_party/boost_1_82_0"
-          ],
-          "defines": [],
-          "compilerPath": "/usr/bin/gcc", // Path to the C++ compiler
-          "cStandard": "c11", // C language standard
-          "cppStandard": "c++17", // C++ language standard
-          "intelliSenseMode": "gcc-x64",
-          "browse": {
-              "path": [
-                "${workspaceFolder}/framework",
-                "${workspaceFolder}/samples"
-              ],
-              "limitSymbolsToIncludedHeaders": true, // Only show symbols from included header files in code browsing
-              "databaseFilename": "" // Set to empty string to disable the browsing database
-          }
-      }
-  ],
-  "version": 4
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/framework/include",
+                "${workspaceFolder}/third_party/plog-1.1.9/include",
+                "${workspaceFolder}/third_party/googletest-1.13.0/googletest/include",
+                "${workspaceFolder}/third_party/boost_1_82_0",
+                "${workspaceFolder}/third_party/cifuzz/include"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "macos-clang-arm64",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/framework",
+                    "${workspaceFolder}/samples"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            }
+        }
+    ],
+    "version": 4
 }

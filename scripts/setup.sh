@@ -9,7 +9,7 @@ Usage: $0 [clean|check|install|help]
 
   clean    will cleanup all third_party files
   check    will check if all required tools are installed
-  install  will install all third_party files 
+  install  will install all third_party libraries and tools 
   help     this help
 EOF
 }
@@ -148,6 +148,11 @@ check_all_tools() {
   # check for include-what-you-use >= 16.x
   # include-what-you-use --version ==> include-what-you-use 0.20 based on Homebrew clang version 16.0.4
   check_one_tool include-what-you-use optional 2 0.20
+
+  # check for lcov >= 16.x
+  # https://github.com/linux-test-project/lcov
+  # lcov --version ==> lcov: LCOV version 2.0-1
+  check_one_tool lcov optional 4 2.0
 }
 
 # see https://github.com/zemasoft/clangformat-cmake
@@ -156,17 +161,16 @@ cmake_clang_format() {
   download_url=https://raw.githubusercontent.com/zemasoft/clangformat-cmake/master/cmake/ClangFormat.cmake
   dir=cmake
 
-  cd ../third_party
   if [ "${do_clean}" = "true" ] ; then
     echo "WARN: Clean third_party/clangformat-cmake"
     rm -rf ${dir}
   elif [ ! -d "${dir}" ] ; then
     echo "INFO: Setup clangformat-cmake"
     echo "INFO: Downloading from ${download_url}"
-    echo "INFO: Installing clangformat-cmake"
+    echo "INFO: Installing clangformat-cmake to third_party/${dir}"
     wget ${download_url} -P ${dir} 2>/dev/null
 
-    echo "INFO: Patching clangformat-cmake for verbose output"
+    echo "INFO: Patching third_party/${dir}/ClangFormat.cmake for verbose output"
     sed -e 's|-style=file|-style=file --verbose|g' cmake/ClangFormat.cmake >cmake/ClangFormat.cmake.tmp
     mv cmake/ClangFormat.cmake.tmp cmake/ClangFormat.cmake
   else
@@ -186,6 +190,26 @@ build_googletest() {
   )
 }
 
+# See https://github.com/CodeIntelligenceTesting/cifuzz
+download_and_install_cifuzz() {
+  do_clean=${1} # true/false
+  dir=cifuzz
+  # this is install dir, will install to ./third_party/cifuzz
+  export XDG_DATA_HOME=.
+
+  if [ "${do_clean}" = "true" ] ; then
+    if [ -d "${dir}" ] ; then
+      echo "WARN: Clean third_party/${dir}"
+      rm -rf "${XDG_DATA_HOME}/cifuzz"
+      rm -f cifuzz_installer
+    fi
+  else
+    echo "INFO: Installing cifuzz into third_party/${dir}"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/CodeIntelligenceTesting/cifuzz/main/install.sh)" 2>/dev/null 1>&2
+    echo "INFO: Installing cifuzz done"
+  fi
+}
+
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd ${SCRIPT_DIR}
 
@@ -199,6 +223,8 @@ if [ "${DO_CLEAN}" = "true" ] && [ -d ../third_party ] ; then
     download_and_unpack_third_party true boost_1_82_0
 
     cmake_clang_format true
+
+    download_and_install_cifuzz true
   )
 
   if [ -d ../third_party ] ; then
@@ -215,7 +241,7 @@ if [ "${DO_CHECK}" = "true" ] ; then
 fi
 
 if [ "${DO_INSTALL}" = "true" ] ; then
-  echo "INFO: Checking third_party libraries ..."
+  echo "INFO: Checking third_party libraries and tools ..."
 
   cd ${SCRIPT_DIR}
   if [ ! -d ../third_party ] ; then
@@ -242,8 +268,13 @@ if [ "${DO_INSTALL}" = "true" ] ; then
     # boost is a standard library for C++
     download_and_unpack_third_party false boost_1_82_0 \
       https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/boost_1_82_0.tar.gz
-    )
 
     cmake_clang_format false
+
+    # cifuzz: https://github.com/CodeIntelligenceTesting/cifuzz
+    # cifuzz is a fuzzing tool for C/C++ projects
+    download_and_install_cifuzz false
+    )
+
   fi
 fi

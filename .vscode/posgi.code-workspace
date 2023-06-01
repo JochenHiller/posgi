@@ -1,10 +1,13 @@
 {
 	"folders": [
 		{
-			"path": "."
+			"path": ".."
 		},
 		{
-			"path": "docs/osgi-r8/java"
+			"path": "../docs/osgi-r8/java"
+		},
+		{
+			"path": "../../cifuzz"
 		}
 	],
 	"settings": {
@@ -78,8 +81,10 @@
 			"stack": "cpp",
 			"unordered_map": "cpp",
 			"variant": "cpp",
-			"thread": "cpp"
+			"thread": "cpp",
+			"condition_variable": "cpp"
 		},
-		"editor.formatOnSave": true
+		"editor.formatOnSave": true,
+		"java.compile.nullAnalysis.mode": "automatic"
 	}
 }

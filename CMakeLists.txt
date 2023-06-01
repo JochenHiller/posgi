@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.16)
 
 # TODO(JochenHiller): How can we change folder where .o files will be created?
 
@@ -8,6 +8,11 @@ cmake_policy(SET CMP0135 NEW)
 
 project(Posgi VERSION 0.1)
 configure_file(PosgiConfig.h.in PosgiConfig.h)
+
+# Set C++17 as the default language standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 # GoogleTest
 include(FetchContent)
@@ -20,6 +25,10 @@ set(gtest_force_shared_crt
     CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 enable_testing()
+
+# cifuzz tests
+find_package(cifuzz NO_SYSTEM_ENVIRONMENT_PATH)
+enable_fuzz_testing()
 
 # ClangFormat
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/third_party/cmake)
@@ -53,7 +62,6 @@ add_library(
   framework/include/org/posgi/framework/impl/bundle_context_impl.h
   framework/include/org/posgi/framework/impl/manifest_parser.h
   framework/include/org/posgi/framework/impl/utils/printable_mutex.h)
-target_compile_features(posgi PUBLIC cxx_std_17)
 target_include_directories(
   posgi
   PUBLIC
@@ -65,32 +73,48 @@ target_include_directories(
 target_clangformat_setup(posgi)
 
 # core tests
-add_executable(posgi_test framework/posgi_test.cc
-                          framework/impl/manifest_parser_test.cc)
-target_link_libraries(posgi_test posgi GTest::gtest_main)
+add_executable(posgi_tests framework/posgi_test.cc
+                           framework/impl/manifest_parser_test.cc)
+target_link_libraries(posgi_tests posgi GTest::gtest_main)
 target_include_directories(
-  posgi_test
+  posgi_tests
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/build>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/framework/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/plog-1.1.9/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/googletest-1.13.0/googletest/include>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/boost_1_82_0>)
-target_compile_features(posgi_test PUBLIC cxx_std_17)
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/boost_1_82_0>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/cifuzz/include>)
 include(GoogleTest)
 # run all tests found be gtest
 #
-gtest_discover_tests(posgi_test)
+gtest_discover_tests(posgi_tests)
 
 # run one single test only, use for development
 #
-# add_test(NAME posgi_test COMMAND posgi_test
+# add_test(NAME posgi_tests COMMAND posgi_tests
 # --gtest_filter=ManifestParserTest.parse_standard)
 
+#
+# cifuzz tests
+#
+add_fuzz_test(posgi_fuzz_tests framework/impl/manifest_parser_fuzz_test.cc)
+target_link_libraries(posgi_fuzz_tests PRIVATE posgi)
+target_include_directories(
+  posgi_fuzz_tests
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/build>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/framework/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/plog-1.1.9/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/googletest-1.13.0/googletest/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/boost_1_82_0>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/cifuzz/include>)
+
+#
 # posgi cli
+#
 add_executable(posgi_cli framework/main.cc framework/posgi.cc)
-target_link_libraries(posgi_cli PUBLIC posgi)
-target_compile_features(posgi_cli PUBLIC cxx_std_17)
+target_link_libraries(posgi_cli PRIVATE posgi)
 target_include_directories(
   posgi_cli
   PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/build>
@@ -103,7 +127,6 @@ add_executable(
   samples/sample_simple_03/main.cc samples/sample_simple_03/some_bundle.cc
   samples/sample_simple_03/some_bundle.h)
 target_link_libraries(posgi_sample03 PUBLIC posgi)
-target_compile_features(posgi_sample03 PUBLIC cxx_std_17)
 target_include_directories(
   posgi_sample03
   PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/framework/include>)

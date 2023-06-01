@@ -36,5 +36,7 @@
 build
 third_party
 tmp
-**/posgi.log
+**/posgi*.log
 lint-*.log
+.cifuzz-build
+.cifuzz-corpus

@@ -5,7 +5,7 @@
 
 inline std::vector<std::string> convert_args(int argc, char *argv[]) {
   std::vector<std::string> args;
-  for (int i = 0; i < argc; ++i) {
+  for (int i = 0; i < argc; i++) {
     args.push_back(argv[i]);
   }
   return args;

@@ -61,18 +61,14 @@ Options:
   framework->Init();
   framework->Start();
   osgi::BundleContext *bc = framework->GetBundleContext();
-  osgi::Bundle *bundleA =
-      bc->InstallBundle(osgi::Constants::BUNDLE_SYMBOLICNAME + ": BundleA",
-                        new sample::SomeBundle("BundleA"));
-  osgi::Bundle *bundleB =
-      bc->InstallBundle(osgi::Constants::BUNDLE_SYMBOLICNAME + ": BundleB",
-                        new sample::SomeBundle("BundleB"));
-  osgi::Bundle *bundleC =
-      bc->InstallBundle(osgi::Constants::BUNDLE_SYMBOLICNAME + ": BundleC");
-  bundleA->Start();
-  bundleB->Start();
-  bundleC->Start();
-
+  bc->InstallBundle(
+      osgi::Constants::BUNDLE_SYMBOLICNAME + ": BundleA_WithActivator",
+      new sample::SomeBundle("BundleA_WithActivator"));
+  bc->InstallBundle(
+      osgi::Constants::BUNDLE_SYMBOLICNAME + ": BundleB_WithActivator",
+      new sample::SomeBundle("BundleB_WithActivator"));
+  bc->InstallBundle(osgi::Constants::BUNDLE_SYMBOLICNAME +
+                    ": BundleC_NoActivator");
   osgi::Bundle *consoleBundle =
       bc->InstallBundle(osgi::Constants::BUNDLE_SYMBOLICNAME + ": OsgiConsole",
                         new osgi::OsgiConsole());
@@ -80,9 +76,6 @@ Options:
 
   // try out a dynamic cast, to show that we can refer to impl as well
   dynamic_cast<posgi::FrameworkImpl *>(framework)->dump_bundles();
-  bundleC->Stop();
-  bundleB->Stop();
-  bundleA->Stop();
 
   framework->WaitForStop(0);
   // framework->Stop();

@@ -50,6 +50,7 @@ class ManifestParserTest : public testing::TestWithParam<std::string> {
 class OneLineValidTest : public ManifestParserTest {};
 class OneLineInvalidTest : public ManifestParserTest {};
 
+// NOLINTNEXTLINE
 TEST_F(ManifestParserTest, flatten) {
   EXPECT_EQ("K: V,V2", parser->flatten("K: V\n ,V2"));
   EXPECT_EQ("K: V,V2", parser->flatten("K: V\r\n ,V2"));

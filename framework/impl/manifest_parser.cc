@@ -11,9 +11,36 @@
 
 namespace posgi {
 
+namespace ManifestHeader {
+
+// TODO(JochenHiller): check if unused constants will be removed by compiler
+
+const char kManifestPath[] = "META-INF/MANIFEST.MF";
+
+const char kManifestVersion[] = "Manifest-Version";
+const char kCreatedBy[] = "Created-By";
+const char kSignatureVersion[] = "Signature-Version";
+const char kClassPath[] = "Class-Path";
+const char kMainClass[] = "Main-Class";
+
+const char kImplementationTitle[] = "Implementation-Title";
+const char kImplementationVersion[] = "Implementation-Version";
+const char kImplementationVendor[] = "Implementation-Vendor";
+const char kImplementationVendorId[] = "Implementation-Vendor-Id";
+const char kImplementationUrl[] = "Implementation-URL";
+const char kSpecificationTitle[] = "Specification-Title";
+const char kSpecificationVersion[] = "Specification-Version";
+const char kSpecificationVendor[] = "Specification-Vendor";
+const char kSealed[] = "Sealed";
+
+}  // namespace ManifestHeader
+
 /**
  * See MANIFEST specification here:
  * https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html#Manifest_Specification
+ *
+ * Not yet implemented:
+ * - per-entry headers, would be flatten to one line
  */
 ManifestParser::ManifestParser() {
   PLOG_INFO << "ManifestParser::ManifestParser()";
@@ -102,6 +129,19 @@ std::map<std::string, std::string> ManifestParser::parse(std::string manifest) {
   for (const auto& pair : headers) {
     PLOG_VERBOSE << "parse: " << pair.first << ": " << pair.second;
   }
+  // just a check to allow fuzz tests to fail
+  /*
+  if (headers.count("Manifest-Version") > 0) {
+    auto iter = headers.find("Manifest-Version");
+    if (iter != headers.end()) {
+      auto value = iter->second;
+      if (value != "1.0") {
+        PLOG_FATAL << "Manifest has wrong version";
+        throw std::runtime_error("Could not parse manifest: wrong version");
+      }
+    }
+  }
+  */
   return headers;
 }
 
