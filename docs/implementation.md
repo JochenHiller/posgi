@@ -27,6 +27,41 @@ Up-to-now I am using the Google style guide without changes, for simplicity.
   * See <https://google.github.io/styleguide/cppguide.html#Namespaces>
   * See tips from [Abseil](https://abseil.io/tips/130) as well
 
+
+## Fuzzy testing
+
+For fuzzy testing we use [cifuzz](https://github.com/CodeIntelligenceTesting/cifuzz), an interesting fuzzy testing tool from CodeIntelligence. We do NOT use their central CI server, we just do local fuzz test generation.
+
+It fits well with a C/C++ program as it
+
+* integrates very well with CMake
+* It can create corpus data based on reasonable input
+* It will create input files for failed tests for regression testing
+* It has source code instrumentation to observe code coverage, using `lcov`
+* It can create nice HTML reports about code coverage
+* It integrates as well with VS code and CLion IDEs to show code coverage (not yet tested)
+
+The setup is quite easy:
+
+```bash
+# initialize your project
+./third_party/cifuzz/bin/cifuzz init
+
+# create a simple fuzz test to start from
+./third_party/cifuzz/bin/cifuzz create
+
+# run fuzz tests indefinitely, use corpus with good input data, stop wth CTRL-C
+./third_party/cifuzz/bin/cifuzz run \           
+  --interactive=false \
+  --seed-corpus framework/impl/posgi_fuzz_tests_inputs \
+  posgi_fuzz_tests
+
+# generate a HTML report of fuzz tests
+./third_party/cifuzz/bin/cifuzz coverage --output=./build/coverage-report posgi_fuzz_tests
+```
+
+There is at the moment one fuzz test for parsing manifest file. Up to now no problems have been identified, so code seems to be OK and not breakable by unexpected data. For the test implementation see [manifest_parser_fuzz_test.cc](../framework/impl/manifest_parser_fuzz_test.cc).
+
 ## C++ Pros and Cons
 
 ### Pros
@@ -118,6 +153,9 @@ Up-to-now I am using the Google style guide without changes, for simplicity.
 * Testing
   * <https://github.com/google/googletest>
 
+* Fuzzy testing
+  * <https://github.com/CodeIntelligenceTesting/cifuzz>
+ 
 * Logging frameworks
   * <https://github.com/SergiusTheBest/plog> ==> selected logging framework
   * <https://github.com/gabime/spdlog>

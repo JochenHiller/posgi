@@ -4,7 +4,8 @@
 
 ### Work in progress (WIP)
 
-* [ ] manifest: testdata, valid/invalid files, use felix as sample
+* [ ] lint: check include files for use, clang-tidy
+* [ ] manifest parser: parse with errors/exceptions?
 * [ ] linter: check for include files if really needed (clang-tidy)
 * [ ] check for smart memory management
 * [ ] console as service bundle
@@ -12,6 +13,8 @@
   * [ ] bundles/console/impl/osgi_console.cc, command_xxx.cc
 * [ ] Pros and Cons C++
 * [ ] Linux build and tests
+* [ ] Coverage: fuzz, exlucde third_party libraries (plog, boost)
+* [ ] Coverage: also for normal tests
 
 ### Minimum viable product (MVP)
 
@@ -19,7 +22,7 @@
 * [ ] OSGi Bundle Layer
   * [x] Install bundles from linked classes
   * [x] Bundle states
-  * [ ] MANIFEST Parser
+  * [x] MANIFEST Parser
   * [x] Start and stop bundles
   * [ ] Bundle tracker
 * [ ] OSGi Compendium Bundles
@@ -33,7 +36,9 @@
   * [x] Clang C++17
   * [x] CMake build
   * [x] libposgi-0.1.0.so delivery
-  * [x] C++ Linter integrated
+  * [x] Core tests of implementation
+  * [x] One Fuzz test as a first template for further fuzz tests
+  * [x] C++ Linter integrated (cpplint, clang-tidy)
   * [x] Auto-Format (IDE, build) (`.h`, `.cc`)
   * [ ] Doxygen generated docs, incl. class diagram
   * [ ] Docs how to build and run on Linux (using Docker)
@@ -73,7 +78,7 @@ Specification for LogFormatter:
   * [ ] Bazel support
   * [ ] More C++ Linters (clang-tidy, include-what-you-use, cppcheck)
 * [ ] Further Ideas
-  * [ ] Check for OSGi.fx support (Bundle/Service layer) (agent, sockets, DTOs)
+  * [ ] Check for OSGi.fx support (Bundle/Service layer) (agent, sockets, DTOs), own management agent using socket and JSON? 
   * [ ] Gogo telnet console
   * [ ] Experimental HttpService
 
