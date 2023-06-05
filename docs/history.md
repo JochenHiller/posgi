@@ -4,7 +4,7 @@ This project has primarily been started as a self education project. I had some 
 
 ## C/C++ history
 
-During my studies end of eighties, I used C language in real time operating systems like [QNX](https://en.wikipedia.org/wiki/QNX) and [OS/9](https://en.wikipedia.org/wiki/OS-9). Dissatisified with the traditional software development, I searched for new software engineering concepts and stumbled over Object-oriented software development. I ordered in US a [Zortech C++ compiler](https://en.wikipedia.org/wiki/Digital_Mars), C-Scape UI library and [Digitalk Smalltalk/V](https://winworldpc.com/product/digital-smalltalk/5x) for PC 286. I had to develop grahical applications in health care (some years before Windows entered the market). Smalltalk was too inefficient for applications these times, and the Zortech C++ compiler was so buggy and non-debuggable, that I backported C++ to C again to get the application finally working.
+During my studies end of eighties, I used C language in real time operating systems like [QNX](https://en.wikipedia.org/wiki/QNX) and [OS/9](https://en.wikipedia.org/wiki/OS-9). Dissatisified with the traditional software development, I searched for new software engineering concepts and stumbled over Object-oriented software development. I ordered in US a [Zortech C++ compiler](https://en.wikipedia.org/wiki/Digital_Mars), C-Scape UI library and [Digitalk Smalltalk/V](https://winworldpc.com/product/digital-smalltalk/5x) for PC 286. I had to develop graphical applications in health care (some years before Windows entered the market). Smalltalk was too inefficient for applications these times, and the Zortech C++ compiler was so buggy and non-debuggable, that I backported C++ to C again to get the application finally working.
 
 In 1992 I had the opportunity to work on a NeXT workstation. I had to develop a hardware driver, so I decided to stick on C, and do not use Objective-C, which was quite new this time. [Objective-C](https://en.wikipedia.org/wiki/Objective-C) uses some Smalltalk concepts (message passing), but added that to a procedural language. Finally I worked same year on a graphical configuration tool for high-scalable hardware (Transputer, DSPs), where I used [InterViews](https://www.researchgate.net/publication/2953839_Composing_User_Interfaces_with_InterViews) as UI framework on X-Windows and [OSF/Motif](https://en.wikipedia.org/wiki/Motif_(software)). InterViews was from Stanford University, one of the authors was John Vlissides, also Co-author of the famous Design Patterns book. I had to get the GCC 2.2 compiler from University on tape and had to compile it for myself on SUN Solaris and Interactive/Unix to use it for UI development.
 
@@ -21,7 +21,7 @@ In year 2003 I stumbled over OSGi specification, and an OpenSource implementatio
 At the same time, I was a user of Eclipse IDE 2.x for Java development, first time that an IDE came close to my experiences in past when developing with Smalltalk. I also wrote plugins for Eclipse, e.g. an small tool to compile and run Java code on [leJOS](https://lejos.sourceforge.io/index.php), a tidy JVM for [Lego Mindstorms RCX](https://en.wikipedia.org/wiki/Lego_Mindstorms#RCX). Eclipse decided to change its underlying plugin concept to be OSGi based from 3.0 on, developing its own OSGi implementation named [Equinox](https://www.eclipse.org/equinox/) (core developers have been Jeff McAffer and Thomas Watson from IBM).
 As plugin developer, it was quite interesting to see the migration during 3.0 release phase finally reaching a plain OSGi framework and keeping compatibility to old plugins. Since that time I was somehow _infected_ by OSGi and its concepts.
 
-In daily business I was doing JavaEE based web development at this time. I extended our architecture to modularize the application based on ideas of OSGi, using class loader hierachies and web application class loaders mirroring the module concept. And I always thought about how web applications could be integrated better with the OSGi bundle concept. 2005 there was a breakthrough by Simon Kaegi from Cognos/later IBM, who made OSGi able to run inside a web container. There have been much more progress the next years, about a more easy way to use OSGi inside a web app, or add web applications to an OSGi container by new OSGi specifications.
+In daily business I was doing JavaEE based web development at this time. I extended our architecture to modularize the application based on ideas of OSGi, using class loader hierachies and web application class loaders mirroring the module concept. And I always thought about how web applications could be integrated better with the OSGi bundle concept. 2005 there was a breakthrough by Simon Kaegi from Cognos/later IBM, who made OSGi able to run inside a web container. There have been much more progress the next years, about a more easy way to use OSGi inside a web app, or add web applications to an OSGi framework by new OSGi specifications.
 
 Togother with friends Simon Kaegi, Gunnar Wagenknecht, Frank Gerhardt I gave some tutorials ([1](https://www.slideshare.net/mfrancis/building-serverside-eclipse-based-web-applications-jochen-hiller-principal-architect-business-operation-systems-germany), [2](https://preview.jugsaxony.org/downloads/events//Building-Server-Applications-With-EclipseRT.pdf)) and presentations ([3](https://www.slideshare.net/mfrancis/modular-web-applications-based-on-osgi-jochen-hiller)) at many EclipseCon conferences to convince people about OSGi. In business when I started a new job, I tried as well to introduce OSGi in new applications. Some cloud applications have been developed using OSGi, modularization has been used to define common interfaces, and split implementations between multiple software suppliers.
 
@@ -38,12 +38,14 @@ When thinking about a C++ project, I wanted to at least parts rely on existing k
   * Multithreading needed
   * Shared memory management beween framework, bundles, application
   * RTTI and Reflection can be used
-* Use standard development tools to reach good quality
+* Use standard development approach to reach good quality
   * Use standard libraries
-  * use standard code styles and formatting
+  * Use standard code style guides and source code formatting
   * Add unit testing, integration testing, fuzz testing
   * Use linters for good code
-  * Use reliable CI/CD process
-* Make everything OpenSource
+  * Use reliable CI/CD process (e.g. CMake, Bazel)
+* Finally: make everything OpenSource
 
 There are as well other OSGi C/C++ implementations available, which I simply ignored for the moment ([nosgi](https://sourceforge.net/p/nosgi/home/Home/) stopped development in 2014, [Apache Celix](https://celix.apache.org/) is C-based, did not fit my expectations).
+
+I also thought about trying out [Carbon](https://github.com/carbon-language/carbon-lang), the new proposed language by Google. Carbon might be a successor of C++ in future, but at the moment the project is not mature enough to build real applications with it. Nevertheless I will have an eye on Carbon, because many of the concerns I had and learned again about C++ will be addressed by Carbon.

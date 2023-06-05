@@ -61,17 +61,17 @@ Options:
   framework->Init();
   framework->Start();
   osgi::BundleContext *bc = framework->GetBundleContext();
-  bc->InstallBundle(
-      osgi::Constants::BUNDLE_SYMBOLICNAME + ": BundleA_WithActivator",
-      new sample::SomeBundle("BundleA_WithActivator"));
-  bc->InstallBundle(
-      osgi::Constants::BUNDLE_SYMBOLICNAME + ": BundleB_WithActivator",
-      new sample::SomeBundle("BundleB_WithActivator"));
-  bc->InstallBundle(osgi::Constants::BUNDLE_SYMBOLICNAME +
+  bc->InstallBundle(std::string(osgi::Constants::kBundleSymbolicName) +
+                        ": BundleA_WithActivator",
+                    new sample::SomeBundle("BundleA_WithActivator"));
+  bc->InstallBundle(std::string(osgi::Constants::kBundleSymbolicName) +
+                        ": BundleB_WithActivator",
+                    new sample::SomeBundle("BundleB_WithActivator"));
+  bc->InstallBundle(std::string(osgi::Constants::kBundleSymbolicName) +
                     ": BundleC_NoActivator");
-  osgi::Bundle *consoleBundle =
-      bc->InstallBundle(osgi::Constants::BUNDLE_SYMBOLICNAME + ": OsgiConsole",
-                        new osgi::OsgiConsole());
+  osgi::Bundle *consoleBundle = bc->InstallBundle(
+      std::string(osgi::Constants::kBundleSymbolicName) + ": OsgiConsole",
+      new osgi::OsgiConsole());
   consoleBundle->Start();
 
   // try out a dynamic cast, to show that we can refer to impl as well

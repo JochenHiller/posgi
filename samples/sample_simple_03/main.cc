@@ -19,7 +19,7 @@ int main() {
 
   std::cout << "Installing bundle A\n";
   osgi::Bundle *bundleA = bundleContext->InstallBundle(
-      osgi::Constants::BUNDLE_SYMBOLICNAME + ": BundleA",
+      std::string(osgi::Constants::kBundleSymbolicName) + ": BundleA",
       new sample::SomeBundle("BundleA"));
 
   bundleA->Start();

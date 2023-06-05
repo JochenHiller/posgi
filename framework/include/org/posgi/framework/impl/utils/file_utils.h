@@ -1,11 +1,8 @@
 #ifndef POSGI_ORG_POSGI_FRAMEWORK_IMPL_UTIL_FILE_UTILS_H
 #define POSGI_ORG_POSGI_FRAMEWORK_IMPL_UTIL_FILE_UTILS_H
 
-#include <filesystem>
-#include <fstream>
-#include <iostream>
-#include <regex>
 #include <string>
+#include <vector>
 
 namespace Utils {
 

@@ -200,7 +200,7 @@ osgi::Bundle *FrameworkImpl::InstallBundle(std::string manifest,
   // inc bundle id
   bundleImpl->id = ++lastBundleId;
   bundleImpl->bundleSymbolicName =
-      headers[osgi::Constants::BUNDLE_SYMBOLICNAME];
+      headers[osgi::Constants::kBundleSymbolicName];
   if (activator != nullptr) {
     bundleImpl->activatorRef = activator;
   }

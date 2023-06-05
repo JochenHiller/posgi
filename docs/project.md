@@ -78,9 +78,14 @@ Specification for LogFormatter:
   * [ ] Bazel support
   * [ ] More C++ Linters (clang-tidy, include-what-you-use, cppcheck)
 * [ ] Further Ideas
-  * [ ] Check for OSGi.fx support (Bundle/Service layer) (agent, sockets, DTOs), own management agent using socket and JSON? 
+  * [ ] Check for OSGi.fx support (Bundle/Service layer) (agent, sockets, DTOs), own management agent using socket and JSON?
   * [ ] Gogo telnet console
   * [ ] Experimental HttpService
+  * [ ] Benchmark (bundles, services)
+* [ ] Platforms (cross-compilation)
+  * [ ] x86 32/64 bit, ARM v5/v6/v7 (hardfloat, softfloat)
+  * [ ] RISC-V
+  * [ ] Others ? ([Zephyr](https://www.zephyrproject.org/), [ROS](https://www.ros.org/), [Arduino)](https://github.com/arduino)
 
 ### Out-of-Scope
 

@@ -7,9 +7,9 @@ class Constants {
  public:
   // inline supported since C++17:
   // https://en.cppreference.com/w/cpp/language/inline
-  inline static const std::string BUNDLE_ACTIVATOR = "Bundle-Activator";
-  inline static const std::string BUNDLE_SYMBOLICNAME = "Bundle-SymbolicName";
-  inline static const std::string BUNDLE_VERSION = "Bundle-Version";
+  inline static const char kBundleActivator[] = "Bundle-Activator";
+  inline static const char kBundleSymbolicName[] = "Bundle-SymbolicName";
+  inline static const char kBundleVersion[] = "Bundle-Version";
 };
 
 }  // end namespace osgi

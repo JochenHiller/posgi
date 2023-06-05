@@ -3,8 +3,17 @@
 # pending checks
 # cppcoreguidelines-* and next ones
 
-Checks:              '-*,boost-*,bugprone-*,cert-*,clang-analyzer-*,concurrency-*,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-cppcoreguidelines-pro-type-reinterpret-cast,-cppcoreguidelines-owning-memory,-bugprone-suspicious-include'
+Checks: -*,
+        boost-*,
+        bugprone-*,
+        cert-*,
+        clang-analyzer-*,
+        concurrency-*,
+        -bugprone-suspicious-include,
+        -cppcoreguidelines-owning-memory,
+        -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
+        -cppcoreguidelines-pro-type-reinterpret-cast
 
-# TODO(JochenHiller): fix theses warnings using GSL: [cppcoreguidelines-owning-memory]
 # TODO(JochenHiller): fix theses warnings with gtest: [bugprone-suspicious-include]
+# TODO(JochenHiller): fix theses warnings using GSL: [cppcoreguidelines-owning-memory]
 # TODO(JochenHiller): fix theses warnings due to plog: [-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-cppcoreguidelines-pro-type-reinterpret-cast]

@@ -124,21 +124,24 @@ if [ "${DO_LINT}" = "true" ] ; then
   else
     echo "WARN: Could not find cpplint, ignoring..."
   fi
+
   # TODO(JochenHiller): does not run on Linux
   which clang-tidy >/dev/null
   if [ $? = 0 ] ; then
-    pwd=$(pwd)
-    rm -rf ./build ; cmake -DCMAKE_BUILD_TYPE=Debug  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+    rm -rf ./build ; cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
       "-DCMAKE_CXX_CLANG_TIDY=clang-tidy" -S . -B build
     (cd build ; make clean all) 2>&1 | tee lint-clang-tidy.log
   else
     echo "WARN: Could not find clang-tidy, ignoring..."
   fi
+
+  # see https://include-what-you-use.org/. This linter does not really give useful results, therefoe verbose=0
   which include-what-you-use >/dev/null
   if [ $? = 0 ] ; then
-    # rm -rf ./build ; cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-    # "-DCMAKE_CXX_INCLUDE_WHAT_YOU_USE=include-what-you-use;--transitive_includes_only;-w;-Xiwyu;--verbose=7" -S . -B build
-    # (cd build ; make clean all) 2>&1 | tee lint-iwyu.log
+    # add -Xiwyu; before every iwyu flag
+    rm -rf ./build ; cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+      "-DCMAKE_CXX_INCLUDE_WHAT_YOU_USE=include-what-you-use;-w;-Xiwyu;--no_fwd_decls;-Xiwyu;--verbose=0" -S . -B build
+    (cd build ; make clean all) 2>&1 | tee lint-iwyu.log
     :
   else
     echo "WARN: Could not find include-what-you-use, ignoring..."

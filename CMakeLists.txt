@@ -9,6 +9,8 @@ cmake_policy(SET CMP0135 NEW)
 project(Posgi VERSION 0.1)
 configure_file(PosgiConfig.h.in PosgiConfig.h)
 
+# enable for debugging of CMake: set(CMAKE_VERBOSE_MAKEFILE ON)
+
 # Set C++17 as the default language standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -75,6 +77,9 @@ target_clangformat_setup(posgi)
 # core tests
 add_executable(posgi_tests framework/posgi_test.cc
                            framework/impl/manifest_parser_test.cc)
+# TODO(Googletest): bug in Googletest:
+# https://github.com/google/googletest/issues/4206 will results in 2 warnings
+# "implicit-int-float-conversion" when compiling gtest-all.cc
 target_link_libraries(posgi_tests posgi GTest::gtest_main)
 target_include_directories(
   posgi_tests
@@ -86,14 +91,9 @@ target_include_directories(
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/boost_1_82_0>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/cifuzz/include>)
 include(GoogleTest)
-# run all tests found be gtest
-#
 gtest_discover_tests(posgi_tests)
-
-# run one single test only, use for development
-#
-# add_test(NAME posgi_tests COMMAND posgi_tests
-# --gtest_filter=ManifestParserTest.parse_standard)
+# run one single test only, use for development, add this option TEST_FILTER
+# ManifestParserTest.parse_standard
 
 #
 # cifuzz tests

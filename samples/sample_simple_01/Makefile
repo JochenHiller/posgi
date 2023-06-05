@@ -25,6 +25,12 @@ string_format: string_format.o
 
 core_dump.o: core_dump.cc
 
+include_checks: include_checks.cc
+	$(CXX) $(CXXFLAGS) -c -o $@.o $^
+	# suppress sytem headers: --system-headers
+	clang-tidy --checks=+bugprone-suspicious-include --header-filter=.* include_checks.cc -- -std=c++17
+	include-what-you-use -Xiwyu --no_fwd_decls include_checks.cc -std=c++17
+
 .PHONY: all clean
 
 clean:

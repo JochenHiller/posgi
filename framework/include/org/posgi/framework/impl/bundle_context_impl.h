@@ -1,13 +1,8 @@
 #ifndef POSGI_ORG_POSGI_FRAMEWORK_IMPL_BUNDLE_CONTEXT_IMPL_H
 #define POSGI_ORG_POSGI_FRAMEWORK_IMPL_BUNDLE_CONTEXT_IMPL_H
 
-#include <string>
-
 #include "org/osgi/framework/bundle.h"
 #include "org/osgi/framework/bundle_context.h"
-#include "org/osgi/framework/bundle_revision.h"
-#include "org/posgi/framework/impl/bundle_impl.h"
-// #include "org/posgi/framework/impl/launch/framework_impl.h"
 
 namespace posgi {
 
