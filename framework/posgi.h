@@ -4,11 +4,13 @@
 #include <string>
 #include <vector>
 
-// TODO(jhi): enums?
-constexpr int RC_OK = 0;
-constexpr int RC_VERSION = 1;
-constexpr int RC_HELP = 2;
+// return codes from main
+enum class RC {
+  kOk = 0,
+  kVersion = 1,
+  kHelp = 2,
+};
 
-int do_main(std::vector<std::string> args);
+RC do_main(std::vector<std::string> args);
 
 #endif  // POSGI_POSGI_H

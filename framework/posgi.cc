@@ -12,6 +12,7 @@
 #include "org/osgi/framework/launch/framework_factory.h"
 #include "org/osgi/framework/service/osgi_console.h"
 #include "org/posgi/framework/impl/framework_impl.h"
+#include "org/posgi/framework/impl/utils/system_utils.h"
 
 namespace sample {
 
@@ -36,25 +37,30 @@ class SomeBundle : public osgi::BundleActivator {
 
 }  // namespace sample
 
-int do_main(std::vector<std::string> args) {
-  if ((args.size() >= 2) &&
-      (std::find(args.begin(), args.end(), "--help") != args.end())) {
-    // report version
-    std::cout << R"(Usage: posgi_cli [options]
+void usage() {
+  std::cout << R"(Usage: posgi_cli [options]
 
 Options:
   --version  show version number
   --help     show this help
     )" << std::endl;
-    return RC_HELP;
+}
+
+RC do_main(std::vector<std::string> args) {
+  if ((args.size() >= 2) &&
+      (std::find(args.begin(), args.end(), "--help") != args.end())) {
+    usage();
+    return RC::kHelp;
   }
   if ((args.size() >= 2) &&
       (std::find(args.begin(), args.end(), "--version") != args.end())) {
     // report version
     std::cout << args[0] << " Version " << Posgi_VERSION_MAJOR << "."
-              << Posgi_VERSION_MINOR << std::endl;
-    std::cout << "Usage: " << args[0] << " [--version]" << std::endl;
-    return RC_VERSION;
+              << Posgi_VERSION_MINOR << "-" << GIT_COMMIT_HASH << std::endl;
+    std::cout << "Compiled with " << CMAKE_CXX_COMPILER_ID << " "
+              << CMAKE_CXX_COMPILER_VERSION << std::endl;
+    std::cout << "Running on OS " << Utils::SystemUtils::get_os() << std::endl;
+    return RC::kVersion;
   }
 
   osgi::Framework *framework = osgi::FrameworkFactory().NewFramework();
@@ -80,5 +86,5 @@ Options:
   framework->WaitForStop(0);
   // framework->Stop();
 
-  return RC_OK;
+  return RC::kOk;
 }

@@ -7,6 +7,15 @@ cmake_minimum_required(VERSION 3.16)
 cmake_policy(SET CMP0135 NEW)
 
 project(Posgi VERSION 0.1)
+
+# add Git hash to config file
+find_package(Git REQUIRED)
+execute_process(
+  COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_VARIABLE GIT_COMMIT_HASH
+  OUTPUT_STRIP_TRAILING_WHITESPACE)
+
 configure_file(PosgiConfig.h.in PosgiConfig.h)
 
 # enable for debugging of CMake: set(CMAKE_VERBOSE_MAKEFILE ON)
@@ -40,6 +49,7 @@ include(ClangFormat)
 add_library(
   posgi STATIC
   framework/impl/utils/file_utils.cc
+  framework/impl/utils/system_utils.cc
   framework/impl/bundle_context_impl.cc
   framework/impl/bundle_impl.cc
   framework/impl/framework_impl.cc
@@ -58,6 +68,7 @@ add_library(
   framework/include/org/osgi/framework/service/osgi_console.h
   framework/include/org/osgi/framework/bundle_activator.h
   framework/include/org/posgi/framework/impl/utils/file_utils.h
+  framework/include/org/posgi/framework/impl/utils/system_utils.h
   framework/include/org/posgi/framework/impl/bundle_context_impl.h
   framework/include/org/posgi/framework/impl/bundle_impl.h
   framework/include/org/posgi/framework/impl/framework_impl.h

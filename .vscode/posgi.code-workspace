@@ -82,7 +82,8 @@
 			"unordered_map": "cpp",
 			"variant": "cpp",
 			"thread": "cpp",
-			"condition_variable": "cpp"
+			"condition_variable": "cpp",
+			"*.in": "cpp"
 		},
 		"editor.formatOnSave": true,
 		"java.compile.nullAnalysis.mode": "automatic"

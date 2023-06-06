@@ -2,11 +2,11 @@
 
 usage() {
   cat <<EOF
-Usage: $0 [clean|fmt|all|test|fuzztest-run|fuzztest-report|lint|help]
+Usage: $0 [clean|fmt|compile|test|fuzztest-run|fuzztest-report|lint|help|all]
 
   clean            cleanup all generated files
   fmt              format all source files (.cc, .h, CMakelists.txt)
-  all              build all targets
+  compile          build all targets
   test             run tests
   fuzztest-run     run fuzz tests, might run indefinitely
   fuzztest-report  run coverage report for fuzz tests
@@ -15,13 +15,14 @@ Usage: $0 [clean|fmt|all|test|fuzztest-run|fuzztest-report|lint|help]
     lint-clang-tidy  run clang-tidy only
     lint-iwyu        run include-what-you-use only
   help             this help
+  all              will run clean, fmt, compile, test, lint in a row
 EOF
 }
 
 # parse args
 DO_CLEAN="false"
 DO_FMT="false"
-DO_ALL="false"
+DO_COMPILE="false"
 DO_TEST="false"
 DO_FUZZ_TEST_RUN="false"
 DO_FUZZ_TEST_REPORT="false"
@@ -34,8 +35,8 @@ for arg in $@ ; do
     DO_CLEAN="true"
   elif [ "${arg}" = "fmt" ] ; then
     DO_FMT="true"
-  elif [ "${arg}" = "all" ] ; then
-    DO_ALL="true"
+  elif [ "${arg}" = "compile" ] ; then
+    DO_COMPILE="true"
   elif [ "${arg}" = "test" ] ; then
     DO_TEST="true"
   elif [ "${arg}" = "fuzztest-run" ] ; then
@@ -54,6 +55,14 @@ for arg in $@ ; do
     DO_LINT_IWYU="true"
   elif [ "${arg}" = "help" ] ; then
     DO_HELP="true"
+  elif [ "${arg}" = "all" ] ; then
+    DO_CLEAN="true"
+    DO_FMT="true"
+    DO_COMPILE="true"
+    DO_TEST="true"
+    DO_LINT_CPPINT="true"
+    DO_LINT_CLANG_TIDY="true"
+    DO_LINT_IWYU="true"
   else
     echo "WARN: Unknown command ${arg}"
     DO_HELP="true"
@@ -62,7 +71,7 @@ done
 
 if    [ "${DO_CLEAN}" = "false" ] \
    && [ "${DO_FMT}" = "false" ]   \
-   && [ "${DO_ALL}" = "false" ]   \
+   && [ "${DO_COMPILE}" = "false" ]   \
    && [ "${DO_TEST}" = "false" ]  \
    && [ "${DO_FUZZ_TEST_RUN}" = "false" ]  \
    && [ "${DO_FUZZ_TEST_REPORT}" = "false" ]  \
@@ -97,7 +106,7 @@ if [ "${DO_FMT}" = "true" ] ; then
   cmake-format -i CMakeLists.txt
 fi
 
-if [ "${DO_ALL}" = "true" ] ; then
+if [ "${DO_COMPILE}" = "true" ] ; then
   echo "Make ./build directory"
   cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -S . -B build
   (cd build ; make)

@@ -1,3 +1,7 @@
 // the configured options and settings for Posgi
-#define Posgi_VERSION_MAJOR @Posgi_VERSION_MAJOR@
-#define Posgi_VERSION_MINOR @Posgi_VERSION_MINOR@
+#define Posgi_VERSION_MAJOR "@Posgi_VERSION_MAJOR@"
+#define Posgi_VERSION_MINOR "@Posgi_VERSION_MINOR@"
+
+#define GIT_COMMIT_HASH "@GIT_COMMIT_HASH@"
+#define CMAKE_CXX_COMPILER_ID "@CMAKE_CXX_COMPILER_ID@"
+#define CMAKE_CXX_COMPILER_VERSION "@CMAKE_CXX_COMPILER_VERSION@"
