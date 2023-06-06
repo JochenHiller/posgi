@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-# TODO(JochenHiller): How can we change folder where .o files will be created?
+# TODO(jhi): How can we change folder where .o files will be created?
 
 # https://cmake.org/cmake/help/latest/policy/CMP0135.html needed to avoid warn
 # when fetching googletest content

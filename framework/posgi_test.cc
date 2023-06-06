@@ -2,7 +2,7 @@
 
 #include "gtest/gtest.h"
 
-// TODO(JochenHiller): why does clang-tidy complain about gtest?
+// TODO(jhi): why does clang-tidy complain about gtest?
 // NOLINTNEXTLINE
 TEST(PosgiTest, do_main_version) {
   auto rc = do_main({"main", "--version"});

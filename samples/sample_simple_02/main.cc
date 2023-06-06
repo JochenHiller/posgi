@@ -85,7 +85,7 @@ class BundleContextImpl : public osgi::BundleContext {
                               osgi::BundleActivator *activator = nullptr);
 
   void dump_bundle_context();
-  // TODO(JochenHiller): make private and provide a setter
+  // TODO(jhi): make private and provide a setter
   FrameworkImpl *frameworkImpl;
 
  private:
@@ -131,7 +131,7 @@ class BundleImpl : public virtual osgi::Bundle {
   };
 
  public:
-  // TODO(JochenHiller): make all private with setters, or use friends
+  // TODO(jhi): make all private with setters, or use friends
   BundleContextImpl *bc;
   int id;
   std::string bundleSymbolicName;
@@ -153,7 +153,7 @@ class ManifestParser {
       // Split the line by the delimiter ":"
       std::vector<std::string> tokens;
       boost::split(tokens, line, boost::is_any_of(":"));
-      // TODO(JochenHiller): what to do with "key: value1:value2"
+      // TODO(jhi): what to do with "key: value1:value2"
       if (tokens.size() != 2) {
         PLOG_ERROR << "Could not parse '" << line << "'";
         continue;
@@ -211,7 +211,7 @@ class FrameworkImpl : public BundleImpl, public osgi::Framework {
   void Start() {
     PLOG_INFO << "FrameworkImpl::Start";
     BundleImpl::Start();
-    // TODO(JochenHiller): give thread a good name, see named thread sample
+    // TODO(jhi): give thread a good name, see named thread sample
     frameworkThread =
         new std::thread(&FrameworkImpl::frameworkThreadLoop, this);
     // give thread a chance to start

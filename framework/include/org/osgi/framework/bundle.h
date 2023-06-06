@@ -11,7 +11,7 @@ namespace osgi {
 
 class Bundle : public virtual BundleRevision {
  public:
-  // TODO(JochenHiller): enums?
+  // TODO(jhi): enums?
   static const int UNINSTALLED = 0x00000001;
   static const int INSTALLED = 0x00000002;
   static const int RESOLVED = 0x00000004;
@@ -30,7 +30,7 @@ class Bundle : public virtual BundleRevision {
   virtual int GetId() = 0;
   virtual std::string GetSymbolicName() = 0;
   virtual int GetState() = 0;
-  // TODO(JochenHiller): convenient method to get the state as a string, move to
+  // TODO(jhi): convenient method to get the state as a string, move to
   // utils?
   virtual std::string GetStateAsString() = 0;
 };

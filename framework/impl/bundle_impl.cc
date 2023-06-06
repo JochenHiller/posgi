@@ -12,7 +12,7 @@ void BundleImpl::Start() {
   PLOG_INFO << "start " << this->to_string() << " (" << this->activatorRef
             << ")";
   this->SetState(BundleImpl::STARTING);
-  // TODO(JochenHiller): calling activator asynchronously?
+  // TODO(jhi): calling activator asynchronously?
   if (this->activatorRef != nullptr) {
     PLOG_INFO << "call activator start " << to_string() << " ("
               << this->activatorRef << ")";
@@ -84,7 +84,7 @@ std::string BundleImpl::getStateAsStringMapping(int state) {
   }
 }
 
-// TODO(JochenHiller): C++ pattern for toString() ?
+// TODO(jhi): C++ pattern for toString() ?
 std::string BundleImpl::to_string() {
   return "[" + std::to_string(this->id) + "] " + this->bundleSymbolicName +
          " [" + this->getStateAsStringMapping(this->state) + "]";

@@ -23,7 +23,7 @@
 
 namespace posgi {
 
-// TODO(JochenHiller): use inner namespace internal or impl?
+// TODO(jhi): use inner namespace internal or impl?
 // posgi::internal, posgi::impl
 
 void initializeLogging() {
@@ -123,7 +123,7 @@ void FrameworkImpl::Init() {
 void FrameworkImpl::Start() {
   PLOG_INFO << "FrameworkImpl::Start";
   BundleImpl::Start();
-  // TODO(JochenHiller): give thread a good name, see named thread sample
+  // TODO(jhi): give thread a good name, see named thread sample
   frameworkThread = new std::thread(&FrameworkImpl::frameworkThreadLoop, this);
   // give thread a chance to start
   std::this_thread::yield();
@@ -142,7 +142,7 @@ void FrameworkImpl::Stop() {
     framework_stop_cv.notify_one();
     PLOG_ERROR << "FrameworkImpl::Stop (notify thread done)";
     try {
-      // TODO(JochenHiller): why do we get a "thread::join failed: Invalid
+      // TODO(jhi): why do we get a "thread::join failed: Invalid
       // argument" here?
       frameworkThread->join();
     } catch (const std::system_error &err) {
@@ -210,7 +210,7 @@ osgi::Bundle *FrameworkImpl::InstallBundle(std::string manifest,
   bundleContextImpl->frameworkImpl = this;
   bundleImpl->SetBundleContext(bundleContextImpl);
   bundles.push_back(bundleImpl);
-  // TODO(JochenHiller): any other state than resolved?
+  // TODO(jhi): any other state than resolved?
   bundleImpl->SetState(BundleImpl::RESOLVED);
 
   return bundleImpl;

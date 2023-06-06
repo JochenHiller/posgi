@@ -21,7 +21,7 @@ RUN apt-get update \
   && /opt/python/venv/bin/pip3 install cmakelang cpplint \
   && rm -rf /var/lib/apt/lists/*
 
-# TODO(JochenHiller): include-what-you-use missing
+# TODO(jhi): include-what-you-use missing
 
 ENV PATH="/opt/python/venv/bin:$PATH"
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# TODO(JochenHiller): Use standard approach to setup project including all external dependencies
+# TODO(jhi): Use standard approach to setup project including all external dependencies
 # See Python VirtualEnv with scripts/bootstrap.sh and ./scripts/activate.sh
 
 usage() {

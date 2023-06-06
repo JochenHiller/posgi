@@ -20,7 +20,7 @@
 
 namespace osgi {
 
-// TODO(JochenHiller): move impl to another file and add an OSGi service with
+// TODO(jhi): move impl to another file and add an OSGi service with
 // its own header file
 
 // plain old C-style printf
@@ -128,7 +128,7 @@ Available commands
       std::cout << "OSGi console terminated" << std::endl;
       break;
     } else if (command == "exit") {
-      // TODO(JochenHiller): does not work on Linux
+      // TODO(jhi): does not work on Linux
       this->bundleContext->GetBundle(0)->Stop();
       std::cout << "OSGi framework terminated" << std::endl;
     } else if (command == "lb") {

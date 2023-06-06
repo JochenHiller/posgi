@@ -88,7 +88,7 @@
           <skip>${skipTests}</skip>
         </configuration>
         <executions>
-        <!-- TODO(JochenHiller): does not work in VS Code
+        <!-- TODO(jhi): does not work in VS Code
           <execution>
             <?m2e execute onConfiguration,onIncremental?>
             <id>checkstyle</id>

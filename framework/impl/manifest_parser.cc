@@ -13,7 +13,7 @@ namespace posgi {
 
 namespace ManifestHeader {
 
-// TODO(JochenHiller): check if unused constants will be removed by compiler
+// TODO(jhi): check if unused constants will be removed by compiler
 
 const char kManifestPath[] = "META-INF/MANIFEST.MF";
 

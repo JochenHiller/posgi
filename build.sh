@@ -10,7 +10,10 @@ Usage: $0 [clean|fmt|all|test|fuzztest-run|fuzztest-report|lint|help]
   test             run tests
   fuzztest-run     run fuzz tests, might run indefinitely
   fuzztest-report  run coverage report for fuzz tests
-  lint             run C++ linter(s) on all source files
+  lint             run all C++ linter(s) on all source files
+    lint-cpplint     run cpplint only
+    lint-clang-tidy  run clang-tidy only
+    lint-iwyu        run include-what-you-use only
   help             this help
 EOF
 }
@@ -22,7 +25,9 @@ DO_ALL="false"
 DO_TEST="false"
 DO_FUZZ_TEST_RUN="false"
 DO_FUZZ_TEST_REPORT="false"
-DO_LINT="false"
+DO_LINT_CPPINT="false"
+DO_LINT_CLANG_TIDY="false"
+DO_LINT_IWYU="false"
 DO_HELP="false"
 for arg in $@ ; do
   if [ "${arg}" = "clean" ] ; then
@@ -37,8 +42,16 @@ for arg in $@ ; do
     DO_FUZZ_TEST_RUN="true"
   elif [ "${arg}" = "fuzztest-report" ] ; then
     DO_FUZZ_TEST_REPORT="true"
-  elif [ "${arg}" = "lint" ] ; then
-    DO_LINT="true"
+  elif [ "${arg}" = "lint" ] ; then # all linters
+    DO_LINT_CPPINT="true"
+    DO_LINT_CLANG_TIDY="true"
+    DO_LINT_IWYU="true"
+  elif [ "${arg}" = "lint-cpplint" ] ; then
+    DO_LINT_CPPINT="true"
+  elif [ "${arg}" = "lint-clang-tidy" ] ; then
+    DO_LINT_CLANG_TIDY="true"
+  elif [ "${arg}" = "lint-iwyu" ] ; then
+    DO_LINT_IWYU="true"
   elif [ "${arg}" = "help" ] ; then
     DO_HELP="true"
   else
@@ -53,7 +66,9 @@ if    [ "${DO_CLEAN}" = "false" ] \
    && [ "${DO_TEST}" = "false" ]  \
    && [ "${DO_FUZZ_TEST_RUN}" = "false" ]  \
    && [ "${DO_FUZZ_TEST_REPORT}" = "false" ]  \
-   && [ "${DO_LINT}" = "false" ]  \
+   && [ "${DO_LINT_CPPLINT}" = "false" ]  \
+   && [ "${DO_LINT_CLANG_TIDY}" = "false" ]  \
+   && [ "${DO_LINT_IWYU}" = "false" ]  \
    ; then
   DO_HELP="true"
 fi
@@ -102,7 +117,7 @@ if [ "${DO_FUZZ_TEST_RUN}" = "true" ] ; then
   echo "Run fuzz tests"
   cmake -DCMAKE_BUILD_TYPE=Debug -S . -B build
   # we start with some good inputs to give fuzzer a good start
-  # TODO(JochenHiller): what to do if we have more fuzz tests?
+  # TODO(jhi): what to do if we have more fuzz tests?
   ./third_party/cifuzz/bin/cifuzz run --interactive=false \
     --seed-corpus framework/impl/posgi_fuzz_tests_inputs posgi_fuzz_tests
 fi
@@ -112,8 +127,7 @@ if [ "${DO_FUZZ_TEST_REPORT}" = "true" ] ; then
   ./third_party/cifuzz/bin/cifuzz coverage --output=./build/fuzz-test-coverage-report posgi_fuzz_tests
 fi
 
-# TODO(JochenHiller): lint-cpplint, lint-clang-tidy, lint-iwyu
-if [ "${DO_LINT}" = "true" ] ; then
+if [ "${DO_LINT_CPPLINT}" = "true" ] ; then
   # see https://stackoverflow.com/questions/51582604/how-to-use-cpplint-code-style-checking-with-cmake
   which cpplint >/dev/null
   if [ $? = 0 ] ; then
@@ -124,8 +138,10 @@ if [ "${DO_LINT}" = "true" ] ; then
   else
     echo "WARN: Could not find cpplint, ignoring..."
   fi
+fi
 
-  # TODO(JochenHiller): does not run on Linux
+if [ "${DO_LINT_CLANG_TIDY}" = "true" ] ; then
+  # TODO(jhi): does not run on Linux
   which clang-tidy >/dev/null
   if [ $? = 0 ] ; then
     rm -rf ./build ; cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
@@ -134,7 +150,9 @@ if [ "${DO_LINT}" = "true" ] ; then
   else
     echo "WARN: Could not find clang-tidy, ignoring..."
   fi
+fi
 
+if [ "${DO_LINT_IWYU}" = "true" ] ; then
   # see https://include-what-you-use.org/. This linter does not really give useful results, therefoe verbose=0
   which include-what-you-use >/dev/null
   if [ $? = 0 ] ; then

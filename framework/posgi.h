@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-// TODO(JochenHiller): enums?
+// TODO(jhi): enums?
 constexpr int RC_OK = 0;
 constexpr int RC_VERSION = 1;
 constexpr int RC_HELP = 2;

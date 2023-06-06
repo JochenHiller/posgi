@@ -14,6 +14,6 @@ Checks: -*,
         -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
         -cppcoreguidelines-pro-type-reinterpret-cast
 
-# TODO(JochenHiller): fix theses warnings with gtest: [bugprone-suspicious-include]
-# TODO(JochenHiller): fix theses warnings using GSL: [cppcoreguidelines-owning-memory]
-# TODO(JochenHiller): fix theses warnings due to plog: [-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-cppcoreguidelines-pro-type-reinterpret-cast]
+# TODO(jhi): fix theses warnings with gtest: [bugprone-suspicious-include]
+# TODO(jhi): fix theses warnings using GSL: [cppcoreguidelines-owning-memory]
+# TODO(jhi): fix theses warnings due to plog: [-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-cppcoreguidelines-pro-type-reinterpret-cast]

@@ -40,7 +40,7 @@ class ManifestParserTest : public testing::TestWithParam<std::string> {
     ASSERT_EQ(headers.size(), expected_size);
   }
 
-  // TODO(JochenHiller): how to know where ../ is, as called from build
+  // TODO(jhi): how to know where ../ is, as called from build
   // directory
   const std::string rootDir = "../";
   posgi::ManifestParser* parser;
@@ -138,7 +138,7 @@ TEST_P(OneLineInvalidTest, parse_one_line_invalid) {
   ASSERT_EQ(0, headers.size());
 }
 
-// TODO(JochenHiller): what to do with " KeyWithLeadingBlank: value" ?
+// TODO(jhi): what to do with " KeyWithLeadingBlank: value" ?
 
 // these values are all invalid
 // NOLINTNEXTLINE
