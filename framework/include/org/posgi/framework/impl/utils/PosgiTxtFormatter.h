@@ -11,21 +11,25 @@ namespace Utils {
 /*
  * This class will format a log message to this format:
 
-<Timestamp (ISO8601)> " " <LogLevel> " " [<thread-id-or-name>] [<file-class-method@line>] msg
+<Timestamp (ISO8601)> " " <log-level> " " "[" <thread-id-or-name> "]" " " "[" <file-class-method@line> "]" " " msg
 
 Sample:
 
 2023-05-18T12:41:14.082+02:00 ERROR [9562345] [posg..class.method@line] log message
 
  * where:
- *   ISO8601 timestamp:          see https://en.wikipedia.org/wiki/ISO_8601
- *   [<thread-id-or-name>]:      shortened to max 15 chars
- *   [<file-class-method@line>]: shortened to max 25 chars
+ *   ISO8601 timestamp:        see https://en.wikipedia.org/wiki/ISO_8601
+ *   <log-level>:              max 5 chars
+ *   <thread-id-or-name>:      shortened to max 15 chars
+ *   <file-class-method@line>: shortened to max 25 chars
 */
 // clang-format on
 
 template <bool useUtcTime>
 class PosgiTxtFormatterImpl {
+ private:
+  static constexpr int max_padding = 16;
+
  public:
   static plog::util::nstring header() {
     return plog::util::nstring();
@@ -48,17 +52,20 @@ which returns a string according to these rules:
 - the output will add `..` to indicate more characters
 - the output will add remaining characters, from text right side
 
-  * The code was 80% correct, I had to fix some bugs for edge cases in input data.
+  * The code was 80% correct, we had to fix some bugs for edge cases in input data.
   * There is also a fuzz test to check about different input data.
+  * 
+  * ChatGPT was not able to generate useful test cases, the tests have been wrong, not matching implementation.
   */
   // clang-format on
 
-  static constexpr int max_padding = 16;
-  static plog::util::nstring fixed_column(std::string text, size_t max_width,
-                                         size_t min_left_chars) {
+  static plog::util::nstring fixed_column(const std::string text,
+                                          const size_t max_width,
+                                          const size_t min_left_chars) {
     if (text.length() <= max_width) {
       auto padding = max_width - text.length();
-      // limit padding in case max_width is too high
+      // limit padding in case max_width is too high, e.g. when max_width = -1
+      // (INT_MAX)
       if (padding > max_padding) {
         padding = max_padding;
       }
@@ -80,18 +87,21 @@ which returns a string according to these rules:
     } else if (max_width == 2) {
       return text.substr(0, 2);
     } else {
+      auto left_chars = min_left_chars;
+      // TODO(jhi): must be of type int, if size_t we will have underflow
+      // Do we really should use size_t or better int?
       int remaining_chars =
-          max_width - min_left_chars - 2;  // "- 2" to account for ".."
+          max_width - left_chars - 2;  // "- 2" to account for ".."
       // fix: check if remaining_chars is too small which will result in wrong
       // access to string
       if (remaining_chars < 0) {
         remaining_chars = 0;
-        min_left_chars = max_width - 2;
-        if (min_left_chars < 0) {
-          min_left_chars = 0;
+        left_chars = max_width - 2;
+        if (left_chars < 0) {
+          left_chars = 0;
         }
       }
-      return text.substr(0, min_left_chars) + ".." +
+      return text.substr(0, left_chars) + ".." +
              text.substr(text.length() - remaining_chars);
     }
   }
@@ -124,16 +134,18 @@ which returns a string according to these rules:
     constexpr int thread_width = 6;
     constexpr int func_line_width = 25;
 
-    auto threadName = fixed_column(std::to_string(record.getTid()), thread_width,
-                                  min_left_chars);
-    auto funcLine = fixed_column(std::string(record.getFunc()) + PLOG_NSTR("@") +
-                                    std::to_string(record.getLine()),
-                                func_line_width, min_left_chars);
+    auto severity = fixed_column(severityToString(record.getSeverity()), 5, 0);
+    auto thread_name = fixed_column(std::to_string(record.getTid()),
+                                    thread_width, min_left_chars);
+    auto func_line =
+        fixed_column(std::string(record.getFunc()) + PLOG_NSTR("@") +
+                         std::to_string(record.getLine()),
+                     func_line_width, min_left_chars);
 
-    ss << std::setfill(PLOG_NSTR(' ')) << std::setw(5) << std::left
-       << severityToString(record.getSeverity()) << PLOG_NSTR(" ");
-    ss << PLOG_NSTR("[") << threadName << PLOG_NSTR("] ");
-    ss << PLOG_NSTR("[") << funcLine << PLOG_NSTR("] ");
+    ss << std::setfill(PLOG_NSTR(' ')) << std::setw(5) << std::left << severity
+       << PLOG_NSTR(" ");
+    ss << PLOG_NSTR("[") << thread_name << PLOG_NSTR("] ");
+    ss << PLOG_NSTR("[") << func_line << PLOG_NSTR("] ");
     ss << record.getMessage() << PLOG_NSTR("\n");
 
     return ss.str();
