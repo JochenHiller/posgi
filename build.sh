@@ -2,20 +2,23 @@
 
 usage() {
   cat <<EOF
-Usage: $0 [clean|fmt|compile|test|fuzztest-run|fuzztest-report|lint|help|all]
+Usage: $0 [clean|fmt|compile|test|fuzztest-run-*|fuzztest-report|fuzztest-clean|lint|help|all]
 
-  clean            cleanup all generated files
-  fmt              format all source files (.cc, .h, CMakelists.txt)
-  compile          build all targets
-  test             run tests
-  fuzztest-run     run fuzz tests, might run indefinitely
-  fuzztest-report  run coverage report for fuzz tests
-  lint             run all C++ linter(s) on all source files
+  clean              cleanup all generated files
+  fmt                format all source files (.cc, .h, CMakelists.txt)
+  compile            build all targets
+  test               run tests
+  fuzztest-run-*     run fuzz tests, might run indefinitely
+    fuzztest-run-01  run fuzz tests for manifest
+    fuzztest-run-02  run fuzz tests for PosgiTxtFormatter.formatColumn
+  fuzztest-report    run coverage report for fuzz tests
+  fuzztest-clean     clean all temporary fuzz tests files
+  lint               run all C++ linter(s) on all source files
     lint-cpplint     run cpplint only
     lint-clang-tidy  run clang-tidy only
     lint-iwyu        run include-what-you-use only
-  help             this help
-  all              will run clean, fmt, compile, test, lint in a row
+  help               this help
+  all                will run clean, fmt, compile, test, lint in a row
 EOF
 }
 
@@ -25,11 +28,14 @@ DO_FMT="false"
 DO_COMPILE="false"
 DO_TEST="false"
 DO_FUZZ_TEST_RUN="false"
+FUZZ_TEST_RUN_ARG=""
 DO_FUZZ_TEST_REPORT="false"
-DO_LINT_CPPINT="false"
+DO_FUZZ_TEST_CLEAN="false"
+DO_LINT_CPPLINT="false"
 DO_LINT_CLANG_TIDY="false"
 DO_LINT_IWYU="false"
 DO_HELP="false"
+
 for arg in $@ ; do
   if [ "${arg}" = "clean" ] ; then
     DO_CLEAN="true"
@@ -39,16 +45,19 @@ for arg in $@ ; do
     DO_COMPILE="true"
   elif [ "${arg}" = "test" ] ; then
     DO_TEST="true"
-  elif [ "${arg}" = "fuzztest-run" ] ; then
+  elif [[ ${arg} =~ fuzztest-run* ]] ; then
     DO_FUZZ_TEST_RUN="true"
+    FUZZ_TEST_RUN_ARG="${arg}"
   elif [ "${arg}" = "fuzztest-report" ] ; then
     DO_FUZZ_TEST_REPORT="true"
+  elif [ "${arg}" = "fuzztest-clean" ] ; then
+    DO_FUZZ_TEST_CLEAN="true"
   elif [ "${arg}" = "lint" ] ; then # all linters
-    DO_LINT_CPPINT="true"
+    DO_LINT_CPPLINT="true"
     DO_LINT_CLANG_TIDY="true"
     DO_LINT_IWYU="true"
   elif [ "${arg}" = "lint-cpplint" ] ; then
-    DO_LINT_CPPINT="true"
+    DO_LINT_CPPLINT="true"
   elif [ "${arg}" = "lint-clang-tidy" ] ; then
     DO_LINT_CLANG_TIDY="true"
   elif [ "${arg}" = "lint-iwyu" ] ; then
@@ -60,7 +69,7 @@ for arg in $@ ; do
     DO_FMT="true"
     DO_COMPILE="true"
     DO_TEST="true"
-    DO_LINT_CPPINT="true"
+    DO_LINT_CPPLINT="true"
     DO_LINT_CLANG_TIDY="true"
     DO_LINT_IWYU="true"
   else
@@ -87,6 +96,7 @@ if [ "${DO_HELP}" = "true" ] ; then
   exit 1
 fi
 
+
 if [ "${DO_CLEAN}" = "true" ] ; then
   if [ -d build ] ; then
     echo "Clean ./build directory"
@@ -110,7 +120,7 @@ if [ "${DO_COMPILE}" = "true" ] ; then
   echo "Make ./build directory"
   cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -S . -B build
   (cd build ; make)
-  ls -al build/libposgi* build/posgi*
+  ls -al build/libposgi* build/posgi_cli build/posgi_fuzz_tests build/posgi_sample03 build/posgi_tests
 fi
 
 if [ "${DO_TEST}" = "true" ] ; then
@@ -118,22 +128,39 @@ if [ "${DO_TEST}" = "true" ] ; then
   cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -S . -B build
   cmake --build build
   (cd build ; ctest --output-on-failure)
-  # show console output when running tests. Useful during development
+  # below: show console output when running tests. Useful during development
   # (cd build ; ctest --output-on-failure --gtest_catch_exceptions=0)
 fi
 
 if [ "${DO_FUZZ_TEST_RUN}" = "true" ] ; then
   echo "Run fuzz tests"
   cmake -DCMAKE_BUILD_TYPE=Debug -S . -B build
-  # we start with some good inputs to give fuzzer a good start
-  # TODO(jhi): what to do if we have more fuzz tests?
-  ./third_party/cifuzz/bin/cifuzz run --interactive=false \
-    --seed-corpus framework/impl/posgi_fuzz_tests_inputs posgi_fuzz_tests
+
+  if [ "${FUZZ_TEST_RUN_ARG}" = "fuzztest-run-01" ] ; then
+    echo "Run fuzz tests for manifest"
+    ./third_party/cifuzz/bin/cifuzz run --interactive=false \
+      --seed-corpus framework/impl/fuzz_tests_manifest_inputs posgi_fuzz_tests_manifest
+    exit 0
+  fi
+  if [ "${FUZZ_TEST_RUN_ARG}" = "fuzztest-run-02" ] ; then
+    echo "Run fuzz tests for PosgiTxtFormatter.fixedColumn"
+    ./third_party/cifuzz/bin/cifuzz run --interactive=false \
+      --seed-corpus framework/impl/utils/fuzz_tesst_txtformatter_inputs posgi_fuzz_tests_txtformatter
+    exit 0
+  fi
 fi
 
 if [ "${DO_FUZZ_TEST_REPORT}" = "true" ] ; then
   echo "Report fuzz tests coverage"
-  ./third_party/cifuzz/bin/cifuzz coverage --output=./build/fuzz-test-coverage-report posgi_fuzz_tests
+  ./third_party/cifuzz/bin/cifuzz coverage --output=./build/fuzz-tests-manifest-coverage-report posgi_fuzz_tests_manifest
+  ./third_party/cifuzz/bin/cifuzz coverage --output=./build/fuzz-tests-txtformatter-coverage-report posgi_fuzz_tests_txtformatter
+fi
+
+if [ "${DO_FUZZ_TEST_CLEAN}" = "true" ] ; then
+  if [ -d ./.cifuzz-build ] || [ -d ./.cifuzz-corpus ] ; then
+    echo "Clean fuzz tests data"
+    rm -rf ./.cifuzz-build ./.cifuzz-corpus
+  fi
 fi
 
 if [ "${DO_LINT_CPPLINT}" = "true" ] ; then

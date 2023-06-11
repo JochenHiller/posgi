@@ -86,8 +86,9 @@ target_include_directories(
 target_clangformat_setup(posgi)
 
 # core tests
-add_executable(posgi_tests framework/posgi_test.cc
-                           framework/impl/manifest_parser_test.cc)
+add_executable(
+  posgi_tests framework/posgi_test.cc framework/impl/manifest_parser_test.cc
+              framework/impl/utils/PosgiTxtFormatter_test.cc)
 # TODO(Googletest): bug in Googletest:
 # https://github.com/google/googletest/issues/4206 will results in 2 warnings
 # "implicit-int-float-conversion" when compiling gtest-all.cc
@@ -103,16 +104,32 @@ target_include_directories(
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/cifuzz/include>)
 include(GoogleTest)
 gtest_discover_tests(posgi_tests)
-# run one single test only, use for development, add this option TEST_FILTER
-# ManifestParserTest.parse_standard
+
+# run one single test only, use for development, add this optio
+
+# TEST_FILTER PosgiTxtFormatterTest.fixed_column
 
 #
 # cifuzz tests
 #
-add_fuzz_test(posgi_fuzz_tests framework/impl/manifest_parser_fuzz_test.cc)
-target_link_libraries(posgi_fuzz_tests PRIVATE posgi)
+add_fuzz_test(posgi_fuzz_tests_manifest
+              framework/impl/manifest_parser_fuzz_test.cc)
+target_link_libraries(posgi_fuzz_tests_manifest PRIVATE posgi)
 target_include_directories(
-  posgi_fuzz_tests
+  posgi_fuzz_tests_manifest
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/build>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/framework/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/plog-1.1.9/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/googletest-1.13.0/googletest/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/boost_1_82_0>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/cifuzz/include>)
+
+add_fuzz_test(posgi_fuzz_tests_txtformatter
+              framework/impl/utils/PosgiTxtFormatter_fuzz_test.cc)
+target_link_libraries(posgi_fuzz_tests_txtformatter PRIVATE posgi)
+target_include_directories(
+  posgi_fuzz_tests_txtformatter
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/build>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/framework/include>

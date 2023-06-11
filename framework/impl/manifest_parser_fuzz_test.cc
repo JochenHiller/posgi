@@ -13,7 +13,7 @@ static posgi::ManifestParser *parser;
 
 FUZZ_TEST_SETUP() {
   // enable if you want to see fuzzed data
-  // plog::init(plog::fatal, "posgi_fuzz_tests.log");
+  // plog::init(plog::fatal, "posgi_fuzz_tests_manifest.log");
   PLOG_FATAL << "FUZZ_TEST_SETUP";
 
   parser = new posgi::ManifestParser();

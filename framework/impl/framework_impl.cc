@@ -20,6 +20,7 @@
 #include "org/osgi/framework/launch/framework.h"
 #include "org/posgi/framework/impl/bundle_context_impl.h"
 #include "org/posgi/framework/impl/manifest_parser.h"
+#include "org/posgi/framework/impl/utils/PosgiTxtFormatter.h"
 
 namespace posgi {
 
@@ -38,13 +39,13 @@ void initializeLogging() {
   switch (type) {
     case file:
       // Option A) fixed file logger
-      plog::init(plog::debug, "posgi.log");
+      { plog::init<Utils::PosgiTxtFormatter>(plog::debug, "posgi.log"); }
       break;
 
     case console:
       // Option B) Console logging
       {
-        static plog::ConsoleAppender<plog::TxtFormatter> consoleAppender;
+        static plog::ConsoleAppender<Utils::PosgiTxtFormatter> consoleAppender;
         plog::init(plog::debug, &consoleAppender);
       }
       break;
@@ -52,7 +53,8 @@ void initializeLogging() {
     case color_console:
       // Option C) Color console logger
       {
-        static plog::ColorConsoleAppender<plog::TxtFormatter> consoleAppender;
+        static plog::ColorConsoleAppender<Utils::PosgiTxtFormatter>
+            consoleAppender;
         plog::init(plog::debug, &consoleAppender);
       }
       break;
