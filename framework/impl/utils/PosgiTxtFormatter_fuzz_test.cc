@@ -31,5 +31,5 @@ FUZZ_TEST(const uint8_t *data, size_t size) {
   PLOG_FATAL << "FUZZ_TEST: '" << text_corpus << "', " << max_width_corpus
              << ", " << min_left_char_corpus;
   auto formatter = Utils::PosgiTxtFormatter();
-  formatter.fixedColumn(text_corpus, max_width_corpus, min_left_char_corpus);
+  formatter.fixed_column(text_corpus, max_width_corpus, min_left_char_corpus);
 }

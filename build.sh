@@ -143,7 +143,7 @@ if [ "${DO_FUZZ_TEST_RUN}" = "true" ] ; then
     exit 0
   fi
   if [ "${FUZZ_TEST_RUN_ARG}" = "fuzztest-run-02" ] ; then
-    echo "Run fuzz tests for PosgiTxtFormatter.fixedColumn"
+    echo "Run fuzz tests for PosgiTxtFormatter.fixed_column"
     ./third_party/cifuzz/bin/cifuzz run --interactive=false \
       --seed-corpus framework/impl/utils/fuzz_tesst_txtformatter_inputs posgi_fuzz_tests_txtformatter
     exit 0
