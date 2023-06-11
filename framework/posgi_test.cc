@@ -1,6 +1,6 @@
 #include "posgi.h"
 
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 // TODO(jhi): why does clang-tidy complain about gtest?
 // NOLINTNEXTLINE

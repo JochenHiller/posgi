@@ -1,6 +1,9 @@
 #include "org/osgi/framework/service/osgi_console.h"
 
+#include <plog/Log.h>
+
 #include <atomic>
+#include <boost/algorithm/string.hpp>
 #include <chrono>              // NOLINT [build/c++11]
 #include <condition_variable>  // NOLINT [build/c++11]
 #include <cstdio>
@@ -13,10 +16,8 @@
 #include <thread>  // NOLINT [build/c++11]
 #include <vector>
 
-#include "boost/algorithm/string.hpp"
 #include "org/osgi/framework/bundle.h"
 #include "org/posgi/framework/impl/bundle_context_impl.h"
-#include "plog/Log.h"
 
 namespace osgi {
 

@@ -1,9 +1,9 @@
 #include "some_bundle.h"  // NOLINT [build/include_subdir]
 
+#include <org/osgi/framework/bundle_context.h>
+
 #include <iostream>
 #include <string>
-
-#include "org/osgi/framework/bundle_context.h"
 
 namespace sample {
 

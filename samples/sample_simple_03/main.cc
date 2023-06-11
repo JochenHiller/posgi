@@ -2,12 +2,13 @@
  * Simple program to to install and start & stop one single bundle.
  */
 
+#include <org/osgi/framework/bundle_context.h>
+#include <org/osgi/framework/constants.h>
+#include <org/osgi/framework/launch/framework.h>
+#include <org/osgi/framework/launch/framework_factory.h>
+
 #include <iostream>
 
-#include "org/osgi/framework/bundle_context.h"
-#include "org/osgi/framework/constants.h"
-#include "org/osgi/framework/launch/framework.h"
-#include "org/osgi/framework/launch/framework_factory.h"
 #include "some_bundle.h"  // NOLINT [build/include_subdir]
 
 int main() {

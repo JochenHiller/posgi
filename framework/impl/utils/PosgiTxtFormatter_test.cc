@@ -1,8 +1,8 @@
 #include "org/posgi/framework/impl/utils/PosgiTxtFormatter.h"
 
-#include <string>
+#include <gtest/gtest.h>
 
-#include "gtest/gtest.h"
+#include <string>
 
 // NOLINTNEXTLINE
 TEST(PosgiTxtFormatterTest, fixed_column_valid_args) {
@@ -36,16 +36,16 @@ TEST(PosgiTxtFormatterTest, fixed_column_valid_args) {
   // max_width close to text size
   EXPECT_EQ("1234567890ABCDEFGHIJKLMNOPQRSTUVW..",
             formatter.fixed_column(pattern_long, pattern_long.size() - 1,
-                                  pattern_long.size() - 1));
+                                   pattern_long.size() - 1));
   EXPECT_EQ("1234567890ABCDEFGHIJKLMNOPQRSTUVW..",
             formatter.fixed_column(pattern_long, pattern_long.size() - 1,
-                                  pattern_long.size() - 2));
+                                   pattern_long.size() - 2));
   EXPECT_EQ("1234567890ABCDEFGHIJKLMNOPQRSTUVW..",
             formatter.fixed_column(pattern_long, pattern_long.size() - 1,
-                                  pattern_long.size() - 3));
+                                   pattern_long.size() - 3));
   EXPECT_EQ("1234567890ABCDEFGHIJKLMNOPQRSTUV..Z",
             formatter.fixed_column(pattern_long, pattern_long.size() - 1,
-                                  pattern_long.size() - 4));
+                                   pattern_long.size() - 4));
 }
 
 // NOLINTNEXTLINE

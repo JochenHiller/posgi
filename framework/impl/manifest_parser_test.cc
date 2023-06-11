@@ -1,5 +1,6 @@
 #include "org/posgi/framework/impl/manifest_parser.h"
 
+#include <gtest/gtest.h>
 #include <plog/Appenders/ColorConsoleAppender.h>
 #include <plog/Formatters/TxtFormatter.h>
 #include <plog/Initializers/ConsoleInitializer.h>
@@ -12,7 +13,6 @@
 #include <regex>
 #include <string>
 
-#include "gtest/gtest.h"
 #include "org/posgi/framework/impl/utils/file_utils.h"
 
 // use a fixture, use TEST_F or TEST_P for paramterized tests then later

@@ -1,5 +1,7 @@
 #include "org/posgi/framework/impl/bundle_context_impl.h"
 
+#include <plog/Log.h>
+
 #include <string>
 #include <vector>
 
@@ -7,7 +9,6 @@
 #include "org/osgi/framework/bundle_context.h"
 #include "org/posgi/framework/impl/bundle_context_impl.h"
 #include "org/posgi/framework/impl/manifest_parser.h"
-#include "plog/Log.h"
 
 namespace posgi {
 

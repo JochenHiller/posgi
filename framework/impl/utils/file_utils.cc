@@ -1,12 +1,12 @@
 #include "org/posgi/framework/impl/utils/file_utils.h"
 
+#include <plog/Log.h>
+
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <regex>
 #include <string>
-
-#include "plog/Log.h"
 
 namespace Utils {
 

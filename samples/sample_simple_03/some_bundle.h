@@ -1,11 +1,11 @@
 #ifndef POSGI_SAMPLES_SAMPLE_SIMPLE_02_SOME_BUNDLE_H
 #define POSGI_SAMPLES_SAMPLE_SIMPLE_02_SOME_BUNDLE_H
 
+#include <org/osgi/framework/bundle_activator.h>
+#include <org/osgi/framework/bundle_context.h>
+
 #include <iostream>
 #include <string>
-
-#include "org/osgi/framework/bundle_activator.h"
-#include "org/osgi/framework/bundle_context.h"
 
 namespace sample {
 

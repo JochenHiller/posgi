@@ -1,13 +1,14 @@
 #include "org/posgi/framework/impl/manifest_parser.h"
 
+#include <plog/Log.h>
+
+#include <boost/algorithm/string.hpp>
 #include <fstream>
 #include <iostream>
 #include <map>
 #include <string>
 
-#include "boost/algorithm/string.hpp"
 #include "org/osgi/framework/bundle_context.h"
-#include "plog/Log.h"
 
 namespace posgi {
 
