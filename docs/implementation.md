@@ -27,7 +27,6 @@ Up-to-now I am using the Google style guide without changes, for simplicity.
   * See <https://google.github.io/styleguide/cppguide.html#Namespaces>
   * See tips from [Abseil](https://abseil.io/tips/130) as well
 
-
 ## Fuzzy testing
 
 For fuzzy testing we use [cifuzz](https://github.com/CodeIntelligenceTesting/cifuzz), an interesting fuzzy testing tool from CodeIntelligence. We do NOT use their central CI server, we just do local fuzz test generation.
@@ -62,6 +61,10 @@ The setup is quite easy:
 
 There is at the moment one fuzz test for parsing manifest file. Up to now no problems have been identified, so code seems to be OK and not breakable by unexpected data. For the test implementation see [manifest_parser_fuzz_test.cc](../framework/impl/manifest_parser_fuzz_test.cc).
 
+## Commits
+
+We try to follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/). We do also experiment with some AI assitance in generating useful commit messages.
+
 ## C++ Pros and Cons
 
 ### Pros
@@ -71,6 +74,12 @@ There is at the moment one fuzz test for parsing manifest file. Up to now no pro
   * easy writing test cases, easy test suites, CMake integration
   * ignore tests, parameterized tests, run single tests on CLI if needed
   * hides console output, can be enabled by start parameter (`--gtest_catch_exceptions=0`)
+* Google style guide recommends to avoid to use exceptions, which I support
+* Modern C++ supports Embedded systems very good
+  * C++14: Binary literals, e.g. `0b1010'1100`
+  * C++17: enforce processing of return values with `[[nodiscard]]` (like in Ada)
+  * C++17: `static_assert()` mechanism, `if constexpr` for compile time optimizations
+  * C++17: guaranteeing copy elision (return value optimization), for hard real-time systems
 
 ### Cons
 
@@ -78,89 +87,8 @@ There is at the moment one fuzz test for parsing manifest file. Up to now no pro
 * String format: old plain C-style vs. modern C++ style: see [osgi_console.cc](../framework/osgi_console.cc): both options are not really nice. Using old C-style requires conversion from `char *` to `std::string` and vice versa. And the C++ formatting options are also not as intuitive.
 * Googletest framework does complain with linter(s)
 
-## References
+### Header-only C++ libraries
 
-### OSGi specifications
+Some used C++ libraries are so called "Header-only libraries". We thought if this would make sense as well for posgi, but due to drawbacks of such a solution we decided to **NOT** implement as header-only apprpoach. Especially the not clear separation between API and implementation is for posgi a KO criteria.  
 
-* <https://docs.osgi.org/specification/>
-* OSGi R8 - Specification
-  * [OSGi Core Release 8 Specification](https://docs.osgi.org/specification/osgi.core/8.0.0/) ([pdf](https://docs.osgi.org/download/r8/osgi.core-8.0.0.pdf))
-  * [OSGi Compendium Release 8 Specification](https://docs.osgi.org/specification/osgi.cmpn/8.0.0/) ([pdf](https://docs.osgi.org/download/r8/osgi.cmpn-8.0.0.pdf))
-  * [OSGi Compendium Release 8.1 Specification](https://docs.osgi.org/specification/osgi.cmpn/8.1.0/) ([pdf](https://docs.osgi.org/download/r8/osgi.cmpn-8.1.0.pdf))
-* OSGi R8 - Documentation
-  * [OSGi Annotation Release 8 Javadoc](https://docs.osgi.org/javadoc/osgi.annotation/8.1.0/)
-  * [OSGi Core Release 8 Javadoc](https://docs.osgi.org/javadoc/osgi.core/8.0.0/)
-  * [OSGi Compendium Release 8 Javadoc](https://docs.osgi.org/javadoc/osgi.cmpn/8.0.0/)
-  * [OSGi Compendium Release 8.1 Javadoc](https://docs.osgi.org/javadoc/osgi.cmpn/8.1.0/)
-* OSGi R8 - Artifacts
-  * [OSGi Core](https://central.sonatype.com/artifact/org.osgi/osgi.core/8.0.0)
-  * [OSGi Annotations 8.1](https://central.sonatype.com/artifact/org.osgi/osgi.annotation/8.1.0)
-  * [OSGi Compendium Spec for Logging 1.5](https://central.sonatype.com/artifact/org.osgi/org.osgi.service.log/1.5.0)
-  * more to add here...
-
-### OSGi and C/C++
-
-* Apache Celix project
-  * <https://celix.apache.org/>
-
-* <https://blog.cppmicroservices.org/2012/03/29/osgi-and-c++/>
-
-* nOSGi - Native OSGi implementation, Universität Ulm (development stopped in 2014)
-  * <https://sourceforge.net/p/nosgi/home/Home/>
-  * <https://dl.acm.org/doi/10.1145/2016551.2016555>
-  * <https://www.uni-ulm.de/in/in/vs/res/proj/nostrum/getting-started/>
-
-### C++
-
-* C++ Language reference
-  * <https://cppreference.com>
-
-* C++ Core Guidelines
-  * Guidelines: <https://github.com/isocpp/CppCoreGuidelines>
-  * Guidelines Support Library: <https://github.com/microsoft/gsl>
-
-* C++ Libraries
-  * <https://github.com/google?language=c%2B%2B>
-  * <https://blog.codacy.com/10-cpp-open-source-projects/>
-
-* Google C++ Style guide
-  * <https://google.github.io/styleguide/cppguide.html>
-  * <https://github.com/google/styleguide>
-  * <https://opensource.google/documentation/policies/cplusplus-support>
-
-* CMake
-  * <https://code.visualstudio.com/docs/cpp/cmake-linux>
-  * <https://cmake.org/cmake/help/latest/guide/tutorial/index.html>
-  * <https://github.com/zemasoft/clangformat-cmake>
-  * <https://github.com/cheshirekow/cmake_format>
-  * <http://google.github.io/googletest/quickstart-cmake.html>
-
-* Linter
-  * cpplint (by Google): <https://github.com/google/styleguide/blob/gh-pages/cpplint/cpplint.py>
-  * Maintained version: <https://github.com/cpplint/cpplint>
-  * <https://stackoverflow.com/questions/51582604/how-to-use-cpplint-code-style-checking-with-cmake>
-  * Good video, recommended to view: <https://www.youtube.com/watch?v=rLopVhns4Zs&t=4633s>
-  * <https://include-what-you-use.org/>
-  * <https://stackoverflow.com/questions/45667850/disable-specific-warnings-from-cpplint>
-
-* Linter hints
-  * "explicit" should be used on single-parameter constructors and conversion operators: <https://rules.sonarsource.com/cpp/RSPEC-1709>
-  * Google Style Guide "<chrono> is an unapproved C++11 header": <https://stackoverflow.com/questions/33653326/google-style-guide-chrono-is-an-unapproved-c11-header>
-
-* Multiple inheritance
-  * <https://stackoverflow.com/questions/48407658/stumped-by-simple-c-multiple-inheritance-example>
-
-* Testing
-  * <https://github.com/google/googletest>
-
-* Fuzzy testing
-  * <https://github.com/CodeIntelligenceTesting/cifuzz>
- 
-* Logging frameworks
-  * <https://github.com/SergiusTheBest/plog> ==> selected logging framework
-  * <https://github.com/gabime/spdlog>
-  * <https://logging.apache.org/log4cxx/latest_stable/>
-
-* Reflection
-  * <https://www.rttr.org/>
-  * <https://bitbucket.org/barczpe/oops/src/master/>
+There is a good discussion about Pros and Cons of this approach [here](https://stackoverflow.com/questions/12671383/benefits-of-header-only-libraries).

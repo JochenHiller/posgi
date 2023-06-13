@@ -18,3 +18,5 @@ Implementation documentation: [docs/implementation.md](docs/implementation.md)
 Using posgi: [docs/using.md](docs/using.md)
 
 How to build posgi yourself: [docs/build.md](docs/build.md)
+
+Useful references: [docs/references.md](docs/references.md)

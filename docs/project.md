@@ -4,17 +4,14 @@
 
 ### Work in progress (WIP)
 
-* [ ] lint: check include files for use, clang-tidy
-* [ ] manifest parser: parse with errors/exceptions?
-* [ ] linter: check for include files if really needed (clang-tidy)
-* [ ] check for smart memory management
+* [ ] Improve IDEs (VS Code, CLion)
 * [ ] console as service bundle
   * [ ] bundles/console/include/org/osgi/service/console/console.h, command.h
   * [ ] bundles/console/impl/osgi_console.cc, command_xxx.cc
 * [ ] Pros and Cons C++
+* [ ] check for smart memory management
 * [ ] Linux build and tests
 * [ ] Coverage: fuzz, exlucde third_party libraries (plog, boost)
-* [ ] Coverage: also for normal tests
 
 ### Minimum viable product (MVP)
 
@@ -29,7 +26,7 @@
   * [ ] Console bundle to manage framework and bundles (stdin/stdout console, telnet)
 * [ ] Implementation
   * [ ] Common logging, prepare for later log service
-  * [ ] Log Formatter with this format: limit thread name and class/file to max. size, cut from right side
+  * [x] Log Formatter with this format: limit thread name and class/file to max. size, cut from right side
   * [ ] Namespaces: osgi::framework, osgi::services ???
   * [ ] Named threads
 * [ ] CI/CD
@@ -76,7 +73,9 @@ Specification for LogFormatter:
   * [ ] Fuzzy tests (e.g. on ManifestParser), using Jazzer
   * [ ] G++ 13
   * [ ] Bazel support
+  * [ ] Lint: check include files for use, clang-tidy
   * [ ] More C++ Linters (clang-tidy, include-what-you-use, cppcheck)
+  * [ ] Coverage: also for normal tests
 * [ ] Further Ideas
   * [ ] Check for OSGi.fx support (Bundle/Service layer) (agent, sockets, DTOs), own management agent using socket and JSON?
   * [ ] Gogo telnet console
