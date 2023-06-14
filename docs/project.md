@@ -26,7 +26,7 @@
   * [ ] Console bundle to manage framework and bundles (stdin/stdout console, telnet)
 * [ ] Implementation
   * [ ] Common logging, prepare for later log service
-  * [x] Log Formatter with this format: limit thread name and class/file to max. size, cut from right side
+  * [x] Log Formatter with format: limit thread name and class/file to max. size, cut from right side
   * [ ] Namespaces: osgi::framework, osgi::services ???
   * [ ] Named threads
 * [ ] CI/CD
@@ -44,15 +44,6 @@
   * [x] Standard OpenSource files in project
   * [ ] Provide copyright headers, at least class headers, consider to add copyright header by script
   * [ ] Pros and Cons of C++
-
-Specification for LogFormatter:
-
-```txt
-# <Timestamp (ISO8601)> " " <LogLevel> " " [<[thread-id-or-name]>] [<file-class-method@line>] [msg]
-# - [<[thread-id-or-name]>] shortened to max 15 chars
-# - [<file-class-method@line>] shortened to max 25 chars
-2023-05-18T12:41:14.082Z ERROR [thread-id-or-name] [posgi...meworkThreadLoop@186] FrameworkImpl::frameworkThreadLoop: Signal received!
-```
 
 ### Further features (backlog)
 

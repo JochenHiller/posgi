@@ -52,14 +52,21 @@ The setup is quite easy:
 # run fuzz tests indefinitely, use corpus with good input data, stop wth CTRL-C
 ./third_party/cifuzz/bin/cifuzz run \           
   --interactive=false \
-  --seed-corpus framework/impl/posgi_fuzz_tests_inputs \
-  posgi_fuzz_tests
+  --seed-corpus framework/impl/posgi_fuzz_tests_manifest_inputs \
+  posgi_fuzz_tests_manifest
 
 # generate a HTML report of fuzz tests
-./third_party/cifuzz/bin/cifuzz coverage --output=./build/coverage-report posgi_fuzz_tests
+./third_party/cifuzz/bin/cifuzz coverage --output=./build/coverage-report posgi_fuzz_tests_manifest
 ```
 
-There is at the moment one fuzz test for parsing manifest file. Up to now no problems have been identified, so code seems to be OK and not breakable by unexpected data. For the test implementation see [manifest_parser_fuzz_test.cc](../framework/impl/manifest_parser_fuzz_test.cc).
+There are two fuzz tests for parsing manifest file, checking log formatter. Up to now no problems have been identified, so code seems to be OK and not breakable by unexpected data. For the test implementation see [manifest_parser_fuzz_test.cc](../framework/impl/manifest_parser_fuzz_test.cc).
+
+Note: the fuzz tests have to be started by their own (when running fuzz tests only local). There are way to run fuzz tests with
+
+```bash
+./build.sh fuzztest-run-01   # for manifest
+./build.sh fuzztest-run-02   # for txtformatter
+```
 
 ## Commits
 
@@ -89,6 +96,6 @@ We try to follow [Conventional Commits](https://www.conventionalcommits.org/en/v
 
 ### Header-only C++ libraries
 
-Some used C++ libraries are so called "Header-only libraries". We thought if this would make sense as well for posgi, but due to drawbacks of such a solution we decided to **NOT** implement as header-only apprpoach. Especially the not clear separation between API and implementation is for posgi a KO criteria.  
+Some usthird party C++ libraries used are so called "Header-only libraries" (e.g. plog). We checked if this would make sense as well for posgi, but due to drawbacks of such a solution we decided to **NOT** implement posgi as header-only approach. Especially the unclear separation between API and implementation was a clear argument against header-only. criteria.
 
 There is a good discussion about Pros and Cons of this approach [here](https://stackoverflow.com/questions/12671383/benefits-of-header-only-libraries).
