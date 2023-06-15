@@ -9,6 +9,7 @@
 
 #include "org/posgi/framework/impl/manifest_parser.h"
 
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables)
 static posgi::ManifestParser *parser;
 
 FUZZ_TEST_SETUP() {

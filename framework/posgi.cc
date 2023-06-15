@@ -18,21 +18,47 @@ namespace sample {
 
 class SomeBundle : public osgi::BundleActivator {
  public:
-  // use a member constructor initializer list
-  explicit SomeBundle(std::string name) : name(name) {
-    std::cout << "SomeBundle::SomeBundle(" << name << ")\n";
+  // Constructor
+  explicit SomeBundle(std::string name) : name_(std::move(name)) {
+    std::cout << "SomeBundle::SomeBundle(" << name_ << ")\n";
   }
-  virtual ~SomeBundle() = default;
+  // Copy constructor
+  SomeBundle(const SomeBundle& other) : name_(other.name_) {
+  }
+  // Copy assignment operator
+  SomeBundle& operator=(const SomeBundle& other) {
+    if (this != &other) {
+      name_ = other.name_;
+    }
+    return *this;
+  }
+  // Move constructor
+  // TODO(jhi): why does clang-tidy complain about this? It declares noexcept
+  // NOLINTNEXTLINE(bugprone-exception-escape)
+  SomeBundle(SomeBundle&& other) noexcept : name_(std::move(other.name_)) {
+  }
+  // Move assignment operator
+  // TODO(jhi): why does clang-tidy complain about this? It declares noexcept
+  // NOLINTNEXTLINE(bugprone-exception-escape)
+  SomeBundle& operator=(SomeBundle&& other) noexcept {
+    if (this != &other) {
+      name_ = std::move(other.name_);
+    }
+    return *this;
+  }
+  // Destructor
+  virtual ~SomeBundle() {
+  }
 
-  void Start(osgi::BundleContext *bundleContext) {
-    std::cout << name << "::Start\n";
+  void Start(osgi::BundleContext* bundleContext) override {
+    std::cout << name_ << "::Start\n";
   }
-  void Stop(osgi::BundleContext *bundleContext) {
-    std::cout << name << "::Stop\n";
+  void Stop(osgi::BundleContext* bundleContext) override {
+    std::cout << name_ << "::Stop\n";
   }
 
  private:
-  std::string name;
+  std::string name_;
 };
 
 }  // namespace sample
@@ -63,10 +89,10 @@ RC do_main(std::vector<std::string> args) {
     return RC::kVersion;
   }
 
-  osgi::Framework *framework = osgi::FrameworkFactory().NewFramework();
+  osgi::Framework* framework = osgi::FrameworkFactory().NewFramework();
   framework->Init();
   framework->Start();
-  osgi::BundleContext *bc = framework->GetBundleContext();
+  osgi::BundleContext* bc = framework->GetBundleContext();
   bc->InstallBundle(std::string(osgi::Constants::kBundleSymbolicName) +
                         ": BundleA_WithActivator",
                     new sample::SomeBundle("BundleA_WithActivator"));
@@ -75,13 +101,13 @@ RC do_main(std::vector<std::string> args) {
                     new sample::SomeBundle("BundleB_WithActivator"));
   bc->InstallBundle(std::string(osgi::Constants::kBundleSymbolicName) +
                     ": BundleC_NoActivator");
-  osgi::Bundle *consoleBundle = bc->InstallBundle(
-      std::string(osgi::Constants::kBundleSymbolicName) + ": OsgiConsole",
-      new osgi::OsgiConsole());
+  osgi::Bundle* consoleBundle = bc->InstallBundle(
+      std::string(osgi::Constants::kBundleSymbolicName) + ": _OsgiConsole",
+      new osgi::_OsgiConsole());
   consoleBundle->Start();
 
   // try out a dynamic cast, to show that we can refer to impl as well
-  dynamic_cast<posgi::FrameworkImpl *>(framework)->dump_bundles();
+  dynamic_cast<posgi::FrameworkImpl*>(framework)->dump_bundles();
 
   framework->WaitForStop(0);
   // framework->Stop();

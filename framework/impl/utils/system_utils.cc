@@ -8,7 +8,7 @@ namespace Utils {
 
 std::string SystemUtils::get_os() {
   std::string os;
-  struct utsname osInfo;
+  struct utsname osInfo {};
   if (uname(&osInfo) == 0) {
     os = std::string(osInfo.sysname) + " " + std::string(osInfo.release);
   } else {

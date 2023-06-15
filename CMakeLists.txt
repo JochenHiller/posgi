@@ -85,13 +85,17 @@ target_include_directories(
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/boost_1_82_0>)
 target_clangformat_setup(posgi)
 
+# TODO(Googletest): bug in Googletest:
+# https://github.com/google/googletest/issues/4206 will results in 2 warnings
+# "implicit-int-float-conversion" when compiling gtest-all.cc
+
+# workaround: disable warnings when compiling gtest
+target_compile_options(gtest PRIVATE "-Wno-everything")
+
 # core tests
 add_executable(
   posgi_tests framework/posgi_test.cc framework/impl/manifest_parser_test.cc
               framework/impl/utils/PosgiTxtFormatter_test.cc)
-# TODO(Googletest): bug in Googletest:
-# https://github.com/google/googletest/issues/4206 will results in 2 warnings
-# "implicit-int-float-conversion" when compiling gtest-all.cc
 target_link_libraries(posgi_tests posgi GTest::gtest_main)
 target_include_directories(
   posgi_tests

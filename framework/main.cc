@@ -6,6 +6,7 @@
 inline std::vector<std::string> convert_args(int argc, char *argv[]) {
   std::vector<std::string> args;
   for (int i = 0; i < argc; ++i) {
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
     args.push_back(argv[i]);
   }
   return args;

@@ -1,7 +1,6 @@
 # https://clang.llvm.org/extra/clang-tidy/index.html
 
-# pending checks
-# cppcoreguidelines-* and next ones
+# TODO(jhi): pending checks, continue at darwin-* and next ones
 
 Checks: -*,
         boost-*,
@@ -9,11 +8,19 @@ Checks: -*,
         cert-*,
         clang-analyzer-*,
         concurrency-*,
+        cppcoreguidelines-*,
         -bugprone-suspicious-include,
         -cppcoreguidelines-owning-memory,
         -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
-        -cppcoreguidelines-pro-type-reinterpret-cast
+        -cppcoreguidelines-pro-type-reinterpret-cast,
+        -cppcoreguidelines-avoid-c-arrays,
+        -cppcoreguidelines-pro-type-vararg
 
 # TODO(jhi): fix theses warnings with gtest: [bugprone-suspicious-include]
 # TODO(jhi): fix theses warnings using GSL: [cppcoreguidelines-owning-memory]
 # TODO(jhi): fix theses warnings due to plog: [-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-cppcoreguidelines-pro-type-reinterpret-cast]
+
+# warning: do not declare C-style arrays, use std::array<> instead [cppcoreguidelines-avoid-c-arrays] const char kManifestPath[] = "META-INF/MANIFEST.MF";
+# TODO(jhi): do we want to change this rule?
+
+# TODO(jhi): cppcoreguidelines-pro-type-vararg will be raised when linting gtest_main.cc

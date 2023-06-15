@@ -19,7 +19,7 @@ class SomeBundle : public osgi::BundleActivator {
   std::string MANIFEST();
 
  private:
-  std::string name;
+  std::string name_;
 };
 
 }  // namespace sample

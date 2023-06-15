@@ -42,9 +42,12 @@ class ManifestParserTest : public testing::TestWithParam<std::string> {
 
   // TODO(jhi): how to know where ../ is, as called from build
   // directory
+  // TODO(jhi): is there a better way, maybe do NOT lint all test code?
+  // NOLINTBEGIN
   const std::string rootDir = "../";
-  posgi::ManifestParser* parser;
+  posgi::ManifestParser* parser = nullptr;
   std::map<std::string, std::string> headers;
+  // NOLINTEND
 };
 
 class OneLineValidTest : public ManifestParserTest {};

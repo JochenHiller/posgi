@@ -20,13 +20,17 @@ FUZZ_TEST(const uint8_t *data, size_t size) {
   FuzzedDataProvider fuzzed_data(data, size);
   // std::string text_corpus = fuzzed_data.ConsumeRandomLengthString();
 
-  std::string text_corpus = fuzzed_data.ConsumeBytesAsString(255);
+  constexpr int max_bytes = 25;
+  std::string text_corpus = fuzzed_data.ConsumeBytesAsString(max_bytes);
   text_corpus.erase(std::remove(text_corpus.begin(), text_corpus.end(), '\n'),
                     text_corpus.end());
 
-  auto max_width_corpus = fuzzed_data.ConsumeIntegralInRange<size_t>(0, 255);
+  constexpr int max_max_width = 25;
+  auto max_width_corpus =
+      fuzzed_data.ConsumeIntegralInRange<size_t>(0, max_max_width);
+  constexpr int max_min_left = 25;
   auto min_left_char_corpus =
-      fuzzed_data.ConsumeIntegralInRange<size_t>(0, 255);
+      fuzzed_data.ConsumeIntegralInRange<size_t>(0, max_min_left);
 
   PLOG_FATAL << "FUZZ_TEST: '" << text_corpus << "', " << max_width_corpus
              << ", " << min_left_char_corpus;

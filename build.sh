@@ -180,8 +180,10 @@ if [ "${DO_LINT_CLANG_TIDY}" = "true" ] ; then
   # TODO(jhi): does not run on Linux
   which clang-tidy >/dev/null
   if [ $? = 0 ] ; then
+    # add --debug-output to cmake for verbose output
     rm -rf ./build ; cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
       "-DCMAKE_CXX_CLANG_TIDY=clang-tidy" -S . -B build
+    # add VERBOSE=1 to make for verbose output
     (cd build ; make clean all) 2>&1 | tee lint-clang-tidy.log
   else
     echo "WARN: Could not find clang-tidy, ignoring..."
