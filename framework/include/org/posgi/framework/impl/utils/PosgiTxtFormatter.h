@@ -15,7 +15,7 @@ namespace Utils {
 
 Sample:
 
-2023-05-18T12:41:14.082+02:00 ERROR [9562345] [posg..class.method@line] log message
+2023-05-18T12:41:14.082+02:00 ERROR [9562345] [posg..eworkThreadLoop@186] FrameworkImpl::frameworkThreadLoop: Signal received!
 
  * where:
  *   ISO8601 timestamp:        see https://en.wikipedia.org/wiki/ISO_8601
