@@ -36,23 +36,31 @@ std::vector<Command*> OsgiConsole::getCommands() {
   return commands_;
 }
 
-// TODO(jhi): check for duplicate commands in different scopes
 Command* OsgiConsole::findCommand(const std::string& scope_function_to_search) {
   constexpr char delimiter = ':';
-  Command* found = nullptr;
-  // TODO(jhi): use lambda
-  for (const auto& command : commands_) {
-    std::string command_scope_function =
-        command->scope() + delimiter + command->function();
-    if (command_scope_function == scope_function_to_search) {
-      found = command;
-      break;
-    } else if (command->function() == scope_function_to_search) {
-      found = command;
-      break;
-    }
+  std::vector<Command*> results;
+  std::copy_if(commands_.begin(), commands_.end(), std::back_inserter(results),
+               [scope_function_to_search](Command* command) {
+                 std::string command_scope_function =
+                     command->scope() + delimiter + command->function();
+                 if (command_scope_function == scope_function_to_search) {
+                   return true;
+                 }
+                 if (command->function() == scope_function_to_search) {
+                   return true;
+                 }
+                 return false;
+               });
+  if (results.size() == 1) {
+    return results.at(0);
+  } else if (results.size() == 0) {
+    return nullptr;
+  } else {
+    PLOG_WARNING << "Duplicate commands found";
+    // TODO(jhi): what to do if we have multiple commands? At the moment do not
+    // support that.
+    return nullptr;
   }
-  return found;
 }
 
 void OsgiConsole::show_help() {
@@ -94,6 +102,19 @@ void OsgiConsole::show_help_for_command(std::vector<std::string> args) {
   }
 }
 
+// Split the command by the delimiter " " and trim all args
+std::vector<std::string> parseString(const std::string& str) {
+  std::vector<std::string> elements;
+  std::istringstream iss(str);
+  std::string element;
+
+  while (iss >> element) {
+    elements.push_back(element);
+  }
+
+  return elements;
+}
+
 void OsgiConsole::console() {
   while (true) {
     std::string command_line;
@@ -102,11 +123,8 @@ void OsgiConsole::console() {
 
     // Read command from stdin
     std::getline(std::cin, command_line);
-    PLOG_INFO << "OsgiConsole::console: " << command_line;
+    std::vector<std::string> command_args = parseString(command_line);
 
-    // Split the command by the delimiter " "
-    std::vector<std::string> command_args;
-    boost::split(command_args, command_line, boost::is_any_of(" "));
     std::string command;
     if (command_args.size() == 0) {
       continue;

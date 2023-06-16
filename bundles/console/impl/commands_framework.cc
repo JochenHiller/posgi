@@ -72,7 +72,11 @@ void CommandStartBundle::execute(std::vector<std::string> args) {
   PLOG_INFO << "CommandStartBundle::execute" << args;
   auto bundle = getBundleFromSecondArg(args, bundleContext_);
   if (bundle != nullptr) {
-    bundle->Start();
+    if (bundle->GetState() == Bundle::ACTIVE) {
+      std::cout << "Bundle already active" << std::endl;
+    } else {
+      bundle->Start();
+    }
   }
 }
 
@@ -102,7 +106,11 @@ void CommandStopBundle::execute(std::vector<std::string> args) {
   PLOG_INFO << "CommandStopBundle::execute" << args;
   auto bundle = getBundleFromSecondArg(args, bundleContext_);
   if (bundle != nullptr) {
-    bundle->Stop();
+    if (bundle->GetState() == Bundle::RESOLVED) {
+      std::cout << "Bundle already stopped" << std::endl;
+    } else {
+      bundle->Stop();
+    }
   }
 }
 
