@@ -22,6 +22,21 @@ Usage: $0 [clean|fmt|compile|test|fuzztest-run-*|fuzztest-report|fuzztest-clean|
 EOF
 }
 
+log() {
+  level=$1
+  shift
+  echo "[build.sh] ${level} $*"
+}
+log_info() {
+  log "INFO" "$*"
+}
+log_warn() {
+  log "WARN" "$*"
+}
+log_newline() {
+  echo " "
+}
+
 # parse args
 DO_CLEAN="false"
 DO_FMT="false"
@@ -73,7 +88,7 @@ for arg in $@ ; do
     DO_LINT_CLANG_TIDY="true"
     DO_LINT_IWYU="true"
   else
-    echo "WARN: Unknown command ${arg}"
+    log_warn "Unknown command ${arg}"
     DO_HELP="true"
   fi
 done
@@ -99,67 +114,78 @@ fi
 
 if [ "${DO_CLEAN}" = "true" ] ; then
   if [ -d build ] ; then
-    echo "Clean ./build directory"
+    log_info "Clean all generated files"
     rm -rf ./build
   fi
   rm -fv lint-*.log posgi.log */posgi.log */*/posgi.log
+  log_newline
 fi
 
 if [ "${DO_FMT}" = "true" ] ; then
+  log_info "Format all sources"
   # see https://github.com/zemasoft/clangformat-cmake
   # Option A)
   # cmake --build build --target clangformat
   # Option B)
   cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -S . -B build
   (cd build ; make clangformat)
-  echo "Format CMakeLists.txt"
+  log_info "Format CMakeLists.txt"
   cmake-format -i CMakeLists.txt
+  log_newline
 fi
 
 if [ "${DO_COMPILE}" = "true" ] ; then
-  echo "Make ./build directory"
+  log_info "Compile project"
   cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -S . -B build
   (cd build ; make)
-  ls -al build/libposgi* build/posgi_cli build/posgi_fuzz_tests build/posgi_sample03 build/posgi_tests
+  ls -al build/libposgi* build/posgi_cli \
+    build/posgi_fuzz_tests_manifest \
+    build/posgi_fuzz_tests_txtformatter \
+    build/posgi_sample03 build/posgi_tests
+  log_newline
 fi
 
 if [ "${DO_TEST}" = "true" ] ; then
-  echo "Run tests"
+  log_info "Run all tests"
   cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -S . -B build
   cmake --build build
   (cd build ; ctest --output-on-failure)
   # below: show console output when running tests. Useful during development
   # (cd build ; ctest --output-on-failure --gtest_catch_exceptions=0)
+  log_newline
 fi
 
 if [ "${DO_FUZZ_TEST_RUN}" = "true" ] ; then
-  echo "Run fuzz tests"
+  log_info "Run fuzz tests"
   cmake -DCMAKE_BUILD_TYPE=Debug -S . -B build
 
   if [ "${FUZZ_TEST_RUN_ARG}" = "fuzztest-run-01" ] ; then
-    echo "Run fuzz tests for manifest"
+    log_info "Run fuzz tests for manifest"
     ./third_party/cifuzz/bin/cifuzz run --interactive=false \
       --seed-corpus framework/impl/fuzz_tests_manifest_inputs posgi_fuzz_tests_manifest
     exit 0
   fi
   if [ "${FUZZ_TEST_RUN_ARG}" = "fuzztest-run-02" ] ; then
-    echo "Run fuzz tests for PosgiTxtFormatter.fixed_column"
+    log_info "Run fuzz tests for PosgiTxtFormatter.fixed_column"
     ./third_party/cifuzz/bin/cifuzz run --interactive=false \
       --seed-corpus framework/impl/utils/fuzz_tesst_txtformatter_inputs posgi_fuzz_tests_txtformatter
     exit 0
   fi
+  log_newline
 fi
 
 if [ "${DO_FUZZ_TEST_REPORT}" = "true" ] ; then
-  echo "Report fuzz tests coverage"
+  log_info "Report fuzz tests coverage"
   ./third_party/cifuzz/bin/cifuzz coverage --output=./build/fuzz-tests-manifest-coverage-report posgi_fuzz_tests_manifest
   ./third_party/cifuzz/bin/cifuzz coverage --output=./build/fuzz-tests-txtformatter-coverage-report posgi_fuzz_tests_txtformatter
+  log_newline
 fi
 
 if [ "${DO_FUZZ_TEST_CLEAN}" = "true" ] ; then
   if [ -d ./.cifuzz-build ] || [ -d ./.cifuzz-corpus ] ; then
-    echo "Clean fuzz tests data"
+    log_info "Clean fuzz tests data"
     rm -rf ./.cifuzz-build ./.cifuzz-corpus
+    log_newline
   fi
 fi
 
@@ -167,39 +193,45 @@ if [ "${DO_LINT_CPPLINT}" = "true" ] ; then
   # see https://stackoverflow.com/questions/51582604/how-to-use-cpplint-code-style-checking-with-cmake
   which cpplint >/dev/null
   if [ $? = 0 ] ; then
+    log_info "Lint using cpplint"
     rm -rf ./build ; cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
       "-DCMAKE_CXX_CPPLINT=cpplint;--verbose=0;--quiet" -S . -B build
     (cd build ; make clean all) 2>&1 | tee lint-cpplint.log
     :
   else
-    echo "WARN: Could not find cpplint, ignoring..."
+    log_warn "Could not find cpplint, ignoring..."
   fi
+  log_newline
 fi
 
 if [ "${DO_LINT_CLANG_TIDY}" = "true" ] ; then
   # TODO(jhi): does not run on Linux
   which clang-tidy >/dev/null
   if [ $? = 0 ] ; then
+    log_info "Lint using clang-tidy"
     # add --debug-output to cmake for verbose output
     rm -rf ./build ; cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
       "-DCMAKE_CXX_CLANG_TIDY=clang-tidy" -S . -B build
     # add VERBOSE=1 to make for verbose output
     (cd build ; make clean all) 2>&1 | tee lint-clang-tidy.log
   else
-    echo "WARN: Could not find clang-tidy, ignoring..."
+    log_warn "Could not find clang-tidy, ignoring..."
   fi
+  log_newline
 fi
 
 if [ "${DO_LINT_IWYU}" = "true" ] ; then
   # see https://include-what-you-use.org/. This linter does not really give useful results, therefoe verbose=0
   which include-what-you-use >/dev/null
   if [ $? = 0 ] ; then
+    log_info "Lint using iwyu"
     # add -Xiwyu; before every iwyu flag
     rm -rf ./build ; cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
       "-DCMAKE_CXX_INCLUDE_WHAT_YOU_USE=include-what-you-use;-w;-Xiwyu;--no_fwd_decls;-Xiwyu;--verbose=0" -S . -B build
     (cd build ; make clean all) 2>&1 | tee lint-iwyu.log
     :
   else
-    echo "WARN: Could not find include-what-you-use, ignoring..."
+    log_warn "Could not find include-what-you-use, ignoring..."
   fi
+  log_newline
 fi
