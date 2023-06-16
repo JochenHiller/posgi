@@ -5,12 +5,13 @@
 #include <string>
 #include <vector>
 
+#include "../impl/osgi_console.h"  // TODO(jhi): from include to impl, make better
 #include "PosgiConfig.h"
 #include "org/osgi/framework/bundle_activator.h"
 #include "org/osgi/framework/constants.h"
 #include "org/osgi/framework/launch/framework.h"
 #include "org/osgi/framework/launch/framework_factory.h"
-#include "org/osgi/framework/service/osgi_console.h"
+#include "org/osgi/service/console/console.h"
 #include "org/posgi/framework/impl/framework_impl.h"
 #include "org/posgi/framework/impl/utils/system_utils.h"
 
@@ -93,6 +94,12 @@ RC do_main(std::vector<std::string> args) {
   framework->Init();
   framework->Start();
   osgi::BundleContext* bc = framework->GetBundleContext();
+  osgi::Bundle* consoleBundle = bc->InstallBundle(
+      std::string(osgi::Constants::kBundleSymbolicName) + ": OsgiConsole",
+      new osgi::OsgiConsole());
+
+  consoleBundle->Start();
+
   bc->InstallBundle(std::string(osgi::Constants::kBundleSymbolicName) +
                         ": BundleA_WithActivator",
                     new sample::SomeBundle("BundleA_WithActivator"));
@@ -101,10 +108,6 @@ RC do_main(std::vector<std::string> args) {
                     new sample::SomeBundle("BundleB_WithActivator"));
   bc->InstallBundle(std::string(osgi::Constants::kBundleSymbolicName) +
                     ": BundleC_NoActivator");
-  osgi::Bundle* consoleBundle = bc->InstallBundle(
-      std::string(osgi::Constants::kBundleSymbolicName) + ": _OsgiConsole",
-      new osgi::_OsgiConsole());
-  consoleBundle->Start();
 
   // try out a dynamic cast, to show that we can refer to impl as well
   dynamic_cast<posgi::FrameworkImpl*>(framework)->dump_bundles();

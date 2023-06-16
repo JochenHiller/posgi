@@ -5,13 +5,15 @@
 ### Work in progress (WIP)
 
 * [ ] Improve IDEs (VS Code, CLion)
-* [ ] console as service bundle
-  * [ ] bundles/console/include/org/osgi/service/console/console.h, command.h
-  * [ ] bundles/console/impl/osgi_console.cc, command_xxx.cc
 * [ ] Pros and Cons C++
 * [ ] check for smart memory management
+  * [ ] std::unique_ptr, std::shared_ptr
 * [ ] Linux build and tests
 * [ ] Coverage: fuzz, exlucde third_party libraries (plog, boost)
+* [ ] namespace osgi, osgi::impl oder osgi::internal
+* [ ] Samples vs. examples
+* [ ] Cmake weniger Output
+* [ ] bundle_id_t als int32_t
 
 ### Minimum viable product (MVP)
 
@@ -23,7 +25,8 @@
   * [x] Start and stop bundles
   * [ ] Bundle tracker
 * [ ] OSGi Compendium Bundles
-  * [ ] Console bundle to manage framework and bundles (stdin/stdout console, telnet)
+  * [ ] Console bundle to manage framework and bundles (stdin/stdout console)
+    * [ ] Console bundle via telnet
 * [ ] Implementation
   * [ ] Common logging, prepare for later log service
   * [x] Log Formatter with format: limit thread name and class/file to max. size, cut from right side

@@ -83,7 +83,8 @@
 			"variant": "cpp",
 			"thread": "cpp",
 			"condition_variable": "cpp",
-			"*.in": "cpp"
+			"*.in": "cpp",
+			"*.ipp": "cpp"
 		},
 		"editor.formatOnSave": true,
 		"java.compile.nullAnalysis.mode": "automatic"

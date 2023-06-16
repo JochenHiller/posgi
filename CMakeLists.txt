@@ -54,7 +54,6 @@ add_library(
   framework/impl/bundle_impl.cc
   framework/impl/framework_impl.cc
   framework/impl/manifest_parser.cc
-  framework/osgi_console.cc
   framework/framework_factory.cc
   framework/posgi.cc
   framework/posgi.h
@@ -65,7 +64,6 @@ add_library(
   framework/include/org/osgi/framework/constants.h
   framework/include/org/osgi/framework/launch/framework_factory.h
   framework/include/org/osgi/framework/launch/framework.h
-  framework/include/org/osgi/framework/service/osgi_console.h
   framework/include/org/osgi/framework/bundle_activator.h
   framework/include/org/posgi/framework/impl/utils/file_utils.h
   framework/include/org/posgi/framework/impl/utils/system_utils.h
@@ -74,12 +72,23 @@ add_library(
   framework/include/org/posgi/framework/impl/framework_impl.h
   framework/include/org/posgi/framework/impl/bundle_context_impl.h
   framework/include/org/posgi/framework/impl/manifest_parser.h
-  framework/include/org/posgi/framework/impl/utils/printable_mutex.h)
+  framework/include/org/posgi/framework/impl/utils/printable_mutex.h
+  bundles/console/include/org/osgi/service/console/command_processor.h
+  bundles/console/include/org/osgi/service/console/command_session.h
+  bundles/console/include/org/osgi/service/console/command.h
+  bundles/console/include/org/osgi/service/console/console.h
+  bundles/console/impl/command_lb.h
+  bundles/console/impl/command_lb.cc
+  bundles/console/impl/commands_framework.h
+  bundles/console/impl/commands_framework.cc
+  bundles/console/impl/osgi_console.h
+  bundles/console/impl/osgi_console.cc)
 target_include_directories(
   posgi
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/build>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/framework/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/bundles/console/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/plog-1.1.9/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/googletest-1.13.0/googletest/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/boost_1_82_0>)
@@ -102,6 +111,7 @@ target_include_directories(
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/build>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/framework/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/bundles/console/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/plog-1.1.9/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/googletest-1.13.0/googletest/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/boost_1_82_0>
@@ -124,6 +134,7 @@ target_include_directories(
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/build>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/framework/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/bundles/console/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/plog-1.1.9/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/googletest-1.13.0/googletest/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/boost_1_82_0>
@@ -137,6 +148,7 @@ target_include_directories(
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/build>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/framework/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/bundles/console/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/plog-1.1.9/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/googletest-1.13.0/googletest/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/boost_1_82_0>
