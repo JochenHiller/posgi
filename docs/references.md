@@ -38,6 +38,7 @@ These references have been found during development, which are worth to be kept.
 
 * C++ Language reference
   * <https://cppreference.com>
+  * Modern C++ from Rainer Grimm: <https://www.modernescpp.com/index.php/c-23-the-next-c-standard>
 
 * C++ Core Guidelines
   * Documentation: <https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines>
@@ -52,6 +53,22 @@ These references have been found during development, which are worth to be kept.
   * <https://google.github.io/styleguide/cppguide.html>
   * <https://github.com/google/styleguide>
   * <https://opensource.google/documentation/policies/cplusplus-support>
+
+* C++20 Modules
+  * Clang reference about Modules: <https://clang.llvm.org/docs/StandardCPlusPlusModules.html>
+  * Gcc reference about Modules:
+    * <https://gcc.gnu.org/wiki/cxx-modules>
+    * <https://gcc.gnu.org/onlinedocs/gcc/C_002b_002b-Modules.html>
+  * Good article series from Rainer Grimm: <https://www.modernescpp.com/index.php/tag/modules>
+  * Good blog posts from [Victor Zverovich](https://www.zverovich.net/), maintainer of [@fmtlib](https://github.com/fmtlib)
+    * <https://www.zverovich.net/2023/04/10/cxx20-modules-in-clang.html>
+    * <https://www.zverovich.net/2023/04/17/simple-cxx20-modules.html>
+  * Cmake and C++ Modules: <https://www.kitware.com/import-cmake-c20-modules/>
+  * Bazel and C++ Modules:
+    * <https://buildingblock.ai/cpp20-modules-bazel>
+    * <https://github.com/rnburn/cpp20-module-example/tree/main>
+  * Known issues:
+  * clang: [Error when importing <string> and <iostream> in same file with c++-20 standard modules](https://github.com/llvm/llvm-project/issues/58540)
 
 * CMake
   * <https://code.visualstudio.com/docs/cpp/cmake-linux>
@@ -127,3 +144,16 @@ These references have been found during development, which are worth to be kept.
   * JunoDB: JunoDB - A secure, consistent and highly available key-value store
     * <https://github.com/paypal/junodb>
     * relies on RocksDB
+
+* Telnet C++ libraries
+  * libtelnet: libtelnet is a lightweight Telnet protocol handling library written in C. It can be easily used in C++ projects
+    * <https://github.com/seanmiddleditch/libtelnet>
+  * TelnetServLib: TelnetServLib is a very light ANSI Telnet Server library
+    * <https://github.com/lukemalcolm/TelnetServLib>
+    * builtin telnet server with callbacks
+  * Telnet++: Telnet++ is an implementation of the Telnet Session Layer protocol that is used primarily to negotiate a feature set between a client and server, the former of which is usually some kind of text-based terminal, Commonly used terminals include Xterm, PuTTY, and a whole host of Telnet-enabled MUD clients including Tintin++, MushClient, and more.
+    * <https://github.com/KazDragon/telnetpp>
+    * sounds most promising implementation, will give it a try
+  * Boost.Asio: Boost.Asio is a C++ library for network programming.
+    * <https://www.boost.org/doc/libs/1_82_0/doc/html/boost_asio.html>
+    * no builtin telnet server

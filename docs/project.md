@@ -4,7 +4,12 @@
 
 ### Work in progress (WIP)
 
+* [ ] Check IF and HOW to use C++20 modules
+  * [ ] Clang
+  * [ ] Gcc
+* [ ] Telnet OSGi console, using threadio similar (e.g. thread_locals for cin/cout/cerr redirection)
 * [ ] Improve IDEs (VS Code, CLion)
+* [ ] Consider to use Conan package manager: <https://conan.io/>
 * [ ] Pros and Cons C++
 * [ ] check for smart memory management
   * [ ] std::unique_ptr, std::shared_ptr
