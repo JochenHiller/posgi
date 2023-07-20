@@ -190,6 +190,51 @@ build_googletest() {
   )
 }
 
+# see https://github.com/gsl-lite/gsl-lite#as-cmake-package
+build_gsl() {
+  dir=${1}
+  echo "INFO: Build gsl in third_party/${dir}"
+  (
+  cd ${dir}
+  mkdir build ; cd build
+  cmake ..
+  )
+}
+
+# see https://github.com/KazDragon/telnetpp
+download_and_install_telnetpp() {
+  do_clean=${1} # true/false
+  dir=${2}
+
+  if [ "${do_clean}" = "true" ] ; then
+    if [ -d "${dir}" ] ; then
+      echo "WARN: Clean third_party/${dir}"
+      rm -rf "third_party/${dir}"
+    fi
+  else
+    echo "INFO: Building telnetpp into third_party/${dir}/build"
+    (
+      version=${3}
+      git clone https://github.com/KazDragon/telnetpp.git ${dir} 2>/dev/null
+      git fetch --all --tags 2>/dev/null
+      cd ${dir}
+      git checkout tags/${version}  2>/dev/null
+      # disable tests
+      sed -e 's|Build with tests" True|Build with tests" False|g' CMakeLists.txt >CMakeLists.txt.tmp
+      mv CMakeLists.txt.tmp CMakeLists.txt
+      # for debugging only
+      # sed -e 's|find_package(Boost|set(Boost_DEBUG ON)\nfind_package(Boost|g' CMakeLists.txt >CMakeLists.txt.tmp
+      # mv CMakeLists.txt.tmp CMakeLists.txt
+      mkdir build && cd build
+      export BOOST_ROOT=../boost_1_82_0
+      export CMAKE_PREFIX_PATH=../../gsl-lite-0.41.0/build
+      cmake -DCMAKE_BUILD_TYPE=Release .. >/dev/null
+      cmake --build .
+    )
+    echo "INFO: Building telnetpp done"
+  fi
+}
+
 # See https://github.com/CodeIntelligenceTesting/cifuzz
 download_and_install_cifuzz() {
   do_clean=${1} # true/false
@@ -221,6 +266,8 @@ if [ "${DO_CLEAN}" = "true" ] && [ -d ../third_party ] ; then
     download_and_unpack_third_party true plog-1.1.9
     download_and_unpack_third_party true googletest-1.13.0
     download_and_unpack_third_party true boost_1_82_0
+    download_and_unpack_third_party true gsl-0.41.0
+    download_and_install_telnetpp true telnetpp-3.0.0
 
     cmake_clang_format true
 
@@ -269,6 +316,17 @@ if [ "${DO_INSTALL}" = "true" ] ; then
     download_and_unpack_third_party false boost_1_82_0 \
       https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/boost_1_82_0.tar.gz
 
+    # gsl-lite: https://github.com/gsl-lite/gsl-lite
+    # gsl-lite is the Guidelines Support Library for C++98, C++11 up
+    download_and_unpack_third_party false gsl-lite-0.41.0 \
+      https://github.com/gsl-lite/gsl-lite/archive/refs/tags/v0.41.0.tar.gz
+    build_gsl gsl-lite-0.41.0
+
+    # telnetpp: https://github.com/KazDragon/telnetpp
+    # Telnet++ is an implementation of the Telnet Session Layer protocol 
+    download_and_install_telnetpp false telnetpp-3.0.0 v3.0.0
+ 
+    # format cpp files from CMake
     cmake_clang_format false
 
     # cifuzz: https://github.com/CodeIntelligenceTesting/cifuzz
