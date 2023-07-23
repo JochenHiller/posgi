@@ -45,7 +45,8 @@ These references have been found during development, which are worth to be kept.
   * Guidelines Project: <https://github.com/isocpp/CppCoreGuidelines>
   * Guidelines Support Library: <https://github.com/microsoft/gsl>
 
-* C++20 Modules
+* C++ Modules
+  * Supported since C++20, better support of STL since C++23
   * Good article series from Rainer Grimm: <https://www.modernescpp.com/index.php/tag/modules>
   * Good blog posts from [Victor Zverovich](https://www.zverovich.net/), maintainer of [@fmtlib](https://github.com/fmtlib)
     * <https://www.zverovich.net/2023/04/10/cxx20-modules-in-clang.html>

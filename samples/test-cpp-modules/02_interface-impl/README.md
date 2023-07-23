@@ -1,4 +1,4 @@
-# Test C++20 Modules: Tests with interface / implementation separation
+# Test C++ Modules: Tests with interface / implementation separation
 
 Based on article from Rainer Grimm here:
 

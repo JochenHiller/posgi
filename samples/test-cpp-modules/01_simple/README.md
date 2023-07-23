@@ -1,4 +1,4 @@
-# Test C++20 Modules: Simple tests
+# Test C++ Modules: Simple tests
 
 Based on article from Rainer Grimm here:
 

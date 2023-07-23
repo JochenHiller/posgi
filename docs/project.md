@@ -4,7 +4,7 @@
 
 ### Work in progress (WIP)
 
-* [ ] Check IF and HOW to use C++20 modules
+* [ ] Check IF and HOW to use C++ modules
   * [ ] Clang
   * [ ] Gcc
   * [ ] MSVC

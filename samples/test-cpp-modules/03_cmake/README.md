@@ -1,4 +1,4 @@
-# Test C++20 Modules: Tests with interface / implementation separation using CMake
+# Test C++ Modules: Tests with interface / implementation separation using CMake
 
 Based on article from Rainer Grimm here:
 
