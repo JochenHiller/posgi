@@ -34,7 +34,7 @@ These references have been found during development, which are worth to be kept.
   * <https://dl.acm.org/doi/10.1145/2016551.2016555>
   * <https://www.uni-ulm.de/in/in/vs/res/proj/nostrum/getting-started/>
 
-## C++
+## C++ Language
 
 * C++ Language reference
   * <https://cppreference.com>
@@ -45,52 +45,31 @@ These references have been found during development, which are worth to be kept.
   * Guidelines Project: <https://github.com/isocpp/CppCoreGuidelines>
   * Guidelines Support Library: <https://github.com/microsoft/gsl>
 
-* C++ Libraries
-  * <https://github.com/google?language=c%2B%2B>
-  * <https://blog.codacy.com/10-cpp-open-source-projects/>
-
-* Google C++ Style guide
-  * <https://google.github.io/styleguide/cppguide.html>
-  * <https://github.com/google/styleguide>
-  * <https://opensource.google/documentation/policies/cplusplus-support>
-
 * C++20 Modules
-  * Clang reference about Modules: <https://clang.llvm.org/docs/StandardCPlusPlusModules.html>
-  * Gcc reference about Modules:
-    * <https://gcc.gnu.org/wiki/cxx-modules>
-    * <https://gcc.gnu.org/onlinedocs/gcc/C_002b_002b-Modules.html>
   * Good article series from Rainer Grimm: <https://www.modernescpp.com/index.php/tag/modules>
   * Good blog posts from [Victor Zverovich](https://www.zverovich.net/), maintainer of [@fmtlib](https://github.com/fmtlib)
     * <https://www.zverovich.net/2023/04/10/cxx20-modules-in-clang.html>
     * <https://www.zverovich.net/2023/04/17/simple-cxx20-modules.html>
-  * Cmake and C++ Modules: <https://www.kitware.com/import-cmake-c20-modules/>
-  * Bazel and C++ Modules:
-    * <https://buildingblock.ai/cpp20-modules-bazel>
-    * <https://github.com/rnburn/cpp20-module-example/tree/main>
+  * Clang reference about Modules:
+    * <https://clang.llvm.org/docs/StandardCPlusPlusModules.html>
+  * Gcc reference about Modules:
+    * <https://gcc.gnu.org/wiki/cxx-modules>
+    * <https://gcc.gnu.org/onlinedocs/gcc/C_002b_002b-Modules.html>
   * Known issues:
-  * clang: [Error when importing <string> and <iostream> in same file with c++-20 standard modules](https://github.com/llvm/llvm-project/issues/58540)
-
-* CMake
-  * <https://code.visualstudio.com/docs/cpp/cmake-linux>
-  * <https://cmake.org/cmake/help/latest/guide/tutorial/index.html>
-  * <https://github.com/zemasoft/clangformat-cmake>
-  * <https://github.com/cheshirekow/cmake_format>
-  * <http://google.github.io/googletest/quickstart-cmake.html>
-
-* Linter
-  * cpplint (by Google): <https://github.com/google/styleguide/blob/gh-pages/cpplint/cpplint.py>
-  * Maintained version: <https://github.com/cpplint/cpplint>
-  * <https://stackoverflow.com/questions/51582604/how-to-use-cpplint-code-style-checking-with-cmake>
-  * Good video, recommended to view: <https://www.youtube.com/watch?v=rLopVhns4Zs&t=4633s>
-  * <https://include-what-you-use.org/>
-  * <https://stackoverflow.com/questions/45667850/disable-specific-warnings-from-cpplint>
-
-* Linter hints
-  * "explicit" should be used on single-parameter constructors and conversion operators: <https://rules.sonarsource.com/cpp/RSPEC-1709>
-  * Google Style Guide `<chrono>` is an unapproved C++11 header": <https://stackoverflow.com/questions/33653326/google-style-guide-chrono-is-an-unapproved-c11-header>
+    * clang: [Import std lib as modules with clang](https://stackoverflow.com/questions/66411157/import-std-lib-as-modules-with-clang)
+    * clang: [Error when importing "string" and "iostream" in same file with c++-20 standard modules'](https://github.com/llvm/llvm-project/issues/58540)
+  * Real World Use Cases
+    * MS-Office is using C++-Modules: <https://devblogs.microsoft.com/cppblog/integrating-c-header-units-into-office-using-msvc-1-n/>
+    * Moving a project to C++ named Modules: <https://devblogs.microsoft.com/cppblog/moving-a-project-to-cpp-named-modules/>
 
 * Multiple inheritance
   * <https://stackoverflow.com/questions/48407658/stumped-by-simple-c-multiple-inheritance-example>
+
+## C++ Libraries
+
+* C++ Libraries
+  * <https://github.com/google?language=c%2B%2B>
+  * <https://blog.codacy.com/10-cpp-open-source-projects/>
 
 * Testing
   * <https://github.com/google/googletest>
@@ -122,21 +101,6 @@ These references have been found during development, which are worth to be kept.
   * MetaReflect: Metareflect is a lightweight reflection system for C++, based on LLVM and Clangs libtooling.
     * <https://github.com/Leandros/metareflect>
 
-* Intersting projects
-  * ENTT: EnTT is a header-only, tiny and easy to use library for game programming and much more written in modern C++.
-    * <https://github.com/skypjack/entt>
-
-* IDE's
-  * VisualStudio Code: <https://code.visualstudio.com/>
-    * C++ extensions installed:
-      * Bazel
-      * C/C++ IntelliSense
-      * Clang-Format
-      * CMake, CMake Tools
-      * Makefile Tools
-  * JetBrains CLion: <https://www.jetbrains.com/clion/>
-    * More C++ tooling: <https://www.jetbrains.com/cpp/>
-
 * Databases
   * RocksDB: A Persistent Key-Value Store for Flash and RAM Storage
     * <https://github.com/facebook/rocksdb>
@@ -157,3 +121,66 @@ These references have been found during development, which are worth to be kept.
   * Boost.Asio: Boost.Asio is a C++ library for network programming.
     * <https://www.boost.org/doc/libs/1_82_0/doc/html/boost_asio.html>
     * no builtin telnet server
+
+## C++ Projects
+
+* Interesting projects
+  * ENTT: EnTT is a header-only, tiny and easy to use library for game programming and much more written in modern C++.
+    * <https://github.com/skypjack/entt>
+
+## C++ Tooling
+
+* Google C++ Style guide
+  * <https://google.github.io/styleguide/cppguide.html>
+  * <https://github.com/google/styleguide>
+  * <https://opensource.google/documentation/policies/cplusplus-support>
+
+* Linter
+  * cpplint (by Google): <https://github.com/google/styleguide/blob/gh-pages/cpplint/cpplint.py>
+  * Maintained version: <https://github.com/cpplint/cpplint>
+  * <https://stackoverflow.com/questions/51582604/how-to-use-cpplint-code-style-checking-with-cmake>
+  * Good video, recommended to view: <https://www.youtube.com/watch?v=rLopVhns4Zs&t=4633s>
+  * <https://include-what-you-use.org/>
+  * <https://stackoverflow.com/questions/45667850/disable-specific-warnings-from-cpplint>
+
+* Linter hints
+  * "explicit" should be used on single-parameter constructors and conversion operators: <https://rules.sonarsource.com/cpp/RSPEC-1709>
+  * Google Style Guide `<chrono>` is an unapproved C++11 header": <https://stackoverflow.com/questions/33653326/google-style-guide-chrono-is-an-unapproved-c11-header>
+
+* IDE's
+  * VisualStudio Code: <https://code.visualstudio.com/>
+    * C++ extensions installed:
+      * Bazel
+      * C/C++ IntelliSense
+      * Clang-Format
+      * CMake, CMake Tools
+      * Makefile Tools
+  * JetBrains CLion: <https://www.jetbrains.com/clion/>
+    * More C++ tooling: <https://www.jetbrains.com/cpp/>
+
+## C++ CI/CD build systems
+
+* CMake
+  * <https://code.visualstudio.com/docs/cpp/cmake-linux>
+  * <https://cmake.org/cmake/help/latest/guide/tutorial/index.html>
+  * <https://github.com/zemasoft/clangformat-cmake>
+  * <https://github.com/cheshirekow/cmake_format>
+  * <http://google.github.io/googletest/quickstart-cmake.html>
+  * C++ Modules
+    * Cmake and C++ Modules: <https://www.kitware.com/import-cmake-c20-modules/>
+    * [Simple usage of C++20 modules](https://www.zverovich.net/2023/04/17/simple-cxx20-modules.html), gives an alternative from [Victor Zverovich](https://www.zverovich.net/)
+    * [C++20 Modules support for CMake](https://www.reddit.com/r/cpp/comments/1255t31/c20_modules_support_for_cmake/), talk for CppCon 2023 announced, but not much progress expected
+    * Sample at Godbolt: [hello sample](https://godbolt.org/z/aTr8crhcE)
+
+* Bazel
+  * Bazel Build System for Embedded Projects: <https://interrupt.memfault.com/blog/bazel-build-system-for-embedded-projects>, good article, worth reading
+  * Common C++ Build Use Cases: <https://bazel.build/tutorials/cpp-use-cases>
+  * Bazel and C++ Modules:
+    * <https://buildingblock.ai/cpp20-modules-bazel>
+    * <https://github.com/rnburn/cpp20-module-example/tree/main>
+    * Bazel issue for [Support C++20 modules](https://github.com/bazelbuild/bazel/issues/4005)
+
+* xmake
+  * Project: <https://github.com/xmake-io/xmake>
+  * [Xmake v2.7.1 Released, Better C++ Modules Support · xmake-io/xmake Wiki](https://www.reddit.com/r/cpp/comments/wy87wv/xmake_v271_released_better_c_modules_support/), high-level comparison of Meson/build2/Bazel/Buck/xmake
+  * [C++ Module samples](https://github.com/xmake-io/xmake/tree/master/tests%2Fprojects%2Fc%2B%2B%2Fmodules)
