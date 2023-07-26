@@ -40,3 +40,4 @@ tmp
 lint-*.log
 .cifuzz-build
 .cifuzz-corpus
+**/gcm.cache
