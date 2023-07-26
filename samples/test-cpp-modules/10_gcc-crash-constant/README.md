@@ -47,7 +47,7 @@ export class Constants {
 
 // build
 gcc-13 -freport-bug -std=c++20 -xc++ -fmodules-ts -fmodule-only -Wall -Wextra m.cc
-# see attached output file ccRJ91Vu.out
+# see attached output file ccRJ91Vu.out.txt
 
 // notes
 * exported string constants outside exported class do work
