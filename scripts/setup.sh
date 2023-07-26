@@ -88,14 +88,20 @@ check_one_tool() {
       # ignore version check
       echo "INFO: ${binary} found"
     else
-      _VERSION=$(${binary} --version | grep "version" | cut -f ${column} -d " ")
-      if [ "${_VERSION}" = "" ] ; then
-        # hack for ubuntu g++
-        _VERSION=$(${binary} --version | grep "ubuntu" | cut -f ${column} -d " ")
-      fi
-      if [ "${_VERSION}" = "" ] ; then
-         # hack for cpplint
+      if [ "${binary}" = "bazel" ] ; then
+        _VERSION=$(${binary} --version | cut -f ${column} -d " ")
+      elif [ "${binary}" = "cpplint" ] ; then
+        # hack for cpplint
         _VERSION=$(${binary} --version | grep -v "fork" | grep "cpplint" | cut -f ${column} -d " ")
+      elif [ "${binary}" = "xmake" ] ; then
+        # hack for xmake
+        _VERSION=$(${binary} --version | grep "cross-platform" | cut -f ${column} -d " " | sed -e 's|,||g')
+      else
+        _VERSION=$(${binary} --version | grep "version" | cut -f ${column} -d " ")
+        if [ "${_VERSION}" = "" ] ; then
+          # hack for ubuntu g++
+          _VERSION=$(${binary} --version | grep "ubuntu" | cut -f ${column} -d " ")
+        fi
       fi
       if [ "${_VERSION}" = "" ] ; then
         echo "WARN: ${binary} version not found"
@@ -153,6 +159,14 @@ check_all_tools() {
   # https://github.com/linux-test-project/lcov
   # lcov --version ==> lcov: LCOV version 2.0-1
   check_one_tool lcov optional 4 2.0
+
+  # check for xmake
+  # xmake --version ==> xmake v2.8.1+20230711, A cross-platform build utility based on Lua
+  check_one_tool xmake optional 2 2.8.1
+
+  # check for bazel
+  # bazel --version ==> bazel 6.2.1
+  check_one_tool bazel optional 2 6.2.1
 }
 
 # see https://github.com/zemasoft/clangformat-cmake
