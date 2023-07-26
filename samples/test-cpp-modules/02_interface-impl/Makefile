@@ -21,7 +21,7 @@ ifeq ($(compiler),gcc)
   CXX=${CXX_HOME}/bin/gcc-13
   CXX_INCLUDE=${CXX_HOME}/include/c++/13
   CXXFLAGS_MODULE_CACHE=
-  CXXFLAGS=-std=c++20 -fmodules-ts -fmodules-cache-path=.modules-cache -Wall -g
+  CXXFLAGS=-std=c++20 -fmodules-ts -Wall -g
   CXXFLAGS_MODULE=$(CXXFLAGS) -fmodule-only
   CXX_LINK_FLAGS=-lstdc++
 endif
