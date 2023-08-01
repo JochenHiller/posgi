@@ -1,0 +1,41 @@
+// Target: aarch64-apple-darwin22
+// Configured with: ../configure --prefix=/opt/homebrew/opt/gcc --libdir=/opt/homebrew/opt/gcc/lib/gcc/current --disable-nls --enable-checking=release --with-gcc-major-version-only --enable-languages=c,c++,objc,obj-c++,fortran --program-suffix=-13 --with-gmp=/opt/homebrew/opt/gmp --with-mpfr=/opt/homebrew/opt/mpfr --with-mpc=/opt/homebrew/opt/libmpc --with-isl=/opt/homebrew/opt/isl --with-zstd=/opt/homebrew/opt/zstd --with-pkgversion='Homebrew GCC 13.1.0' --with-bugurl=https://github.com/Homebrew/homebrew-core/issues --with-system-zlib --build=aarch64-apple-darwin22 --with-sysroot=/Library/Developer/CommandLineTools/SDKs/MacOSX13.sdk
+// Thread model: posix
+// Supported LTO compression algorithms: zlib zstd
+// gcc version 13.1.0 (Homebrew GCC 13.1.0) 
+// 
+// In file included from /opt/homebrew/Cellar/gcc/13.1.0/include/c++/13/bits/locale_classes.h:869,
+//                  from /opt/homebrew/Cellar/gcc/13.1.0/include/c++/13/bits/ios_base.h:41,
+//                  from /opt/homebrew/Cellar/gcc/13.1.0/include/c++/13/ios:44,
+//                  from /opt/homebrew/Cellar/gcc/13.1.0/include/c++/13/istream:40,
+//                  from /opt/homebrew/Cellar/gcc/13.1.0/include/c++/13/sstream:40,
+//                  from ../../../third_party/plog-1.1.9/include/plog/Util.h:6,
+//                  from ../../../third_party/plog-1.1.9/include/plog/Record.h:4,
+//                  from ../../../third_party/plog-1.1.9/include/plog/Appenders/IAppender.h:2,
+//                  from ../../../third_party/plog-1.1.9/include/plog/Logger.h:2,
+//                  from ../../../third_party/plog-1.1.9/include/plog/Log.h:7,
+//                  from m_impl.cc:3,
+// of module m:impl, imported at m_public.cc:4,
+// of module m:_public, imported at m.cc:3:
+// /opt/homebrew/Cellar/gcc/13.1.0/include/c++/13/bits/locale_classes.tcc: In instantiation of 'const _Facet& std::use_facet(const locale&) [with _Facet = __cxx11::numpunct@m:impl<char>]':
+// /opt/homebrew/Cellar/gcc/13.1.0/include/c++/13/bits/locale_facets.tcc:80:66:   required from 'void std::__numpunct_cache@m:impl<_CharT>::_M_cache(const std::locale&) [with _CharT = char]'
+// /opt/homebrew/Cellar/gcc/13.1.0/include/c++/13/bits/locale_facets.tcc:63:18:   required from 'const std::__numpunct_cache@m:impl<_CharT>* std::__use_cache@m:impl<std::__numpunct_cache@m:impl<_CharT> >::operator()(const std::locale&) const [with _CharT = char]'
+// /opt/homebrew/Cellar/gcc/13.1.0/include/c++/13/bits/locale_facets.tcc:384:33:   required from '_InIter std::num_get@m:impl<_CharT, _InIter>::_M_extract_int(_InIter, _InIter, std::ios_base@m:impl&, std::ios_base@m:impl::iostate&, _ValueT&) const [with _ValueT = long int; _CharT = char; _InIter = std::istreambuf_iterator<char, std::char_traits@m:impl<char> >; std::ios_base@m:impl::iostate = std::ios_base@m:impl::iostate]'
+// /opt/homebrew/Cellar/gcc/13.1.0/include/c++/13/bits/locale_facets.h:2225:30:   required from 'std::num_get@m:impl<_CharT, _InIter>::iter_type std::num_get@m:impl<_CharT, _InIter>::do_get(iter_type, iter_type, std::ios_base@m:impl&, std::ios_base@m:impl::iostate&, long int&) const [with _CharT = char; _InIter = std::istreambuf_iterator<char, std::char_traits@m:impl<char> >; iter_type = std::istreambuf_iterator<char, std::char_traits@m:impl<char> >; std::ios_base@m:impl::iostate = std::ios_base@m:impl::iostate]'
+// /opt/homebrew/Cellar/gcc/13.1.0/include/c++/13/bits/locale_facets.h:2223:7:   required from here
+// /opt/homebrew/Cellar/gcc/13.1.0/include/c++/13/bits/locale_classes.tcc:203:60: internal compiler error: in tsubst_copy, at cp/pt.cc:17275
+//   203 |       if (const _Facet* __f = std::__try_use_facet<_Facet>(__loc))
+//       |                                                            ^~~~~
+// Please submit a full bug report, with preprocessed source.
+// See <https://github.com/Homebrew/homebrew-core/issues> for instructions.
+
+// /opt/homebrew/Cellar/gcc/13.1.0/bin/../libexec/gcc/aarch64-apple-darwin22/13/cc1plus -quiet -I ../../../third_party/plog-1.1.9/include -I ../../../third_party/boost_1_82_0 -iprefix /opt/homebrew/Cellar/gcc/13.1.0/bin/../lib/gcc/current/gcc/aarch64-apple-darwin22/13/ -MMD m.d -MQ m.o -D__DYNAMIC__ m.cc -fPIC -quiet -dumpbase m.cc -dumpbase-ext .cc -mmacosx-version-min=13.0.0 -mlittle-endian -mabi=lp64 -g -Wall -std=c++20 -fmodules-ts -freport-bug -o - -frandom-seed=0 -fdump-noaddr
+
+# 0 "m.cc"
+# 1 "/System/Volumes/Data/data/p/posgi/git/posgi/samples/test-cpp-modules/11_gcc-internal-error-tsubst_copy//"
+# 0 "<built-in>"
+# 0 "<command-line>"
+# 1 "m.cc"
+export  module  m;
+
+export  import  :_public;
