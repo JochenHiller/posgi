@@ -47,10 +47,16 @@ These references have been found during development, which are worth to be kept.
 
 * C++ Modules
   * Supported since C++20, better support of STL since C++23
+  * Good overview from [Roy Jacobson](https://github.com/royjacobson/modules-report) about current state of implementation
   * Good article series from Rainer Grimm: <https://www.modernescpp.com/index.php/tag/modules>
   * Good blog posts from [Victor Zverovich](https://www.zverovich.net/), maintainer of [@fmtlib](https://github.com/fmtlib)
     * <https://www.zverovich.net/2023/04/10/cxx20-modules-in-clang.html>
     * <https://www.zverovich.net/2023/04/17/simple-cxx20-modules.html>
+  * Daniela Engert, member of C++ committee
+    * [Contemporary C++ in Action - Daniela Engert - CppCon 2022](https://www.youtube.com/watch?v=yUIFdL3D0Vk)
+    * GitHub: https://github.com/DanielaE, [CppinAction](https://github.com/DanielaE/CppInAction)
+      * [Asio as Module](https://github.com/DanielaE/asio/tree/module)
+      * [argparse as Module](https://github.com/DanielaE/argparse/tree/module)
   * Clang reference about Modules:
     * <https://clang.llvm.org/docs/StandardCPlusPlusModules.html>
   * Gcc reference about Modules:
@@ -65,6 +71,10 @@ These references have been found during development, which are worth to be kept.
 
 * Multiple inheritance
   * <https://stackoverflow.com/questions/48407658/stumped-by-simple-c-multiple-inheritance-example>
+
+* C++23
+  * <https://www.reddit.com/r/cpp/comments/10zucok/c23_hits_the_road/>
+  * [How C++23 Changes the Way We Write Code - Timur Doumler](https://www.youtube.com/watch?v=QyFVoYcaORg)
 
 ## C++ Libraries
 
@@ -123,6 +133,9 @@ These references have been found during development, which are worth to be kept.
     * <https://www.boost.org/doc/libs/1_82_0/doc/html/boost_asio.html>
     * no builtin telnet server
 
+* Finite State Machine
+  * [Finite State Machine with std::variant](https://www.cppstories.com/2023/finite-state-machines-variant-cpp/)
+
 ## C++ Projects
 
 * Interesting projects
@@ -160,6 +173,10 @@ These references have been found during development, which are worth to be kept.
     * More C++ tooling: <https://www.jetbrains.com/cpp/>
 
 ## C++ CI/CD build systems
+
+* Comparisons
+  * [Build Systems For C++](https://hackingcpp.com/cpp/tools/build_systems.html)
+    * Taken from that: Bazel, Build2, Xmake
 
 * CMake
   * <https://code.visualstudio.com/docs/cpp/cmake-linux>
