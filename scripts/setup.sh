@@ -222,8 +222,9 @@ download_and_install_telnetpp() {
 
   if [ "${do_clean}" = "true" ] ; then
     if [ -d "${dir}" ] ; then
+    pwd
       echo "WARN: Clean third_party/${dir}"
-      rm -rf "third_party/${dir}"
+      rm -rf "${dir}"
     fi
   else
     echo "INFO: Building telnetpp into third_party/${dir}/build"
@@ -280,7 +281,7 @@ if [ "${DO_CLEAN}" = "true" ] && [ -d ../third_party ] ; then
     download_and_unpack_third_party true plog-1.1.9
     download_and_unpack_third_party true googletest-1.13.0
     download_and_unpack_third_party true boost_1_82_0
-    download_and_unpack_third_party true gsl-0.41.0
+    download_and_unpack_third_party true gsl-lite-0.41.0
     download_and_install_telnetpp true telnetpp-3.0.0
 
     cmake_clang_format true
